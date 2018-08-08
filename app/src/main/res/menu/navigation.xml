@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+
+        android:id="@+id/nav_bottom_search"
+        android:icon="@drawable/ic_nav_bottom_search_a"
+        android:title="Search" />
+
+    <item
+        android:id="@+id/nav_bottom_notification"
+        android:icon="@drawable/ic_bottom_notification"
+        android:title="Notification" />
+
+    <item
+        android:id="@+id/nav_bottom_profile"
+        android:icon="@drawable/ic_bottom_profile"
+        android:title="My Account" />
+
+</menu>

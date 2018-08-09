@@ -1,5 +1,6 @@
 package com.ansh.obaazo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
 import com.ansh.obaazo.adapter.OfferAdapter;
@@ -41,8 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
         TreandingAdapter adapter = new TreandingAdapter(this, new ArrayList<String>());
 
-        rvTreading.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvTreading.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvTreading.setAdapter(adapter);
+
+        findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ActivitySearch.class));
+            }
+        });
 
     }
 

@@ -1,32 +1,51 @@
-package com.ansh.obaazo;
+package com.ansh.obaazo.activit;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
 import com.ansh.obaazo.adapter.OfferAdapter;
 import com.ansh.obaazo.adapter.TreandingAdapter;
+import com.ansh.obaazo.resources.request.BaseRequest;
+import com.ansh.obaazo.resources.response.TrendingHotelResponse;
+import com.ansh.obaazo.resources.service.TrendingHotelService;
+import com.ansh.obaazo.web.ApiCallback;
+import com.ansh.obaazo.web.ApiException;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+import retrofit2.Call;
+
+public class MainActivity extends BaseActivity {
 
     private RecyclerView rvTreading;
     private RecyclerView rvOffer;
     private BottomNavigationView navigation;
+    private TreandingAdapter adapter;
+    private ArrayList<TrendingHotelResponse.ResultBean> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setItemIconTintList(null);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -41,18 +60,50 @@ public class MainActivity extends AppCompatActivity {
         rvOffer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvOffer.setAdapter(offerAdapter);
 
-        TreandingAdapter adapter = new TreandingAdapter(this, new ArrayList<String>());
+        adapter = new TreandingAdapter(this, mList);
 
         rvTreading.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvTreading.setAdapter(adapter);
+    }
 
+    @Override
+    protected void initListener() {
         findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ActivitySearch.class));
             }
         });
+    }
 
+    @Override
+    protected void bindDataWithUi() {
+        hitTrendingApi();
+
+    }
+
+    private void hitTrendingApi() {
+        showLoadingDialog();
+        new TrendingHotelService(this).execute(new BaseRequest(), new ApiCallback<TrendingHotelResponse>() {
+            @Override
+            public void onSuccess(Call<TrendingHotelResponse> call, TrendingHotelResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    adapter.setmList(response.getResult());
+                } else {
+                    Toast.makeText(MainActivity.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+
+            }
+        });
     }
 
 

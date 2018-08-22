@@ -1,7 +1,9 @@
-package com.ansh.obaazo;
+package com.ansh.obaazo.activit;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.ansh.obaazo.R;
 
 public class ActivityHotelDetails extends AppCompatActivity {
 

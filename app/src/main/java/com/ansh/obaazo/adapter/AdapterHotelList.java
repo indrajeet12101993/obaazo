@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activit.ActivityHotelDetails;
@@ -66,19 +68,23 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private RatingBar rbHotelRating;
+        private TextView tvRating;
         private View cbHotel;
         private ImageView ivHotelImage;
+        private TextView tvHotelName;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             cbHotel = itemView.findViewById(R.id.cb_hotel);
             ivHotelImage = itemView.findViewById(R.id.iv_hotel_image);
+            tvHotelName = itemView.findViewById(R.id.tv_hotel_name);
+            rbHotelRating = itemView.findViewById(R.id.rb_rating);
+            tvRating = itemView.findViewById(R.id.tv_rating);
         }
 
         public void bindData(HotelSearchResponse.ResultBean bean) {
-
-
             Picasso.get()
                     .load((!(TextUtils.isEmpty(bean.getImage1()))) ? bean.getImage1() : null)
                     .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
@@ -88,6 +94,10 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                     .placeholder(R.drawable.ani_loader)
                     .error(R.drawable.ani_loader)
                     .into(ivHotelImage);
+
+            tvHotelName.setText(bean.getHotel_name());
+            rbHotelRating.setRating(Float.parseFloat(bean.getRating()));
+            tvRating.setText(bean.getRating() + "/5");
 
 
         }

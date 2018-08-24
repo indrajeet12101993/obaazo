@@ -29,6 +29,7 @@
             android:padding="@dimen/_10sdp">
 
             <TextView
+                android:id="@+id/tv_hotel_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hotel Name"
@@ -41,14 +42,17 @@
                 android:gravity="center">
 
                 <RatingBar
+                    android:id="@+id/rb_rating"
                     style="@style/Base.Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:max="5"
                     android:numStars="5"
-                    android:rating="3" />
+                    android:rating="3"
+                    android:theme="@style/RatingBar_normal" />
 
                 <TextView
+                    android:id="@+id/tv_rating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"

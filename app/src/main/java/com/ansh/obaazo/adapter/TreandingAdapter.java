@@ -84,9 +84,8 @@ public class TreandingAdapter extends RecyclerView.Adapter<TreandingAdapter.View
 
             tvHotelName.setText(bean.getHotel_name());
             tvAddress.setText(bean.getAddress());
-            tvRating.setText(bean.getRating());
-            tvAmount.setText(bean.getHotel_actual_price());
-
+            tvRating.setText("Rating " + bean.getRating() + "/5");
+            tvAmount.setText("Start from  ₹" + bean.getHotel_actual_price());
         }
     }
 }

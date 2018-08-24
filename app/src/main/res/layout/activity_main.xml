@@ -8,31 +8,12 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include layout="@layout/content_main" />
-
-    <android.support.v7.widget.Toolbar
+    <FrameLayout
+        android:id="@+id/fm_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#3000"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_40sdp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_nav_menu" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_notifications" />
-        </RelativeLayout>
-
-    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

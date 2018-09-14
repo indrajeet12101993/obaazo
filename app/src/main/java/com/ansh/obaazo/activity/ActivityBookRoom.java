@@ -1,15 +1,15 @@
-package com.ansh.obaazo.activit;
+package com.ansh.obaazo.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ansh.obaazo.R;
 
-public class ActivityHotelDetails extends AppCompatActivity {
+public class ActivityBookRoom extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hotel_details);
+        setContentView(R.layout.activity_book_room);
     }
 }

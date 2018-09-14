@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ansh.obaazo">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/NoActionBar">
         <activity
-            android:name=".activit.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -25,12 +27,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activit.ActivitySearch"
+            android:name=".activity.ActivitySearch"
             android:theme="@style/NoActionBar" />
         <activity
-            android:name=".activit.ActivityHotelDetails"
+            android:name=".activity.ActivityHotelDetails"
             android:theme="@style/NoActionBar" />
-        <activity android:name=".activit.LocationSettingActivity" />
+        <activity android:name=".activity.LocationSettingActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC4iWVqOGNf59LOodXM_x_szJPWYIRKpto" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".activity.SelectRoomActivity" />
+        <activity android:name=".activity.FilterActivity" />
+        <activity android:name=".activity.ActivityBookRoom"></activity>
     </application>
 
 </manifest>

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3ff7f7f7"
-    tools:context=".activit.MainActivity">
+    tools:context=".activity.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ImageView
+            android:id="@+id/app_banner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_180sdp"
             android:adjustViewBounds="true"
-            android:background="@drawable/img_banner"
+            android:background="@drawable/ic_place_holer"
             android:contentDescription="@null"
             android:scaleType="centerCrop" />
 
@@ -46,278 +49,58 @@
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cb_top"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="@dimen/_5sdp"
+                card_view:cardPreventCornerOverlap="false">
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/cb_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:divider="@android:color/transparent"
-                    card_view:cardCornerRadius="5dp"
-                    card_view:cardElevation="@dimen/_5sdp"
-                    card_view:cardPreventCornerOverlap="false">
-
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:background="#00000000"
-                        android:drawableLeft="@drawable/ic_location"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:hint="City,Location,and Landmark"
-                        android:textSize="@dimen/_10sdp" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <TextView
+                    android:id="@+id/et_place"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="@dimen/_5sdp">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:hint="City,Location,and Landmark"
+                    android:textSize="@dimen/_10sdp" />
 
-                    <LinearLayout
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/row_date_time" />
+
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="#e9e7e7" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                    <include layout="@layout/row_room" />
+                </LinearLayout>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:layout_marginRight="@dimen/_10sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Select Date"
-                                android:textColor="@android:color/black" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="@dimen/_10sdp"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/_10sdp"
-                                    android:layout_marginRight="@dimen/_10sdp"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="@dimen/_2sdp"
-                                        android:text="Jan 2015" />
-
-                                    <TextView
-                                        android:layout_width="@dimen/_60sdp"
-                                        android:layout_height="@dimen/_66sdp"
-                                        android:background="@drawable/shape_date"
-                                        android:gravity="center"
-                                        android:padding="@dimen/_10sdp"
-                                        android:text="Fri  23"
-                                        android:textColor="@color/orange"
-                                        android:textSize="@dimen/_16sdp" />
-                                </LinearLayout>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_10sdp"
-                                    android:text="To"
-                                    android:textColor="@android:color/black" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/_10sdp"
-                                    android:layout_marginRight="@dimen/_10sdp"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="@dimen/_2sdp"
-                                        android:text="Oct 2015" />
-
-                                    <TextView
-                                        android:layout_width="@dimen/_60sdp"
-                                        android:layout_height="@dimen/_66sdp"
-                                        android:background="@drawable/shape_date"
-                                        android:gravity="center"
-                                        android:padding="@dimen/_10sdp"
-                                        android:text="Thu 28"
-                                        android:textColor="@color/orange"
-                                        android:textSize="@dimen/_16sdp" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <Button
-                                android:id="@+id/btn_search"
-                                android:layout_width="@dimen/_120sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="@dimen/_20sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:background="@drawable/shape_orange"
-                                android:text="Search"
-                                android:textColor="#fff" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="#e9e7e7" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/_5sdp"
-                                    android:layout_weight="1"
-                                    android:text="Room 1" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/_5sdp"
-                                    android:layout_marginRight="@dimen/_10sdp"
-                                    android:layout_weight="1"
-                                    android:gravity="end"
-                                    android:text="4 person max" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/_10sdp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/shape_greay"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="@dimen/_10sdp">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content">
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_remove" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/_10sdp"
-                                            android:layout_marginRight="@dimen/_10sdp"
-                                            android:text="2"
-                                            android:textSize="@dimen/_14sdp" />
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-
-                                            android:src="@drawable/ic_add" />
-
-                                    </LinearLayout>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:drawableLeft="@drawable/ic_directions"
-                                        android:gravity="center"
-                                        android:text="Adult"
-                                        android:textColor="#000" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/_10sdp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/shape_greay"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="@dimen/_10sdp">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content">
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_remove" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/_10sdp"
-                                            android:layout_marginRight="@dimen/_10sdp"
-                                            android:text="2"
-                                            android:textSize="@dimen/_14sdp" />
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-
-                                            android:src="@drawable/ic_add" />
-
-                                    </LinearLayout>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:drawableLeft="@drawable/ic_directions"
-                                        android:gravity="center"
-                                        android:text="Child"
-                                        android:textColor="#000" />
-
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -341,7 +124,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_offer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -367,7 +151,8 @@
                 android:id="@+id/rv_trending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_56sdp" />
+                android:layout_marginBottom="@dimen/_56sdp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
     </RelativeLayout>
 

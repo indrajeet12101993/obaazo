@@ -1,4 +1,4 @@
-package com.ansh.obaazo.activit;
+package com.ansh.obaazo.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,7 +7,9 @@ import android.view.MenuItem;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
+import com.ansh.obaazo.fragment.FragmentCash;
 import com.ansh.obaazo.fragment.FragmentHome;
+import com.ansh.obaazo.fragment.FragmentProfile;
 
 public class MainActivity extends BaseActivity {
 
@@ -17,6 +19,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // addFragment(new FragmentHome(), R.id.fm_main);
 
 
     }
@@ -32,7 +35,7 @@ public class MainActivity extends BaseActivity {
         navigation.setItemIconTintList(null);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.removeShiftMode(navigation);
-        addFragment(new FragmentHome(),R.id.fm_main);
+        addFragment(new FragmentHome(), R.id.fm_main);
 
 
     }
@@ -55,24 +58,18 @@ public class MainActivity extends BaseActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             navigation.getMenu().findItem(R.id.nav_bottom_search).setIcon((R.id.nav_bottom_search == item.getItemId()) ? R.drawable.ic_nav_bottom_search_a : R.drawable.ic_nav_bottom_search);
-            navigation.getMenu().findItem(R.id.nav_bottom_notification).setIcon((R.id.nav_bottom_notification == item.getItemId()) ? R.drawable.ic_bottom_notification_a : R.drawable.ic_bottom_notification);
+            navigation.getMenu().findItem(R.id.nav_bottom_cash).setIcon((R.id.nav_bottom_cash == item.getItemId()) ? R.drawable.ic_bottom_notification_a : R.drawable.ic_bottom_notification);
             navigation.getMenu().findItem(R.id.nav_bottom_profile).setIcon((R.id.nav_bottom_profile == item.getItemId()) ? R.drawable.ic_bottom_profile_a : R.drawable.ic_bottom_profile);
 
             switch (item.getItemId()) {
                 case R.id.nav_bottom_search:
-                   /* FragmentSearch f2 = new FragmentSearch();
-                    loadFrag(f2, "search", fm);
-                    toolbar.setTitle("Search");*/
+                    replaceFragment(new FragmentHome(), R.id.fm_main, false);
                     return true;
-                case R.id.nav_bottom_notification:
-                   /* FragmentNotification notification = new FragmentNotification();
-                    loadFrag(notification, "notification", fm);
-                    toolbar.setTitle("Notification");*/
+                case R.id.nav_bottom_cash:
+                    replaceFragment(new FragmentCash(), R.id.fm_main, false);
                     return true;
                 case R.id.nav_bottom_profile:
-                   /* FragmentProfile fprof = new FragmentProfile();
-                    loadFrag(fprof, "profile", fm);
-                    toolbar.setTitle("Profile");*/
+                    replaceFragment(new FragmentProfile(), R.id.fm_main, false);
                     return true;
             }
             return false;

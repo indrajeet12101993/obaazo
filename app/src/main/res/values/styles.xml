@@ -6,14 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="Theme.Transparent" parent="AppTheme">
@@ -35,5 +33,32 @@
     </style>
 
 
+    <style name="My.Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
 
+    <style name="DialogThemePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="My.DialogC" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+
+    <style name="Animation.Design.TopSheetDialog" parent="Animation.AppCompat.Dialog">
+        <item name="android:windowEnterAnimation">@anim/top_sheet_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/top_sheet_slide_out</item>
+    </style>
+
+    <style name="Widget.Design.TopSheet.Modal" parent="android:Widget">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="behavior_peekHeight">@dimen/_350sdp</item>
+        <item name="behavior_hideable">true</item>
+    </style>
 </resources>

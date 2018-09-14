@@ -1,7 +1,9 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,28 +13,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
-import com.ansh.obaazo.resources.response.TrendingHotelResponse;
+import com.ansh.obaazo.activity.ActivityHotelDetails;
+import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static com.ansh.obaazo.web.AppConstant.MAX_HEIGHT;
-import static com.ansh.obaazo.web.AppConstant.MAX_WIDTH;
-import static com.ansh.obaazo.web.AppConstant.size;
+import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
+import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
+import static com.ansh.obaazo.utils.AppConstant.size;
 
 public class TreandingAdapter extends RecyclerView.Adapter<TreandingAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<TrendingHotelResponse.ResultBean> mList;
+    private ArrayList<HotelInfo> mList;
 
-    public TreandingAdapter(Context mContext, ArrayList<TrendingHotelResponse.ResultBean> mList) {
+    public TreandingAdapter(Context mContext, ArrayList<HotelInfo> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
 
 
-    public void setmList(ArrayList<TrendingHotelResponse.ResultBean> mList) {
+    public void setmList(ArrayList<HotelInfo> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
@@ -44,8 +48,21 @@ public class TreandingAdapter extends RecyclerView.Adapter<TreandingAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.bindData(mList.get(holder.getAdapterPosition()));
+        holder.cvTreanding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ActivityHotelDetails.class)
+                        .putExtra(AppConstant.START_DATE, "")
+                        .putExtra(AppConstant.END_DATE, "")
+                        .putExtra(AppConstant.NO_OF_ADULT, 0)
+                        .putExtra(AppConstant.NO_OF_CHILD, 0)
+                        .putExtra(AppConstant.NO_OF_ROOM, 0)
+                        .putExtra(AppConstant.BOOKING_DATES, "")
+                        .putExtra(AppConstant.HOTEL_DETAILS, mList.get(holder.getAdapterPosition())));
+            }
+        });
 
     }
 
@@ -55,6 +72,7 @@ public class TreandingAdapter extends RecyclerView.Adapter<TreandingAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private CardView cvTreanding;
         private ImageView ivHotelImage;
         private TextView tvHotelName;
         private TextView tvAddress;
@@ -68,9 +86,10 @@ public class TreandingAdapter extends RecyclerView.Adapter<TreandingAdapter.View
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvRating = itemView.findViewById(R.id.tv_rating);
             tvAmount = itemView.findViewById(R.id.tv_amount);
+            cvTreanding = itemView.findViewById(R.id.cv_row_treanding);
         }
 
-        public void bindData(TrendingHotelResponse.ResultBean bean) {
+        public void bindData(HotelInfo bean) {
             Picasso.get()
                     .load((!TextUtils.isEmpty(bean.getImage1()) ? bean.getImage1() : null))
                     .error(R.drawable.ani_loader)

@@ -12,28 +12,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp">
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_80sdp">
 
         <ImageView
             android:id="@+id/iv_hotel_image"
             android:layout_width="@dimen/_120sdp"
-            android:layout_height="match_parent"
-            android:background="@color/orange"
+            android:layout_height="@dimen/_80sdp"
             android:contentDescription="@null"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_place_holer" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp">
 
             <TextView
                 android:id="@+id/tv_hotel_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Hotel Name"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_14sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,13 +67,30 @@
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:text="1500 Rs"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_14sdp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_start_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="1500 Rs"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="1500 Rs"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

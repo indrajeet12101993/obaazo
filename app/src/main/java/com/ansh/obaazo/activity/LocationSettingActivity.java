@@ -1,4 +1,4 @@
-package com.ansh.obaazo.activit;
+package com.ansh.obaazo.activity;
 
 import android.Manifest;
 import android.app.Activity;

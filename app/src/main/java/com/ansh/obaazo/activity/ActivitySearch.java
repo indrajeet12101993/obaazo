@@ -1,0 +1,149 @@
+package com.ansh.obaazo.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
+import com.ansh.obaazo.R;
+import com.ansh.obaazo.adapter.AdapterHotelList;
+import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.resources.request.HotelSearchRequest;
+import com.ansh.obaazo.resources.response.HotelSearchResponse;
+import com.ansh.obaazo.resources.service.HotelSearchService;
+import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.DateUtils;
+import com.ansh.obaazo.web.ApiCallback;
+import com.ansh.obaazo.web.ApiException;
+import com.ansh.obaazo.widget.topSheet.TopSheetDialog;
+import com.ethanhua.skeleton.RecyclerViewSkeletonScreen;
+import com.ethanhua.skeleton.Skeleton;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import retrofit2.Call;
+
+public class ActivitySearch extends BaseActivity {
+
+    private RecyclerView rvHotelList;
+    private AdapterHotelList adapterHotelList;
+    private ArrayList<HotelInfo> mList = new ArrayList<>();
+    private String startDate;
+    private String endDate;
+    private RecyclerViewSkeletonScreen skeletonScreen;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_search;
+    }
+
+    @Override
+    protected void initView() {
+
+        rvHotelList = findViewById(R.id.rv_hotel_list);
+        rvHotelList.setLayoutManager(new LinearLayoutManager(ActivitySearch.this));
+        adapterHotelList = new AdapterHotelList(this, mList);
+        rvHotelList.setAdapter(adapterHotelList);
+
+    }
+
+    @Override
+    protected void initListener() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+        findViewById(R.id.fb_filter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(ActivitySearch.this, FilterActivity.class), 1001);
+            }
+        });
+
+        findViewById(R.id.ll_booking_date).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TopSheetDialog dialog = new TopSheetDialog(ActivitySearch.this);
+                dialog.setContentView(R.layout.sheet_content);
+                dialog.show();
+            }
+        });
+
+    }
+
+    @Override
+    protected void bindDataWithUi() {
+        if (getIntent() != null) {
+            startDate = getIntent().getStringExtra(AppConstant.START_DATE);
+            endDate = getIntent().getStringExtra(AppConstant.END_DATE);
+            int roomCount = getIntent().getIntExtra(AppConstant.NO_OF_ROOM, 0);
+            int noOfAdult = getIntent().getIntExtra(AppConstant.NO_OF_ADULT, 0);
+            int noOfChild = getIntent().getIntExtra(AppConstant.NO_OF_CHILD, 0);
+
+            ((TextView) findViewById(R.id.tv_room_count)).setText("" + roomCount);
+            ((TextView) findViewById(R.id.tv_adult_count)).setText("" + noOfAdult);
+            ((TextView) findViewById(R.id.tv_child_count)).setText("" + noOfChild);
+
+            Calendar calStart = DateUtils.formatDate(startDate);
+            Calendar calEnd = DateUtils.formatDate(endDate);
+            String tempDates = "";
+            if (calStart != null && calEnd != null) {
+                tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
+                        calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
+                ((TextView) findViewById(R.id.tv_dates)).setText(tempDates);
+            }
+            adapterHotelList.setBookingDetails(startDate, endDate, noOfAdult, noOfChild, roomCount, tempDates);
+        }
+        hitHotelSearchApi();
+
+    }
+
+    private void hitHotelSearchApi() {
+        skeletonScreen = Skeleton.bind(rvHotelList)
+                .adapter(adapterHotelList)
+                .load(R.layout.item_skeleton_hotel)
+                .show();
+        // showLoadingDialog();
+        HotelSearchRequest request = new HotelSearchRequest();
+        request.setCheckInDate(startDate);    //       28.5355; 77.3910; "09/2/2018";*/"09/2/2018";*/
+        request.setCheckOutDate(endDate);
+        request.setLatitude(28.5355);
+        request.setLongitude(77.3910);
+        new HotelSearchService(this).execute(request, new ApiCallback<HotelSearchResponse>() {
+            @Override
+            public void onSuccess(Call<HotelSearchResponse> call, HotelSearchResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    adapterHotelList.setmList(response.getResult());
+                    findViewById(R.id.iv_empty).setVisibility((response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                skeletonScreen.hide();
+                //  hideLoadingDialog();
+
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+
+            }
+        });
+    }
+
+}

@@ -3,10 +3,10 @@ package com.ansh.obaazo.resources.request;
 import com.ansh.obaazo.web.ApiRequest;
 
 public class HotelSearchRequest extends ApiRequest {
-    private double latitude = 28.5355;
-    private double longitude = 77.3910;
-    private String checkInDate = "09/2/2018";
-    private String checkOutDate = "09/2/2018";
+    private double latitude;
+    private double longitude;
+    private String checkInDate;
+    private String checkOutDate;
 
 
     public double getLatitude() {

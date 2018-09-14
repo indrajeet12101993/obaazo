@@ -7,13 +7,13 @@
         android:title="Search" />
 
     <item
-        android:id="@+id/nav_bottom_notification"
+        android:id="@+id/nav_bottom_cash"
         android:icon="@drawable/ic_bottom_notification"
-        android:title="Notification" />
+        android:title="Cash" />
 
     <item
         android:id="@+id/nav_bottom_profile"
         android:icon="@drawable/ic_bottom_profile"
-        android:title="My Account" />
+        android:title="Profile" />
 
 </menu>

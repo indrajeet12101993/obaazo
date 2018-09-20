@@ -14,6 +14,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/colorPrimaryDark</item> <!-- Whatever color you want-->
+    </style>
+
     <style name="Theme.Transparent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

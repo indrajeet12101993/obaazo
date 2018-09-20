@@ -76,7 +76,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:text="1500 Rs"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/_14sdp" />
 
@@ -86,9 +85,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:text="1500 Rs"
+                    android:text="0Km"
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
             </RelativeLayout>
 

@@ -104,7 +104,8 @@ public class ActivityHotelDetails extends BaseActivity {
         findViewById(R.id.btn_select_room).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class));
+                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class).putExtra(AppConstant.HOTEL_ID,  hotelDetails.getHotel_id()
+                ));
             }
         });
 

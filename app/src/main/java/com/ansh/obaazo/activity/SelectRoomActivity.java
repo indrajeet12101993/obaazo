@@ -10,6 +10,7 @@ import com.ansh.obaazo.adapter.RoomsAdapter;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
+import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 
@@ -43,7 +44,8 @@ public class SelectRoomActivity extends BaseActivity {
     private void hitRoomApi() {
         showLoadingDialog();
         BaseRequest request = new BaseRequest();
-        request.setId("45");
+        String hotelId = getIntent().getStringExtra(AppConstant.HOTEL_ID);
+        request.setId(hotelId);
         new HotelRoomService(this).execute(request, new ApiCallback<HotelRoomResponse>() {
             @Override
             public void onSuccess(Call<HotelRoomResponse> call, HotelRoomResponse response) {

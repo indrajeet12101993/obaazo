@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.ansh.obaazo.web.ApiResponse;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -77,6 +78,12 @@ public class HotelRoomResponse extends ApiResponse {
         private String amenities;
         private String hotel_id;
         private String active;
+        @SerializedName("rimg")
+        private String image;
+
+        public String getImage() {
+            return image;
+        }
 
         public String getId() {
             return id;
@@ -198,6 +205,9 @@ public class HotelRoomResponse extends ApiResponse {
             this.active = active;
         }
 
+        public ResultBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -220,9 +230,7 @@ public class HotelRoomResponse extends ApiResponse {
             dest.writeString(this.amenities);
             dest.writeString(this.hotel_id);
             dest.writeString(this.active);
-        }
-
-        public ResultBean() {
+            dest.writeString(this.image);
         }
 
         protected ResultBean(Parcel in) {
@@ -241,9 +249,10 @@ public class HotelRoomResponse extends ApiResponse {
             this.amenities = in.readString();
             this.hotel_id = in.readString();
             this.active = in.readString();
+            this.image = in.readString();
         }
 
-        public static final Parcelable.Creator<ResultBean> CREATOR = new Parcelable.Creator<ResultBean>() {
+        public static final Creator<ResultBean> CREATOR = new Creator<ResultBean>() {
             @Override
             public ResultBean createFromParcel(Parcel source) {
                 return new ResultBean(source);

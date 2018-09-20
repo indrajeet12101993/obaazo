@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <FrameLayout
         android:id="@+id/fm_main"
         android:layout_width="match_parent"
@@ -25,5 +26,8 @@
         app:itemTextColor="@android:color/primary_text_light"
         app:menu="@menu/navigation" />
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
 </RelativeLayout>

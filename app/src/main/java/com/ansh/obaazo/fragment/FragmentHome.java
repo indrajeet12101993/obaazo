@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import com.ansh.obaazo.resources.response.TrendingHotelResponse;
 import com.ansh.obaazo.resources.service.OfferService;
 import com.ansh.obaazo.resources.service.TrendingHotelService;
 import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.BackgroundColorTransform;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
@@ -89,15 +93,12 @@ public class FragmentHome extends BaseFragment {
 
     @Override
     protected void initView() {
-       /* Picasso.get()
-                .load("http://obaazo.com//vendor//images//users//145845726.jpg")
-                .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .resize(size, size)
-                .centerInside()
+        Picasso.get()
+                .load("https://obaazo.com//assets/img/home_1/beach-blue.jpg")
                 .error(R.drawable.ic_hotel_place_holder)
                 .placeholder(R.drawable.ic_hotel_place_holder)
-                .into(((ImageView) mView.findViewById(R.id.app_banner)));*/
+                .into(((ImageView) mView.findViewById(R.id.app_banner)));
+        mView.findViewById(R.id.app_banner).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.light_transparent));
 
         etPlace = mView.findViewById(R.id.et_place);
         rvTreading = mView.findViewById(R.id.rv_trending);
@@ -124,6 +125,28 @@ public class FragmentHome extends BaseFragment {
     @Override
     protected void initListener() {
         btnSearch = mView.findViewById(R.id.btn_search);
+        NestedScrollView nsView = mView.findViewById(R.id.ns_home);
+        nsView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                    ((BaseActivity) getActivity()).slideDown();
+                }
+                if (scrollY < oldScrollY && scrollY == 0) {
+                    Log.i(TAG, "Scroll UP");
+                    ((BaseActivity) getActivity()).slideUp();
+                }
+
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL");
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    Log.i(TAG, "BOTTOM SCROLL");
+                }
+            }
+        });
 
         etPlace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,15 +291,15 @@ public class FragmentHome extends BaseFragment {
             public void onSuccess(Call<OfferResponse> call, OfferResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200") && response.getResult() != null) {
                     offerAdapter.setmList(response);
-                    Picasso.get()
-                            .load(response.getBackgroundimage())
-                            .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
-                            .memoryPolicy(MemoryPolicy.NO_CACHE)
-                            .resize(size, size)
-                            .centerInside()
+                    /*Picasso.get()
+                            .load("https://obaazo.com//assets/img/home_1/beach-blue.jpg")
+*//*
+                            .load(response.getBackgroundimage().replaceAll("/\\z", ""))
+*//*
                             .error(R.drawable.ic_hotel_place_holder)
                             .placeholder(R.drawable.ic_hotel_place_holder)
-                            .into(((ImageView) mView.findViewById(R.id.app_banner)));
+                            .into(((ImageView) mView.findViewById(R.id.app_banner)));*/
+
 
                 } else {
                     Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -329,7 +352,7 @@ public class FragmentHome extends BaseFragment {
                     .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
                     .setCountry("IN")
                     .build();
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                     .setFilter(typeFilter)
                     .build(getActivity());
             startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);

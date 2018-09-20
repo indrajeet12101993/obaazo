@@ -9,90 +9,52 @@
     tools:context=".activity.ActivityHotelDetails">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:background="#fff">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:src="@drawable/ic_back" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_2sdp"
-                android:src="@drawable/ic_notifications_small" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_2sdp"
-                android:src="@drawable/ic_search" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_2sdp"
-                android:src="@drawable/ic_more_vert" />
-
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
-
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_marginBottom="@dimen/_40sdp">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/_44sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_42sdp"
             android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#cfcccc" />
+                android:background="#3000" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_160sdp">
+                android:layout_height="@dimen/_180sdp">
 
                 <ImageView
                     android:id="@+id/iv_banner_image"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
+                    android:layout_height="@dimen/_180sdp"
                     android:adjustViewBounds="true"
                     android:background="@drawable/ic_place_holer"
                     android:scaleType="centerCrop" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_180sdp"
+                    android:background="@color/mdtp_transparent_black" />
+
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="@dimen/_36sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_42sdp"
                     app:cardCornerRadius="@dimen/_20sdp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_36sdp"
+                        android:layout_height="@dimen/_32sdp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -170,7 +132,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/rl_bottom"
-                    android:background="#3000"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp">
 
@@ -197,7 +158,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:background="#3000"
                     android:paddingBottom="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_5sdp">
@@ -219,10 +179,11 @@
                         android:id="@+id/tv_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignEnd="@+id/rb_hotel_rating"
-                        android:layout_centerInParent="true"
-                        android:paddingLeft="@dimen/_2sdp"
-                        android:paddingRight="@dimen/_2sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="102dp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
                         android:textColor="@color/mdtp_white" />
 
                     <TextView
@@ -246,11 +207,19 @@
             </android.support.v7.widget.RecyclerView>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="View All" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
-                android:text="Description"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="DESCRIPTION"
                 android:textColor="#000"
                 android:textSize="@dimen/_12sdp" />
 
@@ -287,7 +256,7 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/greay"
+                android:background="#efefef"
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
@@ -303,13 +272,13 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/greay"
+                android:background="#efefef"
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:text="Question and Answer"
+                android:text="Children and Extra Beds"
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
@@ -320,7 +289,7 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/greay"
+                android:background="#efefef"
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
@@ -331,6 +300,49 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:src="@drawable/ic_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                android:src="@drawable/ic_notifications_small" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                android:src="@drawable/ic_search" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                android:src="@drawable/ic_more_vert" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <Button
         android:id="@+id/btn_select_room"

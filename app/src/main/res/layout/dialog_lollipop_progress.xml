@@ -5,11 +5,10 @@
     android:background="@android:color/transparent">
 
     <ProgressBar
-        style="?android:attr/progressBarStyle"
+        android:background="@drawable/progress"
         android:layout_width="@dimen/_43sdp"
         android:layout_height="@dimen/_43sdp"
         android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/ani_loader"
         android:indeterminateDuration="1000" />
 
 </RelativeLayout>

@@ -38,15 +38,42 @@ public class AmentiesAdapter extends RecyclerView.Adapter<AmentiesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String name = mData[holder.getAdapterPosition()];
-        holder.tvName.setText(name);
-        switch (name) {
-            case "non-smoking":
+        switch (holder.getAdapterPosition()) {
+            case 0:
+                holder.ivAmintes.setImageResource(R.drawable.ic_coffie);
+                holder.tvName.setText("Breakfast");
+                break;
+            case 1:
+                holder.ivAmintes.setImageResource(R.drawable.ic_condiction);
+                holder.tvName.setText("Air Condition");
+
+                break;
+            case 2:
+                holder.ivAmintes.setImageResource(R.drawable.ic_customer_service);
+                holder.tvName.setText("24X7 Security");
+
+                break;
+            case 3:
+                holder.ivAmintes.setImageResource(R.drawable.ic_enerfy);
+                holder.tvName.setText("100% \nPower Backup");
+
+                break;
+            case 4:
+                holder.ivAmintes.setImageResource(R.drawable.ic_news_paper);
+                holder.tvName.setText("News Paper");
+
+                break;
+            case 5:
+                holder.ivAmintes.setImageResource(R.drawable.ic_wifiy);
+                holder.tvName.setText("Free Wifi");
+
+                break;
+           /* case "non-smoking":
                 holder.ivAmintes.setImageResource(R.drawable.ic_coffie);
                 break;
             case "Swimming pool":
                 holder.ivAmintes.setImageResource(R.drawable.ic_swiming);
-                break;
+                break;*/
             default:
                 holder.ivAmintes.setImageResource(R.drawable.ic_place_holer);
         }
@@ -56,7 +83,8 @@ public class AmentiesAdapter extends RecyclerView.Adapter<AmentiesAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return (mData != null) ? (mData.length < 6 ? mData.length : 6) : 0;
+        return /*(mData != null) ? (mData.length < 6 ? mData.length : 6) : 0;*/
+                6;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

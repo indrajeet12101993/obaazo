@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -289,9 +290,9 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:layout_marginBottom="@dimen/_15sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp">
@@ -414,69 +415,74 @@
     </android.support.v4.widget.NestedScrollView>
 
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FFF"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingRight="@dimen/_15sdp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payable Ammount"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="390 Rs"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+        app:cardElevation="@dimen/_10sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
 
-            <android.support.v7.widget.AppCompatButton
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
-                android:text="Pay At Hotel"
-                android:textColor="@color/mdtp_white"
-                android:textSize="@dimen/_10sdp" />
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp">
 
-            <android.support.v7.widget.AppCompatButton
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payable Ammount"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="390 Rs"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="wrap_content">
 
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
-                android:text="Pay Now"
-                android:textColor="@color/mdtp_white"
-                android:textSize="@dimen/_10sdp" />
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="Pay At Hotel"
+                    android:textColor="@color/mdtp_white"
+                    android:textSize="@dimen/_10sdp" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="Pay Now"
+                    android:textColor="@color/mdtp_white"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>

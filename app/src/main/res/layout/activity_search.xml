@@ -15,7 +15,7 @@
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:background="#fff">
+            android:background="@color/colorPrimary">
 
             <ImageView
                 android:id="@+id/iv_back"

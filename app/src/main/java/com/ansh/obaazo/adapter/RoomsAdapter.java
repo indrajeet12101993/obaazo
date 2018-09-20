@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,12 @@ import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivityBookRoom;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.BitmapTransform;
+import com.squareup.picasso.Picasso;
+
+import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
+import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
+import static com.ansh.obaazo.utils.AppConstant.size;
 
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHolder> {
     private Context mContext;
@@ -40,6 +47,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final RoomViewHolder holder, int position) {
+        holder.bindData(mData.getResult().get(holder.getAdapterPosition()));
         holder.btnRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,21 +80,18 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         }
 
         public void bindData(HotelRoomResponse.ResultBean bean) {
-            /*Picasso.get()
-                    .load((!(TextUtils.isEmpty(bean.getImage1()))) ? bean.getImage1() : null)
+            Picasso.get()
+                    .load((!(TextUtils.isEmpty(bean.getImage()))) ? bean.getImage() : null)
                     .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .resize(size, size)
                     .centerInside()
                     .error(R.drawable.ic_hotel_place_holder)
                     .placeholder(R.drawable.ic_hotel_place_holder)
-                    .into(ivHotelImage);*/
+                    .into(ivHotelImage);
 
             tvRoomSize.setText(bean.getRoom_size());
             tvBedType.setText(bean.getBed_type());
             tvRoomType.setText(bean.getRoom_type());
-
-
         }
     }
 }

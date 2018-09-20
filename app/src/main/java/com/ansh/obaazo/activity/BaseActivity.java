@@ -29,6 +29,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 
 import com.ansh.obaazo.R;
@@ -459,5 +460,37 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void onLocationFound(Location location) {
+    }
+
+
+    public void slideUp() {
+        View view = findViewById(R.id.toolbar);
+        if (view.getVisibility() == View.INVISIBLE) {
+            view.setVisibility(View.VISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(
+                    0, // fromXDelta
+                    0, // toXDelta
+                    -view.getHeight(), // fromYDelta
+                    0); // toYDelta
+            animate.setDuration(500);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);
+        }
+    }
+
+    // slide the view from its current position to below itself
+    public void slideDown() {
+        View view = findViewById(R.id.toolbar);
+        if (view.getVisibility() == View.VISIBLE) {
+            TranslateAnimation animate = new TranslateAnimation(
+                    0, // fromXDelta
+                    0, // toXDelta
+                    0, // fromYDelta
+                    -view.getHeight()); // toYDelta
+            animate.setDuration(500);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);
+            view.setVisibility(View.INVISIBLE);
+        }
     }
 }

@@ -2,8 +2,8 @@ package com.ansh.obaazo.utils;
 
 public class AppConstant {
 
-    // public static final String SERVER_URL = "http://obaazo.com/";
-    public static final String SERVER_URL = "http://technowhizzit.com/obaazo/";
+    public static final String SERVER_URL = "https://obaazo.com/";
+    // public static final String SERVER_URL = "http://technowhizzit.com/obaazo/";
     public static final int MAX_WIDTH = 1024;
     public static final int MAX_HEIGHT = 768;
     public static final int size = (int) Math.ceil(Math.sqrt(MAX_WIDTH * MAX_HEIGHT));
@@ -18,5 +18,6 @@ public class AppConstant {
 
     public static final String HOTEL_DETAILS = "hotel_details";
     public static final String BOOK_ROOM = "book_room";
+    public static final String HOTEL_ID = "hotel_id";
 }
 

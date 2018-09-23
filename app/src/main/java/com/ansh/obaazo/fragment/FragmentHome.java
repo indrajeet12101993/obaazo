@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivitySearch;
+import com.ansh.obaazo.activity.ActivitySelect;
 import com.ansh.obaazo.activity.BaseActivity;
 import com.ansh.obaazo.adapter.OfferAdapter;
 import com.ansh.obaazo.adapter.TreandingAdapter;
@@ -31,14 +31,13 @@ import com.ansh.obaazo.resources.response.TrendingHotelResponse;
 import com.ansh.obaazo.resources.service.OfferService;
 import com.ansh.obaazo.resources.service.TrendingHotelService;
 import com.ansh.obaazo.utils.AppConstant;
-import com.ansh.obaazo.utils.BackgroundColorTransform;
 import com.ansh.obaazo.utils.BitmapTransform;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.TZDatePicker;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,8 +49,6 @@ import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 import static com.ansh.obaazo.utils.AppConstant.size;
 import static com.ansh.obaazo.utils.DateUtils.formatDate;
-import static com.ansh.obaazo.utils.DateUtils.parseDay;
-import static com.ansh.obaazo.utils.DateUtils.parseMonth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,8 +66,7 @@ public class FragmentHome extends BaseFragment {
     private ArrayList<HotelInfo> mList = new ArrayList<>();
     private TextView tvStartDate;
     private TextView tvEndDate;
-    private String startDate = "";
-    private String endDate = "";
+
     private Button btnSearch;
     private TextView tvACount;
     private TextView tvCount;
@@ -78,6 +74,10 @@ public class FragmentHome extends BaseFragment {
     private int adultCount = 1;
     private TextView etPlace;
     private OfferAdapter offerAdapter;
+    private boolean isLocationSelected = false;
+    private boolean isSDateSelected = false;
+    private boolean isEDateSelected = false;
+
 
     public FragmentHome() {
         // Required empty public constructor
@@ -86,7 +86,7 @@ public class FragmentHome extends BaseFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_home, container, false);
+        mView = inflater.inflate(R.layout.fragment_home_2, container, false);
         init();
         return mView;
     }
@@ -94,11 +94,13 @@ public class FragmentHome extends BaseFragment {
     @Override
     protected void initView() {
         Picasso.get()
-                .load("https://obaazo.com//assets/img/home_1/beach-blue.jpg")
+                .load("https://obaazo.com/assets//img/home_1/beach-blue.jpg")
+                .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
+                .resize(size, size)
+                .centerInside()
                 .error(R.drawable.ic_hotel_place_holder)
                 .placeholder(R.drawable.ic_hotel_place_holder)
                 .into(((ImageView) mView.findViewById(R.id.app_banner)));
-        mView.findViewById(R.id.app_banner).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.light_transparent));
 
         etPlace = mView.findViewById(R.id.et_place);
         rvTreading = mView.findViewById(R.id.rv_trending);
@@ -159,8 +161,8 @@ public class FragmentHome extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (validate()) {
-                    startActivity(new Intent(getActivity(), ActivitySearch.class).putExtra(AppConstant.START_DATE, startDate)
-                            .putExtra(AppConstant.END_DATE, endDate)
+                    startActivity(new Intent(getActivity(), ActivitySearch.class).putExtra(AppConstant.START_DATE, "")
+                            .putExtra(AppConstant.END_DATE, "")
                             .putExtra(AppConstant.NO_OF_ROOM, 1)
                             .putExtra(AppConstant.NO_OF_ADULT, adultCount)
                             .putExtra(AppConstant.NO_OF_CHILD, childCount));
@@ -178,10 +180,9 @@ public class FragmentHome extends BaseFragment {
                     public void onSelect(String date, boolean isCurrentDate) {
                         Calendar tempDate = formatDate(date);
                         if (tempDate != null) {
-                            startDate = date;
-                            String labelSY = parseMonth(tempDate.get(Calendar.MONTH) + 1) + " " + tempDate.get(Calendar.YEAR);
-                            ((TextView) mView.findViewById(R.id.tv_s_month_year)).setText(labelSY);
-                            tvStartDate.setText(parseDay(tempDate.get(Calendar.DAY_OF_WEEK)) + "\n" + tempDate.get(Calendar.DATE));
+                            isSDateSelected = true;
+                            PreferencesUtils.putString(AppConstant.START_DATE, date);
+                            tvStartDate.setText(date);
 
                         } else {
                             Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();
@@ -200,10 +201,9 @@ public class FragmentHome extends BaseFragment {
                     public void onSelect(String date, boolean isCurrentDate) {
                         Calendar tempDate = formatDate(date);
                         if (tempDate != null) {
-                            endDate = date;
-                            String labelSY = parseMonth(tempDate.get(Calendar.MONTH) + 1) + " " + tempDate.get(Calendar.YEAR);
-                            ((TextView) mView.findViewById(R.id.tv_e_month_year)).setText(labelSY);
-                            tvEndDate.setText(parseDay(tempDate.get(Calendar.DAY_OF_WEEK)) + "\n" + tempDate.get(Calendar.DATE));
+                            isEDateSelected = true;
+                            PreferencesUtils.putString(AppConstant.END_DATE, date);
+                            tvEndDate.setText(date);
 
                         } else {
                             Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();
@@ -214,62 +214,25 @@ public class FragmentHome extends BaseFragment {
         });
 
 
-        mView.findViewById(R.id.iv_a_minus).setOnClickListener(new View.OnClickListener() {
+        mView.findViewById(R.id.tv_room_adult).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (adultCount > 1) {
-                    adultCount--;
-                }
-                tvACount.setText("" + adultCount);
-            }
-        });
-        mView.findViewById(R.id.iv_a_plus).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (adultCount < 4) {
-                    adultCount++;
-                }
-                tvACount.setText("" + adultCount);
-
+                startActivityForResult(new Intent(getActivity(), ActivitySelect.class), 1001);
             }
         });
 
-
-        mView.findViewById(R.id.iv_c_minus).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (childCount > 0) {
-                    childCount--;
-
-                }
-                tvCount.setText("" + childCount);
-            }
-        });
-        mView.findViewById(R.id.tv_c_plus).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (childCount < 4) {
-                    childCount++;
-                }
-                tvCount.setText("" + childCount);
-
-            }
-        });
-
-        mView.findViewById(R.id.tv_add_another_room).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "add another room", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private boolean validate() {
-        if (startDate.equalsIgnoreCase("")) {
+        if (!isLocationSelected) {
+            Toast.makeText(mView.getContext(), "Please select location", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!isSDateSelected) {
             Toast.makeText(mView.getContext(), "Please select start date", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (endDate.equalsIgnoreCase("")) {
+        if (!isEDateSelected) {
             Toast.makeText(mView.getContext(), "Please select end date", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -291,16 +254,6 @@ public class FragmentHome extends BaseFragment {
             public void onSuccess(Call<OfferResponse> call, OfferResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200") && response.getResult() != null) {
                     offerAdapter.setmList(response);
-                    /*Picasso.get()
-                            .load("https://obaazo.com//assets/img/home_1/beach-blue.jpg")
-*//*
-                            .load(response.getBackgroundimage().replaceAll("/\\z", ""))
-*//*
-                            .error(R.drawable.ic_hotel_place_holder)
-                            .placeholder(R.drawable.ic_hotel_place_holder)
-                            .into(((ImageView) mView.findViewById(R.id.app_banner)));*/
-
-
                 } else {
                     Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
@@ -375,7 +328,12 @@ public class FragmentHome extends BaseFragment {
             if (resultCode == Activity.RESULT_OK) {
                 com.google.android.gms.location.places.Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 try {
+                    isLocationSelected = true;
                     etPlace.setText((String) place.getAddress());
+                    PreferencesUtils.putDouble(AppConstant.B_LATITUDE, place.getLatLng().latitude);
+                    PreferencesUtils.putDouble(AppConstant.B_LONGITUDE, place.getLatLng().longitude);
+                    PreferencesUtils.putString(AppConstant.B_LOCATION, String.valueOf(place.getAddress()));
+
                    /* findViewById(R.id.btn_set_address).setVisibility(View.VISIBLE);
                     latitude = place.getLatLng().latitude;
                     longitude = place.getLatLng().longitude;

@@ -15,6 +15,7 @@ import com.ansh.obaazo.resources.response.HotelSearchResponse;
 import com.ansh.obaazo.resources.service.HotelSearchService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.DateUtils;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.topSheet.TopSheetDialog;
@@ -49,6 +50,7 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void initView() {
+        initCustomToolbar();
 
         rvHotelList = findViewById(R.id.rv_hotel_list);
         rvHotelList.setLayoutManager(new LinearLayoutManager(ActivitySearch.this));
@@ -59,12 +61,14 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void initListener() {
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                startActivity(new Intent(ActivitySearch.this, ActivitySearchByName.class));
             }
         });
+
+        ((TextView) findViewById(R.id.tv_title)).setText(PreferencesUtils.getString(AppConstant.B_LOCATION));
 
 
         findViewById(R.id.fb_filter).setOnClickListener(new View.OnClickListener() {
@@ -119,10 +123,10 @@ public class ActivitySearch extends BaseActivity {
                 .show();
         // showLoadingDialog();
         HotelSearchRequest request = new HotelSearchRequest();
-        request.setCheckInDate(startDate);    //       28.5355; 77.3910; "09/2/2018";*/"09/2/2018";*/
-        request.setCheckOutDate(endDate);
-        request.setLatitude(28.5355);
-        request.setLongitude(77.3910);
+        request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));    //       28.5355; 77.3910; "09/2/2018";*/"09/2/2018";*/
+        request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
+        request.setLatitude(PreferencesUtils.getDouble(AppConstant.B_LATITUDE));
+        request.setLongitude(PreferencesUtils.getDouble(AppConstant.B_LONGITUDE));
         new HotelSearchService(this).execute(request, new ApiCallback<HotelSearchResponse>() {
             @Override
             public void onSuccess(Call<HotelSearchResponse> call, HotelSearchResponse response) {

@@ -21,8 +21,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -154,21 +156,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void bindDataWithUi();
 
-/*    public void initCustomToolbar() {
+    public void initCustomToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.setTitle(setToolbarName());
-            //   toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_back));
+              toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_back));
 
         }
-       *//* ImageView toolbarLogo = toolbar.findViewById(R.id.iv_toolbar_logo);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.dp_146), (int) getResources().getDimension(R.dimen.dp_56));
-        lp.setMargins(0, 0, (int) getResources().getDimension(R.dimen.dp_56), 0);
-        toolbarLogo.setLayoutParams(lp);*//*
-    }*/
+    }
 
     /**
      * show Progress Dialog

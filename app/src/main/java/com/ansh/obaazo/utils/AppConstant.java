@@ -19,5 +19,16 @@ public class AppConstant {
     public static final String HOTEL_DETAILS = "hotel_details";
     public static final String BOOK_ROOM = "book_room";
     public static final String HOTEL_ID = "hotel_id";
+
+
+    public static final String BOOKING_DETAILS = "booking_details_main";
+
+    public static final String B_DATE = "booking_date";
+    public static final String S_DATE = "start_date";
+    public static final String E_DATE = "end_date";
+    public static final String B_LATITUDE = "latitude";
+    public static final String B_LONGITUDE = "longitude";
+    public static final String B_LOCATION = "booking_location";
+
 }
 

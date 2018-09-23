@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ns_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ece9e9"
     tools:context=".activity.MainActivity">
 
     <RelativeLayout
@@ -20,7 +20,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_place_holer" />
+            app:srcCompat="@drawable/ic_place_holer" />
 
         <View
             android:layout_width="match_parent"
@@ -30,14 +30,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_32sdp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="BOOK YOUR STAY"
                 android:textColor="@android:color/white"
@@ -48,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-5dp"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="CHOOSE FROM 400+ BUDGET HOTEL IN INDIA"
                 android:textColor="@android:color/white"
@@ -58,10 +58,7 @@
                 android:id="@+id/cb_top"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:divider="@android:color/transparent">
+                android:layout_marginTop="@dimen/_10sdp">
 
                 <TextView
                     android:id="@+id/et_place"
@@ -73,6 +70,7 @@
                     android:background="#00000000"
                     android:drawableLeft="@drawable/ic_location"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:fontFamily="sans-serif"
                     android:gravity="center_vertical"
                     android:hint="City,Location,and Landmark"
                     android:textSize="@dimen/_10sdp" />
@@ -82,12 +80,17 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardUseCompatPadding="true"
+                card_view:cardCornerRadius="@dimen/_2sdp"
+                card_view:cardElevation="@dimen/_2sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@drawable/shadwo"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_2sdp">
 
                     <include layout="@layout/row_date_time" />
 
@@ -110,16 +113,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Offers" />
+                    android:fontFamily="sans-serif"
+                    android:text="Offers"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_alignParentRight="true"
+
+                    android:fontFamily="sans-serif"
                     android:text="View All"
-                    android:visibility="visible"
-                    android:textColor="@color/orange" />
+                    android:textColor="@color/orange"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -134,18 +142,22 @@
                 android:padding="@dimen/_10sdp">
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Trending Hotel" />
+                    android:fontFamily="sans-serif"
+                    android:text="Trending Hotel"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:fontFamily="sans-serif"
                     android:text="View all"
-                    android:visibility="invisible"
-                    android:textColor="@color/orange" />
+                    android:textColor="@color/orange"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -153,7 +165,7 @@
                 android:id="@+id/rv_trending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_40sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
     </RelativeLayout>

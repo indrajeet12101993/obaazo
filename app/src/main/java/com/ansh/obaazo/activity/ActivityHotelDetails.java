@@ -59,6 +59,7 @@ public class ActivityHotelDetails extends BaseActivity {
 
     @Override
     protected void initView() {
+        initCustomToolbar();
         bindIntentData();
 
 
@@ -94,17 +95,12 @@ public class ActivityHotelDetails extends BaseActivity {
 
     @Override
     protected void initListener() {
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+
 
         findViewById(R.id.btn_select_room).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class).putExtra(AppConstant.HOTEL_ID,  hotelDetails.getHotel_id()
+                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class).putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id()
                 ));
             }
         });
@@ -113,14 +109,14 @@ public class ActivityHotelDetails extends BaseActivity {
         findViewById(R.id.tv_question).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SimpleDialog(ActivityHotelDetails.this,"Question",hotelDetails.getTour_policy()).show();
+                new SimpleDialog(ActivityHotelDetails.this, "Question", hotelDetails.getTour_policy()).show();
             }
         });
 
         findViewById(R.id.tv_policy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SimpleDialog(ActivityHotelDetails.this,"Hotel Policy and Rules",hotelDetails.getTour_policy()).show();
+                new SimpleDialog(ActivityHotelDetails.this, "Hotel Policy and Rules", hotelDetails.getTour_policy()).show();
             }
         });
 

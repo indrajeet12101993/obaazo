@@ -3,17 +3,17 @@
     <item
 
         android:id="@+id/nav_bottom_search"
-        android:icon="@drawable/ic_nav_bottom_search_a"
+        android:icon="@drawable/ic_search_nav"
         android:title="Search" />
 
     <item
         android:id="@+id/nav_bottom_cash"
-        android:icon="@drawable/ic_bottom_notification"
-        android:title="Cash" />
+        android:icon="@drawable/ic_cash_u"
+        android:title="Obaazzo Money" />
 
     <item
         android:id="@+id/nav_bottom_profile"
-        android:icon="@drawable/ic_bottom_profile"
+        android:icon="@drawable/ic_profile_bottom_u"
         android:title="Profile" />
 
 </menu>

@@ -31,5 +31,6 @@ public class AppConstant {
     public static final String B_LOCATION = "booking_location";
 
     public static final String IMAGES = "images";
+    public static final String POSITION = "position";
 }
 

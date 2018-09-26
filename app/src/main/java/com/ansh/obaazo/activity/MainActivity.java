@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
@@ -23,6 +26,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         // addFragment(new FragmentHome(), R.id.fm_main);
 
@@ -36,6 +42,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initView() {
+
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setItemIconTintList(null);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -48,7 +55,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             //  toolbar.setTitle(setToolbarName());
-            //  toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_nav_menu));
+           //  toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_dehaze));
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

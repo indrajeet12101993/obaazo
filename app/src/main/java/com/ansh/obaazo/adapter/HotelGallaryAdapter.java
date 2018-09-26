@@ -42,7 +42,7 @@ public class HotelGallaryAdapter extends RecyclerView.Adapter<HotelGallaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         HotelImageResponse.ResultBean images = mHotelImage.getResult().get(holder.getAdapterPosition());
         Picasso.get()
                 .load(images.getImage_n())
@@ -56,7 +56,7 @@ public class HotelGallaryAdapter extends RecyclerView.Adapter<HotelGallaryAdapte
         holder.itemView.findViewById(R.id.ll_hotel_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, ZoomImageViewActivity.class).putExtra(AppConstant.IMAGES, mHotelImage));
+                mContext.startActivity(new Intent(mContext, ZoomImageViewActivity.class).putExtra(AppConstant.IMAGES, mHotelImage).putExtra(AppConstant.POSITION, holder.getAdapterPosition()));
             }
         });
 

@@ -2,6 +2,8 @@ package com.ansh.obaazo.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.ansh.obaazo.R;
@@ -20,6 +22,7 @@ public class ActivityBookRoom extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 

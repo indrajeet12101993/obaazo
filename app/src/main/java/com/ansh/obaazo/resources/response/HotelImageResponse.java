@@ -1,10 +1,13 @@
 package com.ansh.obaazo.resources.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ansh.obaazo.web.ApiResponse;
 
 import java.util.ArrayList;
 
-public class HotelImageResponse extends ApiResponse {
+public class HotelImageResponse extends ApiResponse implements Parcelable {
 
 
     /**
@@ -41,7 +44,7 @@ public class HotelImageResponse extends ApiResponse {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Parcelable {
         /**
          * id : 118
          * image_n : http://obaazo.com/vendor/images/users/145845726.jpg
@@ -105,5 +108,78 @@ public class HotelImageResponse extends ApiResponse {
         public void setRoom_id(String room_id) {
             this.room_id = room_id;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.image_n);
+            dest.writeString(this.vendor_id);
+            dest.writeString(this.hotel_id);
+            dest.writeString(this.image_name);
+            dest.writeString(this.room_id);
+        }
+
+        public ResultBean() {
+        }
+
+        protected ResultBean(Parcel in) {
+            this.id = in.readString();
+            this.image_n = in.readString();
+            this.vendor_id = in.readString();
+            this.hotel_id = in.readString();
+            this.image_name = in.readString();
+            this.room_id = in.readString();
+        }
+
+        public static final Creator<ResultBean> CREATOR = new Creator<ResultBean>() {
+            @Override
+            public ResultBean createFromParcel(Parcel source) {
+                return new ResultBean(source);
+            }
+
+            @Override
+            public ResultBean[] newArray(int size) {
+                return new ResultBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.response_code);
+        dest.writeString(this.response_message);
+        dest.writeList(this.result);
+    }
+
+    public HotelImageResponse() {
+    }
+
+    protected HotelImageResponse(Parcel in) {
+        this.response_code = in.readString();
+        this.response_message = in.readString();
+        this.result = new ArrayList<ResultBean>();
+        in.readList(this.result, ResultBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<HotelImageResponse> CREATOR = new Parcelable.Creator<HotelImageResponse>() {
+        @Override
+        public HotelImageResponse createFromParcel(Parcel source) {
+            return new HotelImageResponse(source);
+        }
+
+        @Override
+        public HotelImageResponse[] newArray(int size) {
+            return new HotelImageResponse[size];
+        }
+    };
 }

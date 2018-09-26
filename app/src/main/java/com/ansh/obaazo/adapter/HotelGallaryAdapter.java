@@ -1,6 +1,7 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.activity.ZoomImageViewActivity;
 import com.ansh.obaazo.resources.response.HotelImageResponse;
+import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
@@ -50,6 +52,13 @@ public class HotelGallaryAdapter extends RecyclerView.Adapter<HotelGallaryAdapte
                 .error(R.drawable.ic_hotel_place_holder)
                 .centerInside()
                 .into(holder.ivImage);
+
+        holder.itemView.findViewById(R.id.ll_hotel_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ZoomImageViewActivity.class).putExtra(AppConstant.IMAGES, mHotelImage));
+            }
+        });
 
     }
 

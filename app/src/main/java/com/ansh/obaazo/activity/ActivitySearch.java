@@ -3,7 +3,9 @@ package com.ansh.obaazo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -61,6 +63,13 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void initListener() {
+
+        findViewById(R.id.iv_short).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup(view);
+            }
+        });
         findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,4 +159,11 @@ public class ActivitySearch extends BaseActivity {
         });
     }
 
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.popup_menu, popup.getMenu());
+        popup.show();
+    }
 }

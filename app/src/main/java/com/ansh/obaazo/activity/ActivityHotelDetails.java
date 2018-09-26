@@ -152,7 +152,7 @@ public class ActivityHotelDetails extends BaseActivity {
 
             ((TextView) findViewById(R.id.tv_hotel_name)).setText(hotelDetails.getHotel_name());
             ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getHotel_actual_price());
-            ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(Float.parseFloat(hotelDetails.getRating()));
+            ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(Float.parseFloat((TextUtils.isEmpty(hotelDetails.getRating())?"0.0":hotelDetails.getRating())));
             ((TextView) findViewById(R.id.tv_rating)).setText(hotelDetails.getRating() + "/5");
             ((TextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getServices());
 

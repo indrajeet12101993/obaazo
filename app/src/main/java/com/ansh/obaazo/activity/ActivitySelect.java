@@ -85,7 +85,7 @@ public class ActivitySelect extends BaseActivity {
         findViewById(R.id.iv_a_plus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (info.adultCount < 4) {
+                if (info.adultCount < 4 && validPersonCount()) {
                     info.adultCount++;
                 }
                 ((TextView) findViewById(R.id.tv_adult_count)).setText("" + info.adultCount);
@@ -97,6 +97,7 @@ public class ActivitySelect extends BaseActivity {
             public void onClick(View view) {
                 if (info.getChild().size() > 0) {
                     info.getChild().remove(info.getChild().size() - 1);
+                    childAdapter.notifyDataSetChanged();
                 }
                 ((TextView) findViewById(R.id.tv_child_count)).setText("" + info.getChild().size());
             }
@@ -105,7 +106,7 @@ public class ActivitySelect extends BaseActivity {
         findViewById(R.id.iv_c_plus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (info.getChild().size() < 4) {
+                if (info.getChild().size() < 4 && validPersonCount()) {
                     info.getChild().add("12 years");
                     childAdapter.notifyDataSetChanged();
                 }
@@ -173,5 +174,14 @@ public class ActivitySelect extends BaseActivity {
                 ivRemove = itemView.findViewById(R.id.iv_remove);
             }
         }
+    }
+
+
+    public boolean validPersonCount() {
+        if (info.getChild().size() + info.getAdultCount() == 4) {
+            return false;
+        }
+
+        return true;
     }
 }

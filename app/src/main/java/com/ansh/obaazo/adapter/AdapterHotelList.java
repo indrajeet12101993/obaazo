@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -123,7 +125,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                     .into(ivHotelImage);
 
             tvHotelName.setText(bean.getHotel_name());
-            rbHotelRating.setRating(Float.parseFloat(bean.getRating()));
+            rbHotelRating.setRating(Float.parseFloat((TextUtils.isEmpty(bean.getRating()) ? "0.0" : bean.getRating())));
             tvRating.setText(bean.getRating() + "/5");
             if (bean.getDistance() != 0) {
                 tvDistance.setText(format.format(bean.getDistance()) + " KM");
@@ -132,4 +134,5 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
 
         }
     }
+
 }

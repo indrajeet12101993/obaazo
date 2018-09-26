@@ -31,7 +31,7 @@ import com.ansh.obaazo.resources.response.TrendingHotelResponse;
 import com.ansh.obaazo.resources.service.OfferService;
 import com.ansh.obaazo.resources.service.TrendingHotelService;
 import com.ansh.obaazo.utils.AppConstant;
-import com.ansh.obaazo.utils.BitmapTransform;
+import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
@@ -45,9 +45,6 @@ import java.util.Calendar;
 
 import retrofit2.Call;
 
-import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
-import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
-import static com.ansh.obaazo.utils.AppConstant.size;
 import static com.ansh.obaazo.utils.DateUtils.formatDate;
 
 /**
@@ -86,7 +83,7 @@ public class FragmentHome extends BaseFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_home_2, container, false);
+        mView = inflater.inflate(R.layout.fragment_home, container, false);
         init();
         return mView;
     }
@@ -95,9 +92,7 @@ public class FragmentHome extends BaseFragment {
     protected void initView() {
         Picasso.get()
                 .load("https://obaazo.com/assets//img/home_1/beach-blue.jpg")
-                .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
-                .resize(size, size)
-                .centerInside()
+                .resize(300, 300)
                 .error(R.drawable.ic_hotel_place_holder)
                 .placeholder(R.drawable.ic_hotel_place_holder)
                 .into(((ImageView) mView.findViewById(R.id.app_banner)));
@@ -182,7 +177,7 @@ public class FragmentHome extends BaseFragment {
                         if (tempDate != null) {
                             isSDateSelected = true;
                             PreferencesUtils.putString(AppConstant.START_DATE, date);
-                            tvStartDate.setText(date);
+                            tvStartDate.setText(DateUtils.parseDate(date));
 
                         } else {
                             Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();
@@ -203,7 +198,8 @@ public class FragmentHome extends BaseFragment {
                         if (tempDate != null) {
                             isEDateSelected = true;
                             PreferencesUtils.putString(AppConstant.END_DATE, date);
-                            tvEndDate.setText(date);
+                            //  tvEndDate.setText(formatter.format(date));
+                            tvEndDate.setText(DateUtils.parseDate(date));
 
                         } else {
                             Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();

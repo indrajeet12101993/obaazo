@@ -36,6 +36,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="BOOK YOUR STAY"
@@ -54,28 +55,6 @@
                 android:textSize="@dimen/_9sdp"
                 android:textStyle="bold" />
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cb_top"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_10sdp">
-
-                <TextView
-                    android:id="@+id/et_place"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:background="#00000000"
-                    android:drawableLeft="@drawable/ic_location"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center_vertical"
-                    android:hint="City,Location,and Landmark"
-                    android:textSize="@dimen/_10sdp" />
-
-            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -88,11 +67,49 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shadwo"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
-                    <include layout="@layout/row_date_time" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:fontFamily="sans-serif"
+                        android:text="Search any area landmark or Hotel"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/et_place"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:fontFamily="sans-serif"
+                            android:gravity="center_vertical"
+                            android:text="Select Location"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_16sdp" />
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:padding="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_my_location" />
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -100,7 +117,25 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="#e9e7e7" />
 
-                    <include layout="@layout/row_room" />
+                    <include layout="@layout/row_date_time_2" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="#e9e7e7" />
+
+                    <Button
+                        android:id="@+id/btn_search"
+                        android:layout_width="@dimen/_200sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@drawable/shape_orange"
+                        android:text="Search"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

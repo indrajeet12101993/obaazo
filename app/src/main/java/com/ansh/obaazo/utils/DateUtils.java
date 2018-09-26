@@ -71,4 +71,17 @@ public class DateUtils {
         return "";
     }
 
+
+    public static String parseDate(String date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date parse = simpleDateFormat.parse(date);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+            return formatter.format(parse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
 }

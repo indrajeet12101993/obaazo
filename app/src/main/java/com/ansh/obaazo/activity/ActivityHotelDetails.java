@@ -24,6 +24,7 @@ import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
+import com.ansh.obaazo.widget.AminityDialog;
 import com.ansh.obaazo.widget.SimpleDialog;
 import com.ansh.obaazo.widget.topSheet.TopSheetDialog;
 import com.squareup.picasso.Picasso;
@@ -81,7 +82,7 @@ public class ActivityHotelDetails extends BaseActivity {
         rvHotelGallery = findViewById(R.id.rv_hotel_gallery);
         rvHotelGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvHotelGallery.setNestedScrollingEnabled(false);
-        galleryAdapter = new HotelGallaryAdapter(this, new HotelImageResponse());
+        galleryAdapter = new HotelGallaryAdapter(this, new HotelImageResponse(), hotelDetails.getHotel_name());
         rvHotelGallery.setAdapter(galleryAdapter);
 
 
@@ -101,12 +102,20 @@ public class ActivityHotelDetails extends BaseActivity {
     @Override
     protected void initListener() {
 
+        findViewById(R.id.tv_view_all).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AminityDialog(ActivityHotelDetails.this, "Amenities", hotelDetails.getHotel_amenties1().split(",")).show();
+            }
+        });
+
 
         findViewById(R.id.btn_select_room).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class).putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id()
-                ));
+                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class)
+                        .putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id())
+                        .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
             }
         });
 
@@ -157,7 +166,7 @@ public class ActivityHotelDetails extends BaseActivity {
 
             ((TextView) findViewById(R.id.tv_hotel_name)).setText(hotelDetails.getHotel_name());
             ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getHotel_actual_price());
-            ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(Float.parseFloat((TextUtils.isEmpty(hotelDetails.getRating())?"0.0":hotelDetails.getRating())));
+            ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(Float.parseFloat((TextUtils.isEmpty(hotelDetails.getRating()) ? "0.0" : hotelDetails.getRating())));
             ((TextView) findViewById(R.id.tv_rating)).setText(hotelDetails.getRating() + "/5");
             ((TextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getServices());
 

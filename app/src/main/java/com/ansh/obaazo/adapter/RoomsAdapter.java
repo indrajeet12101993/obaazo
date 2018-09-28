@@ -1,7 +1,6 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,9 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
-import com.ansh.obaazo.activity.ActivityBookRoom;
+import com.ansh.obaazo.listener.IItemClick;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
-import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.squareup.picasso.Picasso;
 
@@ -26,11 +24,13 @@ import static com.ansh.obaazo.utils.AppConstant.size;
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHolder> {
     private Context mContext;
     private HotelRoomResponse mData;
+    private IItemClick<HotelRoomResponse.ResultBean> mListener;
 
 
-    public RoomsAdapter(Context mContext, HotelRoomResponse mData) {
+    public RoomsAdapter(Context mContext, HotelRoomResponse mData, IItemClick<HotelRoomResponse.ResultBean> mListener) {
         this.mContext = mContext;
         this.mData = mData;
+        this.mListener = mListener;
     }
 
 
@@ -51,7 +51,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         holder.btnRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, ActivityBookRoom.class).putExtra(AppConstant.BOOK_ROOM, mData.getResult().get(holder.getAdapterPosition())));
+                mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()));
             }
         });
 
@@ -94,4 +94,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             tvRoomType.setText(bean.getRoom_type());
         }
     }
+
+
 }

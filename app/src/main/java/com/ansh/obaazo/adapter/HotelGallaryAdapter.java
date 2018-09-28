@@ -21,12 +21,14 @@ import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 import static com.ansh.obaazo.utils.AppConstant.size;
 
 public class HotelGallaryAdapter extends RecyclerView.Adapter<HotelGallaryAdapter.ViewHolder> {
+    private String hotelName;
     private Context mContext;
     private HotelImageResponse mHotelImage;
 
-    public HotelGallaryAdapter(Context mContext, HotelImageResponse mHotelImage) {
+    public HotelGallaryAdapter(Context mContext, HotelImageResponse mHotelImage, String hotelName) {
         this.mContext = mContext;
         this.mHotelImage = mHotelImage;
+        this.hotelName = hotelName;
     }
 
 
@@ -56,7 +58,10 @@ public class HotelGallaryAdapter extends RecyclerView.Adapter<HotelGallaryAdapte
         holder.itemView.findViewById(R.id.ll_hotel_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, ZoomImageViewActivity.class).putExtra(AppConstant.IMAGES, mHotelImage).putExtra(AppConstant.POSITION, holder.getAdapterPosition()));
+                mContext.startActivity(new Intent(mContext, ZoomImageViewActivity.class)
+                        .putExtra(AppConstant.IMAGES, mHotelImage)
+                        .putExtra(AppConstant.HOTEL_DETAILS, hotelName)
+                        .putExtra(AppConstant.POSITION, holder.getAdapterPosition()));
             }
         });
 

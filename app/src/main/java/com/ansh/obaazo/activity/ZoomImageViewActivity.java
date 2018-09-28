@@ -25,6 +25,7 @@ public class ZoomImageViewActivity extends BaseActivity {
     private RecyclerView rvPhotoSlder;
     //  private RecyclerView rvImage;
     private ImageView ivImage;
+    private String hotelName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,10 @@ public class ZoomImageViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initCustomToolbar();
         mImages = getIntent().getParcelableExtra(AppConstant.IMAGES);
         int position = getIntent().getIntExtra(AppConstant.POSITION, 0);
+        hotelName = getIntent().getStringExtra(AppConstant.HOTEL_DETAILS);
+        initCustomToolbar();
 
 
         rvPhotoSlder = findViewById(R.id.rv_photo_slide);
@@ -66,6 +68,11 @@ public class ZoomImageViewActivity extends BaseActivity {
         ImageAdapter imageAdapter = new ImageAdapter();
         rvImage.setAdapter(imageAdapter);*/
 
+    }
+
+    @Override
+    public String setToolbarName() {
+        return hotelName;
     }
 
     @Override

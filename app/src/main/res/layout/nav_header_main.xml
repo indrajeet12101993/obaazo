@@ -11,12 +11,12 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_marginTop="@dimen/_10sdp"
         android:id="@+id/imageView"
         android:layout_width="@dimen/_76sdp"
         android:layout_height="@dimen/_76sdp"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_10sdp"
         android:contentDescription="@string/nav_header_desc"
         app:srcCompat="@drawable/ic_user_placeholder" />
 

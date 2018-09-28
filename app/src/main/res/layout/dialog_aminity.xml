@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/_260sdp"
+    android:layout_height="@dimen/_340sdp"
+    android:background="@drawable/shape_dialog"
+    android:minHeight="@dimen/_200sdp"
+    android:minWidth="@dimen/_180sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        android:lines="2"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:text="Amenities"
+        android:textColor="@color/mdtp_light_gray"
+        android:textSize="@dimen/_14sdp" />
+
+    <View
+        android:id="@+id/view_space"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:background="#cacac9" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_amenties"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_210sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:scrollbars="vertical" />
+
+
+    <ImageView
+        android:id="@+id/btn_close"
+        style="@style/Base.Widget.AppCompat.Button"
+        android:layout_width="@dimen/_66sdp"
+        android:layout_height="@dimen/_66sdp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/shape_btn_circle"
+        android:padding="@dimen/_15sdp"
+        app:srcCompat="@drawable/ic_done" />
+</LinearLayout>

@@ -2,11 +2,11 @@ package com.ansh.obaazo.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
@@ -19,6 +19,9 @@ import static com.ansh.obaazo.utils.AppConstant.size;
 public class ActivityBookRoom extends BaseActivity {
     HotelRoomResponse.ResultBean roomDetails;
     private ImageView ivRoomImage;
+    private TextView tvHotelName;
+    private TextView tvAddress;
+    private HotelInfo hotelDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,12 @@ public class ActivityBookRoom extends BaseActivity {
 
     @Override
     protected void initView() {
+        initCustomToolbar();
         roomDetails = getIntent().getParcelableExtra(AppConstant.BOOK_ROOM);
+        hotelDetails = getIntent().getParcelableExtra(AppConstant.HOTEL_DETAILS);
         ivRoomImage = findViewById(R.id.iv_hotel_image);
+        tvHotelName = findViewById(R.id.tv_hotel_name);
+        tvAddress = findViewById(R.id.tv_address);
 
     }
 
@@ -54,6 +61,11 @@ public class ActivityBookRoom extends BaseActivity {
                     .error(R.drawable.ic_place_holer)
                     .placeholder(R.drawable.ic_place_holer)
                     .into(ivRoomImage);
+
+
+
+            tvHotelName.setText(hotelDetails.getHotel_name());
+            tvAddress.setText(hotelDetails.getAddress());
 
         }
 

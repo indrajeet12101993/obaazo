@@ -241,11 +241,14 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
-                    android:layout_alignParentEnd="true"
+                    android:id="@+id/tv_view_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
-                    android:layout_margin="@dimen/_10sdp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:fontFamily="sans-serif"
+                    android:padding="@dimen/_10sdp"
                     android:text="View All" />
             </RelativeLayout>
 
@@ -310,6 +313,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp">
 
@@ -330,10 +334,10 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_2sdp"
-                android:src="@drawable/ic_top_search" />
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_top_search" />
 
             <ImageView
                 android:layout_width="wrap_content"

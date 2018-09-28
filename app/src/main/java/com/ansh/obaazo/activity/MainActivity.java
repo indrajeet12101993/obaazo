@@ -1,17 +1,20 @@
 package com.ansh.obaazo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
@@ -23,6 +26,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private BottomNavigationView navigation;
+    private NavigationView navigationView;
+    private ImageView ivUserImage;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +61,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             //  toolbar.setTitle(setToolbarName());
-           //  toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_dehaze));
+            //  toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_dehaze));
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -72,7 +78,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initListener() {
-
+        ivUserImage = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
+        ivUserImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigation.setSelectedItemId(R.id.nav_bottom_profile);
+                drawer.closeDrawer(Gravity.START);
+            }
+        });
     }
 
     @Override
@@ -108,10 +121,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.nav_my_booking:
+                startActivity(new Intent(MainActivity.this, ActivityMyBooking.class));
+                break;
+            case R.id.nav_my_review:
+                startActivity(new Intent(MainActivity.this, ActivityMyReview.class));
+                break;
+            case R.id.nav_rate_us:
+                Intent ishare = new Intent(Intent.ACTION_SEND);
+                ishare.setType("text/plain");
+                ishare.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.app_name) + " - http://play.google.com/store/apps/details?id=" + getPackageName());
+                startActivity(ishare);
+                break;
+            case R.id.nav_logout:
+                break;
 
-
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

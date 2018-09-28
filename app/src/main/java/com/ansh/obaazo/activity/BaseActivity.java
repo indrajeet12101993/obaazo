@@ -162,9 +162,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.setTitleTextColor(Color.WHITE);
             toolbar.setTitle(setToolbarName());
-              toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_back));
-
+            toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_back));
         }
     }
 

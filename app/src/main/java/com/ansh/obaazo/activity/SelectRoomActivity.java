@@ -1,5 +1,6 @@
 package com.ansh.obaazo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,8 @@ import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.RoomsAdapter;
+import com.ansh.obaazo.listener.IItemClick;
+import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
@@ -16,9 +19,11 @@ import com.ansh.obaazo.web.ApiException;
 
 import retrofit2.Call;
 
-public class SelectRoomActivity extends BaseActivity {
+public class SelectRoomActivity extends BaseActivity implements IItemClick<HotelRoomResponse.ResultBean> {
     private RecyclerView rvRooms;
     private RoomsAdapter roomsAdapter;
+    private HotelInfo hotelDetails;
+    private String hotelName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +37,21 @@ public class SelectRoomActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        hotelDetails = getIntent().getParcelableExtra(AppConstant.HOTEL_DETAILS);
+        hotelName = hotelDetails.getHotel_name();
+        initCustomToolbar();
         rvRooms = findViewById(R.id.rv_rooms);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
-        roomsAdapter = new RoomsAdapter(this, new HotelRoomResponse());
+        roomsAdapter = new RoomsAdapter(this, new HotelRoomResponse(), this);
         rvRooms.setAdapter(roomsAdapter);
         hitRoomApi();
 
 
+    }
+
+    @Override
+    public String setToolbarName() {
+        return hotelName;
     }
 
     private void hitRoomApi() {
@@ -75,5 +88,12 @@ public class SelectRoomActivity extends BaseActivity {
     @Override
     protected void bindDataWithUi() {
 
+    }
+
+    @Override
+    public void onItemClick(HotelRoomResponse.ResultBean been) {
+        startActivity(new Intent(this, ActivityBookRoom.class)
+                .putExtra(AppConstant.BOOK_ROOM, been)
+                .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
     }
 }

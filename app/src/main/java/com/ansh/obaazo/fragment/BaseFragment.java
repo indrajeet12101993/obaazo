@@ -1,5 +1,7 @@
 package com.ansh.obaazo.fragment;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -27,6 +29,17 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_base, container, false);
     }
 
+
+    public boolean hasPermission(String[] permission) {
+        for (String s : permission) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (PackageManager.PERMISSION_GRANTED != getActivity().checkSelfPermission(s)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public void init() {
         initView();

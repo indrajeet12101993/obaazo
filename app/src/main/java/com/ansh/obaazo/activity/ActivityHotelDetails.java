@@ -137,9 +137,9 @@ public class ActivityHotelDetails extends BaseActivity {
         tvBookingDates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TopSheetDialog dialog = new TopSheetDialog(ActivityHotelDetails.this);
+              /*  TopSheetDialog dialog = new TopSheetDialog(ActivityHotelDetails.this);
                 dialog.setContentView(R.layout.sheet_content);
-                dialog.show();
+                dialog.show();*/
             }
         });
 

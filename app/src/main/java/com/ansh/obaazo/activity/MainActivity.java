@@ -1,6 +1,7 @@
 package com.ansh.obaazo.activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,7 +21,9 @@ import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
 import com.ansh.obaazo.fragment.FragmentCash;
 import com.ansh.obaazo.fragment.FragmentHome;
+import com.ansh.obaazo.fragment.FragmentMyBooking;
 import com.ansh.obaazo.fragment.FragmentProfile;
+import com.ansh.obaazo.listener.LocationListener;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,16 +32,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private NavigationView navigationView;
     private ImageView ivUserImage;
     private DrawerLayout drawer;
+    private LocationListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
         // addFragment(new FragmentHome(), R.id.fm_main);
 
 
+    }
+
+
+    @Override
+    protected void onLocationFound(Location location) {
+        super.onLocationFound(location);
+        this.listener.onLocationFound(location);
+    }
+
+
+    public void setLocationListener(LocationListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -103,6 +117,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             navigation.getMenu().findItem(R.id.nav_bottom_search).setIcon((R.id.nav_bottom_search == item.getItemId()) ? R.drawable.ic_search_nav : R.drawable.ic_search_nav_u);
             navigation.getMenu().findItem(R.id.nav_bottom_cash).setIcon((R.id.nav_bottom_cash == item.getItemId()) ? R.drawable.ic_cash : R.drawable.ic_cash_u);
             navigation.getMenu().findItem(R.id.nav_bottom_profile).setIcon((R.id.nav_bottom_profile == item.getItemId()) ? R.drawable.ic_profile_bottom : R.drawable.ic_profile_bottom_u);
+            navigation.getMenu().findItem(R.id.nav_bottom_my_bookig).setIcon((R.id.nav_bottom_my_bookig == item.getItemId()) ? R.drawable.ic_my_booking_nav_a : R.drawable.ic_my_booking_nav);
+
             switch (item.getItemId()) {
                 case R.id.nav_bottom_search:
                     replaceFragment(new FragmentHome(), R.id.fm_main, false);
@@ -113,6 +129,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 case R.id.nav_bottom_profile:
                     replaceFragment(new FragmentProfile(), R.id.fm_main, false);
                     return true;
+                case R.id.nav_bottom_my_bookig:
+                    replaceFragment(new FragmentMyBooking(), R.id.fm_main, false);
+                    return true;
+
             }
             return false;
         }
@@ -122,9 +142,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_my_booking:
-                startActivity(new Intent(MainActivity.this, ActivityMyBooking.class));
-                break;
+         /*   case R.id.nav_my_booking:
+                startActivity(new Intent(MainActivity.this, ActivityMyBookingDetails.class));
+                break;*/
             case R.id.nav_my_review:
                 startActivity(new Intent(MainActivity.this, ActivityMyReview.class));
                 break;

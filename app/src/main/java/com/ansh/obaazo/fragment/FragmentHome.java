@@ -22,6 +22,7 @@ import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivitySearch;
 import com.ansh.obaazo.activity.ActivitySelect;
 import com.ansh.obaazo.activity.BaseActivity;
+import com.ansh.obaazo.activity.LocationActivity;
 import com.ansh.obaazo.adapter.OfferAdapter;
 import com.ansh.obaazo.adapter.TreandingAdapter;
 import com.ansh.obaazo.model.HotelInfo;
@@ -53,7 +54,7 @@ import static com.ansh.obaazo.utils.DateUtils.formatDate;
 public class FragmentHome extends BaseFragment {
 
     private static final String TAG = FragmentHome.class.getSimpleName();
-    private final int REQUEST_CODE_AUTOCOMPLETE = 1001;
+    private final int REQUEST_CODE_AUTOCOMPLETE = 1002;
     private View mView;
     private RecyclerView rvTreading;
     private RecyclerView rvOffer;
@@ -217,7 +218,14 @@ public class FragmentHome extends BaseFragment {
             }
         });
 
+        mView.findViewById(R.id.iv_current_location).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(getActivity(), LocationActivity.class), 1001);
+            }
+        });
     }
+
 
     private boolean validate() {
         if (!isLocationSelected) {
@@ -329,20 +337,25 @@ public class FragmentHome extends BaseFragment {
                     PreferencesUtils.putDouble(AppConstant.B_LATITUDE, place.getLatLng().latitude);
                     PreferencesUtils.putDouble(AppConstant.B_LONGITUDE, place.getLatLng().longitude);
                     PreferencesUtils.putString(AppConstant.B_LOCATION, String.valueOf(place.getAddress()));
-
-                   /* findViewById(R.id.btn_set_address).setVisibility(View.VISIBLE);
-                    latitude = place.getLatLng().latitude;
-                    longitude = place.getLatLng().longitude;
-                    placeName = (String) place.getAddress();
-                    tvLocation.setText(place.getAddress());*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Toast.makeText(getActivity(), "Failed to get Location", Toast.LENGTH_SHORT).show();
-                /*Status status = PlaceAutocomplete.getStatus(this, data);
-                Log.e(TAG, "Error: Status = " + status.toString());*/
             }
         }
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
+            isLocationSelected = true;
+            double latitude = data.getDoubleExtra(AppConstant.B_LATITUDE, 0);
+            double longitude = data.getDoubleExtra(AppConstant.B_LATITUDE, 0);
+            String location = data.getStringExtra(AppConstant.B_LOCATION);
+            PreferencesUtils.putDouble(AppConstant.B_LATITUDE, latitude);
+            PreferencesUtils.putDouble(AppConstant.B_LONGITUDE, longitude);
+            PreferencesUtils.putString(AppConstant.B_LOCATION, location);
+            etPlace.setText(location);
+
+        }
     }
+
+
 }

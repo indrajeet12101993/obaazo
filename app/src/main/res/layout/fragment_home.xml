@@ -103,10 +103,12 @@
                             android:textSize="@dimen/_16sdp" />
 
                         <ImageView
+                            android:id="@+id/iv_current_location"
                             android:layout_width="@dimen/_24sdp"
                             android:layout_height="@dimen/_24sdp"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_10sdp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
                             android:padding="@dimen/_5sdp"
                             app:srcCompat="@drawable/ic_my_location" />
                     </LinearLayout>
@@ -143,7 +145,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp">
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -151,8 +156,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Offers"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/_14sdp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_16sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,7 +178,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp">
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -182,8 +189,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Trending Hotel"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/_14sdp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_16sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"

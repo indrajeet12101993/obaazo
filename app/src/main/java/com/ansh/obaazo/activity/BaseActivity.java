@@ -316,30 +316,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
- /*   public void initFBConfig() {
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        mFirebaseRemoteConfig.fetch(cacheExpiration)
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            //    Toast.makeText(BaseActivity.this, "Fetch Succeeded", Toast.LENGTH_SHORT).show();
-                            mFirebaseRemoteConfig.activateFetched();
-                        } else {
-                            //   Toast.makeText(BaseActivity.this, "Fetch Failed", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-    }*/
-
- /*   public FirebaseRemoteConfig getmFirebaseRemoteConfig() {
-        return mFirebaseRemoteConfig;
-    }*/
 
     public void startLocationService() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -354,6 +330,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LocationSettingActivity.class);
         startActivityForResult(intent, REQUEST_CODE_LOCATION_SETTING);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -425,13 +402,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
                     @Override
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                        //  Toast.makeText(BaseActivity.this, "All location settings are satisfied.", Toast.LENGTH_SHORT).show();
-                        //noinspection MissingPermission
                         if (ActivityCompat.checkSelfPermission(BaseActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(BaseActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }
-                        mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                                mLocationCallback, Looper.myLooper());
+                        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                         //  updateUI();
                     }
                 })

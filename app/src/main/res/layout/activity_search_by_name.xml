@@ -9,14 +9,14 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        app:titleTextAppearance="@style/Toolbar.TitleText">
 
 
         <EditText
-            android:id="@+id/tv_title"
+            android:id="@+id/et_title"
             android:layout_width="@dimen/_160sdp"
             android:layout_height="wrap_content"
             android:background="#00000000"
@@ -57,8 +57,10 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hotel_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar" />
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/_10sdp" />
 
 </RelativeLayout>

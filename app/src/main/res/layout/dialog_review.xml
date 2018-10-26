@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/_250sdp"
+    android:layout_height="@dimen/_300sdp"
+    android:background="@drawable/shape_dialog"
+    android:gravity="center"
+    android:minHeight="@dimen/_200sdp"
+    android:minWidth="@dimen/_180sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:lines="2"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:text="Write a Review"
+        android:textSize="@dimen/_14sdp" />
+
+    <View
+        android:id="@+id/view_space"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/tv_msg"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:background="@color/greay" />
+
+    <LinearLayout
+        android:id="@+id/ll_Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_space"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RatingBar
+            android:id="@+id/rating_resto"
+            style="@style/RatingBar_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:max="5"
+            android:numStars="5"
+            android:theme="@style/RatingBar_normal" />
+
+
+        <EditText
+            android:id="@+id/et_rating"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="start"
+            android:background="@drawable/shape_review"
+            android:fontFamily="sans-serif"
+            android:gravity="start"
+            android:hint="Write a review"
+            android:inputType="text"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_10sdp" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/btn_submit"
+        style="@style/Base.Widget.AppCompat.Button"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/_20sdp"
+        android:background="@drawable/shape_btn_circle"
+        android:padding="@dimen/_15sdp"
+        app:srcCompat="@drawable/ic_done" />
+</RelativeLayout>

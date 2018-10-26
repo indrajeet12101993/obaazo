@@ -67,8 +67,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.ZoomImageViewActivity" />
-        <activity android:name=".activity.ActivityMyBooking" />
-        <activity android:name=".activity.ActivityMyReview"></activity>
+        <activity android:name=".activity.ActivityMyBookingDetails" />
+        <activity android:name=".activity.ActivityMyReview" />
+        <activity android:name=".activity.LocationActivity"></activity>
     </application>
 
 </manifest>

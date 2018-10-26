@@ -1,22 +1,20 @@
 package com.ansh.obaazo.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivityHotelDetails;
-import com.ansh.obaazo.activity.ActivitySearch;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
@@ -42,7 +40,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
     private int roomCount;
     private DecimalFormat format = new DecimalFormat("#.#");
 
-    public AdapterHotelList(ActivitySearch mContext, ArrayList<HotelInfo> mList) {
+    public AdapterHotelList(Activity mContext, ArrayList<HotelInfo> mList) {
         this.mContext = mContext;
         this.mList = mList;
 
@@ -101,6 +99,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
         private ImageView ivHotelImage;
         private TextView tvHotelName;
         private TextView tvDistance;
+        private TextView tvAddress;
 
 
         public ViewHolder(View itemView) {
@@ -111,6 +110,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             rbHotelRating = itemView.findViewById(R.id.rb_rating);
             tvRating = itemView.findViewById(R.id.tv_rating);
             tvDistance = itemView.findViewById(R.id.tv_distance);
+            tvAddress = itemView.findViewById(R.id.tv_address);
         }
 
         public void bindData(HotelInfo bean) {
@@ -127,6 +127,8 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvHotelName.setText(bean.getHotel_name());
             rbHotelRating.setRating(Float.parseFloat((TextUtils.isEmpty(bean.getRating()) ? "0.0" : bean.getRating())));
             tvRating.setText(bean.getRating() + "/5");
+            String[] split = bean.getAddress().split(",");
+            tvAddress.setText((split.length != 0 ? split[0] : ""));
             if (bean.getDistance() != 0) {
                 tvDistance.setText(format.format(bean.getDistance()) + " KM");
             }

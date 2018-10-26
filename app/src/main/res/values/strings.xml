@@ -12,4 +12,7 @@
 
 
     <string name="top_sheet_behavior" translatable="false">com.ansh.obaazo.widget.topSheet.TopSheetBehavior</string>
+    <string name="permission_rationale" />
+    <string name="permission_denied_explanation">dfafa</string>
+    <string name="settings">safafa</string>
 </resources>

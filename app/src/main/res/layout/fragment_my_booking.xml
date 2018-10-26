@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragment.FragmentCash">
+    android:animateLayoutChanges="true"
+    tools:context=".fragment.FragmentMyBooking">
 
     <TextView
         android:id="@+id/tv_title"
@@ -13,15 +13,22 @@
         android:background="@color/colorPrimary"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Obaazo Cash"
+        android:text="My Booking"
         android:textColor="@color/mdtp_white"
         android:textSize="@dimen/_14sdp" />
 
-    <TextView
+    <ImageView
+        android:id="@+id/iv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/img_no_data_found" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_my_booking"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Cash"
-        android:textSize="@dimen/_22sdp" />
+        android:layout_below="@id/tv_title" />
 
-</LinearLayout>
+
+</RelativeLayout>

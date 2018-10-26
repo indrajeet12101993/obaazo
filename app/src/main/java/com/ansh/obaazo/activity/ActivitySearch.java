@@ -59,6 +59,7 @@ public class ActivitySearch extends BaseActivity {
         adapterHotelList = new AdapterHotelList(this, mList);
         rvHotelList.setAdapter(adapterHotelList);
 
+
     }
 
     @Override
@@ -90,9 +91,9 @@ public class ActivitySearch extends BaseActivity {
         findViewById(R.id.ll_booking_date).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TopSheetDialog dialog = new TopSheetDialog(ActivitySearch.this);
+               /* TopSheetDialog dialog = new TopSheetDialog(ActivitySearch.this);
                 dialog.setContentView(R.layout.sheet_content);
-                dialog.show();
+                dialog.show();*/
             }
         });
 

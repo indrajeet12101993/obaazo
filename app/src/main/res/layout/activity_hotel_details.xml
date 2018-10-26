@@ -272,7 +272,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:text="Review"
+                android:text="STANDARD CANCELLATION POLICY"
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
@@ -288,7 +288,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:text="Children and Extra Beds"
+                android:text="HOTEL SERVICES"
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
@@ -305,7 +305,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:text="Hotel Policy and Rules"
+                android:text="TERMS AND CONDITIONS"
                 android:textSize="@dimen/_14sdp" />
 
         </LinearLayout>

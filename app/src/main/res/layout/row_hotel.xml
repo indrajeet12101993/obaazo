@@ -8,7 +8,8 @@
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginRight="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_2sdp"
-    app:cardElevation="@dimen/_2sdp">
+    app:cardElevation="@dimen/_2sdp"
+    app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,20 +32,10 @@
             android:paddingRight="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp">
 
-            <TextView
-                android:id="@+id/tv_hotel_name"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Hotel Name"
-                android:textSize="@dimen/_14sdp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:gravity="center">
+                android:layout_marginTop="@dimen/_2sdp">
 
                 <RatingBar
                     android:id="@+id/rb_rating"
@@ -57,15 +48,71 @@
                     android:theme="@style/RatingBar_normal" />
 
                 <TextView
-                    android:id="@+id/tv_rating"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_distance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:text="3/5"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:drawableLeft="@drawable/ic_location_orange"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="0Km"
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/_12sdp" />
-            </LinearLayout>
+                    android:textSize="@dimen/_8sdp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_hotel_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:text="Hotel Name"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:text="address"
+                android:textSize="@dimen/_8sdp" />
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tv_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/shape_orange_rect"
+                    android:fontFamily="sans-serif"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:text="3/5"
+                    android:textColor="@color/mdtp_white"
+                    android:textSize="@dimen/_8sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="sans-serif"
+                    android:text="Couple friendly"
+                    android:textSize="@dimen/_8sdp" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -79,18 +126,6 @@
                     android:textColor="@color/orange"
                     android:textSize="@dimen/_14sdp" />
 
-                <TextView
-                    android:id="@+id/tv_distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:drawableLeft="@drawable/ic_location_orange"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="0Km"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_10sdp" />
 
             </RelativeLayout>
 

@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.ansh.obaazo.R;
 
-public class ActivityMyBooking extends BaseActivity {
+public class ActivityMyBookingDetails extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,13 +14,13 @@ public class ActivityMyBooking extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_my_booking;
+        return R.layout.activity_my_booking_details;
     }
 
     @Override
     protected void initView() {
         initCustomToolbar();
-        ((TextView) findViewById(R.id.tv_title)).setText("My Booking");
+        ((TextView) findViewById(R.id.tv_title)).setText("Booking Details");
 
     }
 

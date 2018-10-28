@@ -4,9 +4,9 @@
     android:id="@+id/cb_hotel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_10sdp"
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_2sdp"
     app:cardElevation="@dimen/_2sdp"
     app:cardUseCompatPadding="false">
@@ -18,10 +18,11 @@
 
         <ImageView
             android:id="@+id/iv_hotel_image"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_80sdp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_120sdp"
             android:contentDescription="@null"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_place_holer" />
 
         <LinearLayout
@@ -29,8 +30,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_10sdp"
-            android:paddingRight="@dimen/_10sdp"
-            android:paddingTop="@dimen/_5sdp">
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingRight="@dimen/_10sdp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
                     android:gravity="center"
                     android:text="0Km"
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
             </RelativeLayout>
 
@@ -70,7 +71,8 @@
                 android:fontFamily="sans-serif"
                 android:maxLines="1"
                 android:text="Hotel Name"
-                android:textSize="@dimen/_12sdp" />
+                android:textColor="#000"
+                android:textSize="@dimen/_14sdp" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -80,12 +82,12 @@
                 android:fontFamily="sans-serif"
                 android:maxLines="1"
                 android:text="address"
-                android:textSize="@dimen/_8sdp" />
+                android:textSize="@dimen/_10sdp" />
 
-            <RelativeLayout
-                android:layout_marginTop="@dimen/_2sdp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp">
 
 
                 <TextView
@@ -99,35 +101,56 @@
                     android:fontFamily="sans-serif"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:text="3/5"
+                    android:text="3/5 "
                     android:textColor="@color/mdtp_white"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
                     android:fontFamily="sans-serif"
-                    android:text="Couple friendly"
-                    android:textSize="@dimen/_8sdp" />
+                    android:text="1220 Reviews"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:textSize="@dimen/_10sdp" />
 
-            </RelativeLayout>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="sans-serif"
+                    android:text="Couple friendly"
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/tv_start_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_14sdp" />
+                    android:text="₹500"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_16sdp" />
 
 
             </RelativeLayout>
+            <TextView
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Free Breakfast"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:textSize="@dimen/_8sdp" />
 
         </LinearLayout>
 

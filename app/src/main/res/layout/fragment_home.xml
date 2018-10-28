@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ImageView
@@ -132,8 +133,8 @@
                         android:layout_width="@dimen/_200sdp"
                         android:layout_height="@dimen/_36sdp"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
                         android:background="@drawable/shape_orange"
                         android:text="Search"
                         android:textColor="#fff"
@@ -145,10 +146,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp">
+                android:paddingBottom="@dimen/_5sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -178,10 +179,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp">
+                android:paddingBottom="@dimen/_5sdp">
 
                 <TextView
                     android:layout_width="match_parent"

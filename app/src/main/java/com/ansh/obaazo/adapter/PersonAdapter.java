@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
@@ -34,13 +36,16 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     @Override
     public void onBindViewHolder(@NonNull final PersonViewHolder holder, int position) {
+        ((TextView) holder.itemView.findViewById(R.id.tv_leval_room_count)).setText("Room " + (holder.getAdapterPosition() + 1));
         holder.tvRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mList.remove(holder.getAdapterPosition());
-                notifyItemRemoved(holder.getAdapterPosition());
+                notifyDataSetChanged();
+                // notifyItemRemoved(holder.getAdapterPosition());
             }
         });
+        holder.tvRemove.setVisibility((holder.getAdapterPosition() == 0 ? View.GONE : View.VISIBLE));
 
         holder.itemView.findViewById(R.id.cv_card_main).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +88,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         holder.itemView.findViewById(R.id.iv_c_minus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mList.get(holder.getAdapterPosition()).getChild().size() != 0) {
+                if (mList.get(holder.getAdapterPosition()).getChild().size() > 1) {
                     mList.get(holder.getAdapterPosition()).getChild().remove(holder.getAdapterPosition());
                     notifyItemChanged(holder.getAdapterPosition());
                 }
@@ -93,7 +98,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
         holder.tvAdultCount.setText("" + mList.get(holder.getAdapterPosition()).getNoOfAdult());
         holder.tvChildCount.setText("" + mList.get(holder.getAdapterPosition()).getChild().size());
-        holder.itemView.findViewById(R.id.ll_details).setVisibility((mList.get(holder.getAdapterPosition()).getEdit()) ? View.VISIBLE : View.GONE);
+        holder.itemView
+                .findViewById(R.id.ll_details).setVisibility((mList.get(holder.getAdapterPosition()).getEdit()) ? View.VISIBLE : View.GONE);
         holder.itemView.findViewById(R.id.tv_details).setVisibility(!(mList.get(holder.getAdapterPosition()).getEdit()) ? View.VISIBLE : View.GONE);
 
         holder.rvChild.setLayoutManager(new LinearLayoutManager(mContext));
@@ -169,7 +175,92 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
         holder.tvAge.setText(info.getChild().get(holder.getAdapterPosition()));
         holder.tvChild.setText(holder.getAdapterPosition() + 1 + " Child's");*/
+            holder.rb1.setChecked(mChild.get(holder.getAdapterPosition()).equals(1));
+            holder.rb2.setChecked(mChild.get(holder.getAdapterPosition()).equals(2));
+            holder.rb3.setChecked(mChild.get(holder.getAdapterPosition()).equals(3));
+            holder.rb4.setChecked(mChild.get(holder.getAdapterPosition()).equals(4));
+            holder.rb5.setChecked(mChild.get(holder.getAdapterPosition()).equals(5));
+            holder.rb6.setChecked(mChild.get(holder.getAdapterPosition()).equals(6));
+            holder.rb7.setChecked(mChild.get(holder.getAdapterPosition()).equals(7));
+            holder.rb8.setChecked(mChild.get(holder.getAdapterPosition()).equals(8));
+            holder.rb9.setChecked(mChild.get(holder.getAdapterPosition()).equals(9));
+            holder.rb10.setChecked(mChild.get(holder.getAdapterPosition()).equals(10));
+            holder.rb11.setChecked(mChild.get(holder.getAdapterPosition()).equals(11));
+            holder.rb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 1);
+                }
+            });
+            holder.rb2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 2);
+                }
+            });
+            holder.rb3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 3);
 
+                }
+            });
+            holder.rb4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 4);
+
+                }
+            });
+            holder.rb5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 5);
+
+                }
+            });
+            holder.rb6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 6);
+
+                }
+            });
+            holder.rb7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 7);
+
+                }
+            });
+            holder.rb8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 8);
+
+                }
+            });
+            holder.rb9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 9);
+
+                }
+            });
+            holder.rb10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 10);
+
+                }
+            });
+            holder.rb11.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mChild.set(holder.getAdapterPosition(), 11);
+
+                }
+            });
         }
 
         @Override
@@ -181,13 +272,29 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             private TextView tvChild;
             private TextView tvAge;
             private ImageView ivRemove;
+            private RadioButton rb1, rb2, rb3, rb4, rb5, rb6, rb7, rb8, rb9, rb10, rb11;
 
             public ChildViewHolder(View itemView) {
                 super(itemView);
                 tvChild = itemView.findViewById(R.id.tv_c_count);
-                tvAge = itemView.findViewById(R.id.tv_age);
-                ivRemove = itemView.findViewById(R.id.iv_remove);
+                rb1 = itemView.findViewById(R.id.rb_1);
+                rb2 = itemView.findViewById(R.id.rb_2);
+                rb3 = itemView.findViewById(R.id.rb_3);
+                rb4 = itemView.findViewById(R.id.rb_4);
+                rb5 = itemView.findViewById(R.id.rb_5);
+                rb6 = itemView.findViewById(R.id.rb_6);
+                rb7 = itemView.findViewById(R.id.rb_7);
+                rb8 = itemView.findViewById(R.id.rb_8);
+                rb9 = itemView.findViewById(R.id.rb_9);
+                rb10 = itemView.findViewById(R.id.rb_10);
+                rb11 = itemView.findViewById(R.id.rb_11);
+                // tvAge = itemView.findViewById(R.id.tv_age);
+                //  ivRemove = itemView.findViewById(R.id.iv_remove);
             }
         }
+    }
+
+    public ArrayList<PersonInfo> getDetails() {
+        return mList;
     }
 }

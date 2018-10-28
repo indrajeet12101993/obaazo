@@ -6,4 +6,8 @@
     <color name="orange">#f7772c</color>
     <color name="greay">#cfcece</color>
     <color name="greay_transparent">#33000000</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="calendar_selected_range_bg">#0baada</color>
+    <color name="green">#1aaf22</color>
 </resources>

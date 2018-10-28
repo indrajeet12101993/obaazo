@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.PersonAdapter;
@@ -54,7 +55,8 @@ public class ActivitySelect extends BaseActivity {
         findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, new Gson().toJson(info));
+                setResult(RESULT_OK);
+                PreferencesUtils.putString(AppConstant.PERSON_DETAILS, new Gson().toJson(personAdapter.getDetails()));
                 onBackPressed();
             }
         });
@@ -62,7 +64,12 @@ public class ActivitySelect extends BaseActivity {
         findViewById(R.id.tv_add_room).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                personAdapter.addRoom();
+                if (personAdapter.getItemCount() < 3) {
+                    personAdapter.addRoom();
+                } else {
+                    Toast.makeText(ActivitySelect.this, "You have selected maximum no of rooms,for more rooms please contact Obazzo or visit Obazzo.com.", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -73,8 +80,6 @@ public class ActivitySelect extends BaseActivity {
     protected void bindDataWithUi() {
 
     }
-
-
 
 
 }

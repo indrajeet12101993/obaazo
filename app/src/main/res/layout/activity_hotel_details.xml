@@ -48,8 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_42sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     app:cardCornerRadius="@dimen/_20sdp">
 
                     <LinearLayout
@@ -77,8 +77,8 @@
                         <View
                             android:layout_width="0.5dp"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/_8sdp"
                             android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
                             android:background="#cfcccc" />
 
                         <TextView
@@ -87,16 +87,16 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_10sdp"
-                            android:drawablePadding="@dimen/_5sdp"
                             android:drawableStart="@drawable/ic_bed"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:gravity="center"
                             android:textSize="@dimen/_8sdp" />
 
                         <View
                             android:layout_width="0.5dp"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/_8sdp"
                             android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
                             android:background="#cfcccc" />
 
 
@@ -106,8 +106,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_10sdp"
-                            android:drawablePadding="@dimen/_5sdp"
                             android:drawableStart="@drawable/ic_child_small"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:gravity="center"
                             android:textSize="@dimen/_8sdp" />
 
@@ -118,8 +118,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_10sdp"
-                            android:drawablePadding="@dimen/_5sdp"
                             android:drawableStart="@drawable/ic_child_small"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:gravity="center"
                             android:textSize="@dimen/_8sdp" />
 
@@ -143,12 +143,13 @@
                         android:textSize="@dimen/_14sdp" />
 
                     <TextView
-                        android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:textColor="#fff" />
+                        android:text="Starts From"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/_10sdp" />
 
                 </RelativeLayout>
 
@@ -158,9 +159,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_10sdp">
 
                     <RatingBar
                         android:id="@+id/rb_hotel_rating"
@@ -187,11 +188,16 @@
                         android:textColor="@color/mdtp_white" />
 
                     <TextView
+                        android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:textColor="#fff" />
+                        android:layout_centerVertical="true"
+                        android:fontFamily="sans-serif"
+                        android:text="200"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
             </RelativeLayout>
@@ -201,8 +207,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp">
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -211,8 +217,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_15sdp"
                 android:text="DESCRIPTION"
                 android:textColor="#000"
                 android:textSize="@dimen/_12sdp" />
@@ -222,8 +228,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textSize="@dimen/_10sdp" />
 
             <RelativeLayout
@@ -233,23 +241,15 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="6dp"
                     android:layout_marginRight="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="AMENTIES"
                     android:textColor="#000"
                     android:textSize="@dimen/_12sdp" />
 
-                <TextView
-                    android:id="@+id/tv_view_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="end"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:fontFamily="sans-serif"
-                    android:padding="@dimen/_10sdp"
-                    android:text="View All" />
+
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -257,18 +257,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp" />
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp" />
 
             <TextView
+                android:id="@+id/tv_view_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:fontFamily="sans-serif"
+                android:padding="@dimen/_10sdp"
+                android:text="View All" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:text="Review"
+                    android:textColor="#000"
+                    android:textSize="@dimen/_12sdp" />
+
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp" />
+
+
+
+
+            <TextView
+                android:id="@+id/tv_standard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
                 android:background="#efefef"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/ic_arrow_right"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
@@ -280,28 +320,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
                 android:background="#efefef"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/ic_arrow_right"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:text="HOTEL SERVICES"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_policy"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:background="#efefef"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/ic_arrow_right"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
@@ -313,9 +354,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp">
+        android:layout_height="@dimen/_40sdp"
+        app:titleTextAppearance="@style/Toolbar.TitleText">
 
 
         <LinearLayout
@@ -343,6 +384,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_2sdp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_more_vert" />
 
         </LinearLayout>

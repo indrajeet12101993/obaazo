@@ -69,7 +69,8 @@
         <activity android:name=".activity.ZoomImageViewActivity" />
         <activity android:name=".activity.ActivityMyBookingDetails" />
         <activity android:name=".activity.ActivityMyReview" />
-        <activity android:name=".activity.LocationActivity"></activity>
+        <activity android:name=".activity.LocationActivity" />
+        <activity android:name=".activity.ActivityDateSelecte"></activity>
     </application>
 
 </manifest>

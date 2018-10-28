@@ -1,6 +1,7 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.activity.ActivitySelect;
 import com.ansh.obaazo.listener.IItemClick;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.utils.BitmapTransform;
@@ -51,7 +53,8 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         holder.btnRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()));
+                mContext.startActivity(new Intent(mContext, ActivitySelect.class));
+                //  mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()));
             }
         });
 
@@ -67,7 +70,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         private ImageView ivHotelImage;
         private TextView tvRoomSize;
         private TextView tvBedType;
-        private TextView tvRoomType;
         private Button btnRoom;
 
         public RoomViewHolder(View itemView) {
@@ -75,7 +77,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             ivHotelImage = itemView.findViewById(R.id.iv_hotel_image);
             tvRoomSize = itemView.findViewById(R.id.tv_room_size);
             tvBedType = itemView.findViewById(R.id.tv_bed_type);
-            tvRoomType = itemView.findViewById(R.id.tv_room_type);
             btnRoom = itemView.findViewById(R.id.btn_select_room);
         }
 
@@ -91,7 +92,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
 
             tvRoomSize.setText(bean.getRoom_size());
             tvBedType.setText(bean.getBed_type());
-            tvRoomType.setText(bean.getRoom_type());
         }
     }
 

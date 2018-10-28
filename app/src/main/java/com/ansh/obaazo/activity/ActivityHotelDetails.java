@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AmentiesAdapter;
 import com.ansh.obaazo.adapter.HotelGallaryAdapter;
+import com.ansh.obaazo.adapter.ReviewAdapter;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.HotelImageResponse;
@@ -26,8 +28,9 @@ import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.AminityDialog;
 import com.ansh.obaazo.widget.SimpleDialog;
-import com.ansh.obaazo.widget.topSheet.TopSheetDialog;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 
@@ -85,6 +88,11 @@ public class ActivityHotelDetails extends BaseActivity {
         galleryAdapter = new HotelGallaryAdapter(this, new HotelImageResponse(), hotelDetails.getHotel_name());
         rvHotelGallery.setAdapter(galleryAdapter);
 
+        RecyclerView rvReview = findViewById(R.id.rv_review);
+        rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
+        ReviewAdapter reviewAdapter = new ReviewAdapter(this, new ArrayList<String>());
+        rvReview.setAdapter(reviewAdapter);
+        rvReview.setNestedScrollingEnabled(false);
 
     }
 
@@ -119,18 +127,24 @@ public class ActivityHotelDetails extends BaseActivity {
             }
         });
 
+        findViewById(R.id.tv_standard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SimpleDialog(ActivityHotelDetails.this, "STANDARD CANCELLATION POLICY", hotelDetails.getCancellation()).show();
+            }
+        });
 
-        findViewById(R.id.tv_question).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.tv_question).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new SimpleDialog(ActivityHotelDetails.this, "Question", hotelDetails.getTour_policy()).show();
             }
-        });
+        });*/
 
         findViewById(R.id.tv_policy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SimpleDialog(ActivityHotelDetails.this, "Hotel Policy and Rules", hotelDetails.getTour_policy()).show();
+                new SimpleDialog(ActivityHotelDetails.this, "TERMS AND CONDITIONS", hotelDetails.getAdmission()).show();
             }
         });
 
@@ -168,7 +182,7 @@ public class ActivityHotelDetails extends BaseActivity {
             ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getHotel_actual_price());
             ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(Float.parseFloat((TextUtils.isEmpty(hotelDetails.getRating()) ? "0.0" : hotelDetails.getRating())));
             ((TextView) findViewById(R.id.tv_rating)).setText(hotelDetails.getRating() + "/5");
-            ((TextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getServices());
+            ((TextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getTour_policy());
 
 
             amentiesAdapter.setmData(hotelDetails.getHotel_amenties1());

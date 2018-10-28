@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.activity.ActivityDateSelecte;
 import com.ansh.obaazo.activity.ActivitySearch;
 import com.ansh.obaazo.activity.ActivitySelect;
 import com.ansh.obaazo.activity.BaseActivity;
@@ -36,17 +38,15 @@ import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
-import com.ansh.obaazo.widget.TZDatePicker;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import retrofit2.Call;
-
-import static com.ansh.obaazo.utils.DateUtils.formatDate;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +75,8 @@ public class FragmentHome extends BaseFragment {
     private boolean isLocationSelected = false;
     private boolean isSDateSelected = false;
     private boolean isEDateSelected = false;
+    private boolean isPersonSelected = false;
+    private TextView tvRoomAdult;
 
 
     public FragmentHome() {
@@ -106,6 +108,8 @@ public class FragmentHome extends BaseFragment {
         tvEndDate = mView.findViewById(R.id.tv_end_date);
         tvACount = mView.findViewById(R.id.tv_a_count);
         tvCount = mView.findViewById(R.id.tv_c_count);
+
+        tvRoomAdult = mView.findViewById(R.id.tv_room_adult);
 
 
         offerAdapter = new OfferAdapter(getActivity(), new OfferResponse());
@@ -171,7 +175,9 @@ public class FragmentHome extends BaseFragment {
         tvStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TZDatePicker(getActivity(), true, new TZDatePicker.PickerCallback() {
+                startActivityForResult(new Intent(getContext(), ActivityDateSelecte.class), 1003);
+                // calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault()));
+           /*     new TZDatePicker(getActivity(), true, new TZDatePicker.PickerCallback() {
                     @Override
                     public void onSelect(String date, boolean isCurrentDate) {
                         Calendar tempDate = formatDate(date);
@@ -185,14 +191,16 @@ public class FragmentHome extends BaseFragment {
                         }
 
                     }
-                });
+                });*/
 
             }
         });
         tvEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TZDatePicker(getActivity(), true, new TZDatePicker.PickerCallback() {
+                startActivityForResult(new Intent(getContext(), ActivityDateSelecte.class), 1003);
+
+              /*  new TZDatePicker(getActivity(), true, new TZDatePicker.PickerCallback() {
                     @Override
                     public void onSelect(String date, boolean isCurrentDate) {
                         Calendar tempDate = formatDate(date);
@@ -206,15 +214,15 @@ public class FragmentHome extends BaseFragment {
                             Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
             }
         });
 
 
-        mView.findViewById(R.id.tv_room_adult).setOnClickListener(new View.OnClickListener() {
+        tvRoomAdult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getActivity(), ActivitySelect.class), 1001);
+                startActivityForResult(new Intent(getActivity(), ActivitySelect.class), 1004);
             }
         });
 
@@ -353,6 +361,31 @@ public class FragmentHome extends BaseFragment {
             PreferencesUtils.putDouble(AppConstant.B_LONGITUDE, longitude);
             PreferencesUtils.putString(AppConstant.B_LOCATION, location);
             etPlace.setText(location);
+
+        }
+
+        if (requestCode == 1003 && resultCode == Activity.RESULT_OK) {
+            isSDateSelected = true;
+            isEDateSelected = true;
+            tvStartDate.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)));
+            tvEndDate.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
+        }
+
+        if (requestCode == 1004 && resultCode == Activity.RESULT_OK) {
+            isPersonSelected = true;
+            String personDetails = PreferencesUtils.getString(AppConstant.PERSON_DETAILS);
+            if (!TextUtils.isEmpty(personDetails)) {
+                int count = 0;
+                ArrayList arrayList = new Gson().fromJson(personDetails, ArrayList.class);
+               /* for (int i = 0; i < arrayList.size(); i++) {
+                    Object noOfAdult = ((LinkedTreeMap) arrayList.get(i)).get("noOfAdult");
+                    Object noOfChild = ((LinkedTreeMap) arrayList.get(i)).get("child");
+                    count = count + ((int) noOfAdult) + (int) noOfChild;
+                }*/
+
+              //  tvRoomAdult.setText(arrayList.size() + "Room" + count + "Guest");
+
+            }
 
         }
     }

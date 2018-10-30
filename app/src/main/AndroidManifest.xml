@@ -3,6 +3,7 @@
     package="com.ansh.obaazo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -25,6 +26,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="http"
+                    android:pathPattern="/hotel booking"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -65,12 +77,12 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.ZoomImageViewActivity" />
         <activity android:name=".activity.ActivityMyBookingDetails" />
         <activity android:name=".activity.ActivityMyReview" />
         <activity android:name=".activity.LocationActivity" />
-        <activity android:name=".activity.ActivityDateSelecte"></activity>
+        <activity android:name=".activity.ActivityDateSelecte" />
     </application>
 
 </manifest>

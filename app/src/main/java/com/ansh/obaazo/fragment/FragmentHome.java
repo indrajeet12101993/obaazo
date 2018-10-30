@@ -41,7 +41,7 @@ import com.ansh.obaazo.web.ApiException;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -94,11 +94,11 @@ public class FragmentHome extends BaseFragment {
     @Override
     protected void initView() {
         Picasso.get()
-                .load("https://obaazo.com/assets//img/home_1/beach-blue.jpg")
-                .resize(300, 300)
+                .load("https://obaazo.com//assets/img/home_1/wp2003997.jpg")
                 .error(R.drawable.ic_hotel_place_holder)
                 .placeholder(R.drawable.ic_hotel_place_holder)
-                .into(((ImageView) mView.findViewById(R.id.app_banner)));
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .into((ImageView) mView.findViewById(R.id.app_banner));
 
         etPlace = mView.findViewById(R.id.et_place);
         rvTreading = mView.findViewById(R.id.rv_trending);
@@ -383,7 +383,7 @@ public class FragmentHome extends BaseFragment {
                     count = count + ((int) noOfAdult) + (int) noOfChild;
                 }*/
 
-              //  tvRoomAdult.setText(arrayList.size() + "Room" + count + "Guest");
+                //  tvRoomAdult.setText(arrayList.size() + "Room" + count + "Guest");
 
             }
 

@@ -33,5 +33,6 @@ public class AppConstant {
     public static final String IMAGES = "images";
     public static final String POSITION = "position";
     public static final String PERSON_DETAILS = "person_details";
+    public static final String USER_ID = "user_id";
 }
 

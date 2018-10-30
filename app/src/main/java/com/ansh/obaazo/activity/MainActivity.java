@@ -21,6 +21,7 @@ import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
 import com.ansh.obaazo.fragment.FragmentCash;
 import com.ansh.obaazo.fragment.FragmentHome;
+import com.ansh.obaazo.fragment.FragmentLogin;
 import com.ansh.obaazo.fragment.FragmentMyBooking;
 import com.ansh.obaazo.fragment.FragmentProfile;
 import com.ansh.obaazo.listener.LocationListener;
@@ -127,7 +128,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     replaceFragment(new FragmentCash(), R.id.fm_main, false);
                     return true;
                 case R.id.nav_bottom_profile:
-                    replaceFragment(new FragmentProfile(), R.id.fm_main, false);
+                    replaceFragment(new FragmentLogin(), R.id.fm_main, false);
+                    //replaceFragment(new FragmentProfile(), R.id.fm_main, false);
                     return true;
                 case R.id.nav_bottom_my_bookig:
                     replaceFragment(new FragmentMyBooking(), R.id.fm_main, false);

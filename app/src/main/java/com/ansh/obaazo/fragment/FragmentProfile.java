@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.ansh.obaazo.R;
 
@@ -16,6 +17,7 @@ import com.ansh.obaazo.R;
 public class FragmentProfile extends BaseFragment {
 
     private View mView;
+    private Button btnConitinew;
 
     public FragmentProfile() {
         // Required empty public constructor
@@ -31,7 +33,7 @@ public class FragmentProfile extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        btnConitinew = mView.findViewById(R.id.btn_continue);
     }
 
     @Override

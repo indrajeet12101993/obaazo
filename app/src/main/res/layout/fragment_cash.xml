@@ -29,7 +29,7 @@
             android:layout_height="@dimen/_100sdp"
             android:background="@drawable/shape_btn_circle"
             android:gravity="center"
-            android:text="₹"
+            android:text="₹ 00"
             android:textColor="@color/mdtp_white"
             android:textSize="@dimen/_26sdp" />
 
@@ -40,7 +40,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Expires On 12/Oct/2018"
             android:textColor="#000"
             android:textSize="@dimen/_14sdp" />
     </LinearLayout>

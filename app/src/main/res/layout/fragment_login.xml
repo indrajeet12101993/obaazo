@@ -42,6 +42,7 @@
             android:baselineAligned="false">
 
             <LinearLayout
+                android:id="@+id/ll_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_5sdp"
@@ -68,6 +69,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_google"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"

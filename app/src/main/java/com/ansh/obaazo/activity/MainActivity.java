@@ -1,30 +1,33 @@
 package com.ansh.obaazo.activity;
 
+
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
 import com.ansh.obaazo.fragment.FragmentCash;
 import com.ansh.obaazo.fragment.FragmentHome;
-import com.ansh.obaazo.fragment.FragmentLogin;
 import com.ansh.obaazo.fragment.FragmentMyBooking;
 import com.ansh.obaazo.fragment.FragmentProfile;
 import com.ansh.obaazo.listener.LocationListener;
+import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.PreferencesUtils;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -119,24 +122,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             navigation.getMenu().findItem(R.id.nav_bottom_cash).setIcon((R.id.nav_bottom_cash == item.getItemId()) ? R.drawable.ic_cash : R.drawable.ic_cash_u);
             navigation.getMenu().findItem(R.id.nav_bottom_profile).setIcon((R.id.nav_bottom_profile == item.getItemId()) ? R.drawable.ic_profile_bottom : R.drawable.ic_profile_bottom_u);
             navigation.getMenu().findItem(R.id.nav_bottom_my_bookig).setIcon((R.id.nav_bottom_my_bookig == item.getItemId()) ? R.drawable.ic_my_booking_nav_a : R.drawable.ic_my_booking_nav);
-
+          invalidateOptionsMenu();
             switch (item.getItemId()) {
+
                 case R.id.nav_bottom_search:
                     replaceFragment(new FragmentHome(), R.id.fm_main, false);
-                    return true;
+                    break;
                 case R.id.nav_bottom_cash:
-                    replaceFragment(new FragmentCash(), R.id.fm_main, false);
-                    return true;
+                    if (PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                        replaceFragment(new FragmentCash(), R.id.fm_main, false);
+                    } else {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                    break;
                 case R.id.nav_bottom_profile:
-                    replaceFragment(new FragmentLogin(), R.id.fm_main, false);
-                    //replaceFragment(new FragmentProfile(), R.id.fm_main, false);
-                    return true;
+                    if (PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                        replaceFragment(new FragmentProfile(), R.id.fm_main, false);
+                    } else {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                    break;
                 case R.id.nav_bottom_my_bookig:
-                    replaceFragment(new FragmentMyBooking(), R.id.fm_main, false);
-                    return true;
-
+                    if (PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                        replaceFragment(new FragmentMyBooking(), R.id.fm_main, false);
+                    } else {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                    break;
             }
-            return false;
+
+            return true;
         }
     };
 
@@ -163,5 +178,39 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+       /* if (getSupportFragmentManager().findFragmentById(R.id.fm_main) instanceof FragmentProfile) {
+            menu.findItem(R.id.action_logout).setVisible(true);
+        } else {
+            menu.findItem(R.id.action_logout).setVisible(false);
+        }*/
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            PreferencesUtils.clearSharedPrefs();
+            replaceFragment(new FragmentHome(), R.id.fm_main, false);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

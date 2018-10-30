@@ -9,6 +9,7 @@ public class AppConstant {
     public static final int size = (int) Math.ceil(Math.sqrt(MAX_WIDTH * MAX_HEIGHT));
 
 
+    public static final String IS_LOGIN = "is_login";
     public static final String START_DATE = "start_date";
     public static final String END_DATE = "end_date";
     public static final String NO_OF_ROOM = "room_count";
@@ -34,5 +35,6 @@ public class AppConstant {
     public static final String POSITION = "position";
     public static final String PERSON_DETAILS = "person_details";
     public static final String USER_ID = "user_id";
+    public static final String USER_DETAILS = "user_details";
 }
 

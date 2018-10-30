@@ -4,6 +4,7 @@ package com.ansh.obaazo.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,16 @@ import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.BaseActivity;
+import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.resources.request.BaseRequest;
+import com.ansh.obaazo.resources.response.LoginResponse;
 import com.ansh.obaazo.resources.response.ObazoMoneyResponse;
 import com.ansh.obaazo.resources.service.ObaazoMoneyService;
+import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 
@@ -44,17 +50,23 @@ public class FragmentCash extends BaseFragment {
     protected void initView() {
         tvMoney = mView.findViewById(R.id.tv_money);
         tvExpier = mView.findViewById(R.id.tv_expire);
-        hitObaazoMoneyApi();
-
+        String tempDetails = PreferencesUtils.getString(AppConstant.USER_DETAILS);
+        if (!TextUtils.isEmpty(tempDetails)) {
+            UserDetails results = new Gson().fromJson(tempDetails,UserDetails.class);
+            String id = results.getId();
+            hitObaazoMoneyApi(id);
+        } else {
+            Toast.makeText(getActivity(), "Somethings Went Wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void hitObaazoMoneyApi() {
+    private void hitObaazoMoneyApi(String id) {
         if (getActivity() == null) return;
         ((BaseActivity) getActivity()).showLoadingDialog();
 
         BaseRequest baseRequest = new BaseRequest();
         //  baseRequest.setId(PreferencesUtils.getString(AppConstant.USER_ID));
-        baseRequest.setId("48");
+        baseRequest.setId(id);
         new ObaazoMoneyService(getContext()).execute(baseRequest, new ApiCallback<ObazoMoneyResponse>() {
             @Override
             public void onSuccess(Call<ObazoMoneyResponse> call, ObazoMoneyResponse response) {
@@ -67,7 +79,7 @@ public class FragmentCash extends BaseFragment {
                         Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Api Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), response.getResponse_message(), Toast.LENGTH_SHORT).show();
                 }
 
             }

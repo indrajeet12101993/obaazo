@@ -80,6 +80,15 @@ public class HotelRoomResponse extends ApiResponse {
         private String active;
         @SerializedName("rimg")
         private String image;
+        private boolean isSelected = false;
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
 
         public String getImage() {
             return image;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rsb="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,7 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_apply"
         android:layout_below="@+id/top_title"
-        android:layout_marginBottom="@dimen/_10sdp">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,32 +91,36 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            rsb:absoluteMaxValue="5000"
+                            rsb:absoluteMinValue="0" />
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:button="@null"
-                            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                            android:text="Below 2K" />
+                            android:layout_marginTop="@dimen/_5sdp">
 
-                        <android.support.v7.widget.AppCompatCheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:button="@null"
-                            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                            android:text="2K to 4K" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text="00"
+                                android:textSize="@dimen/_10sdp" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:button="@null"
-                            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                            android:text="Above 4K" />
-
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="sans-serif"
+                                android:text="5000"
+                                android:textSize="@dimen/_10sdp" />
+                        </RelativeLayout>
 
                     </LinearLayout>
 

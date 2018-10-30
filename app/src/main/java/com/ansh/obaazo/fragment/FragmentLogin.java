@@ -26,7 +26,7 @@ import com.ansh.obaazo.utils.GoogleHelper;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
-import com.ansh.obaazo.widget.topSheet.ESOTP;
+import com.ansh.obaazo.widget.ESOTP;
 import com.google.gson.Gson;
 
 import retrofit2.Call;

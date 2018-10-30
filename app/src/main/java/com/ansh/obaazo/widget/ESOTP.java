@@ -1,4 +1,4 @@
-package com.ansh.obaazo.widget.topSheet;
+package com.ansh.obaazo.widget;
 
 import android.app.Dialog;
 import android.content.Context;

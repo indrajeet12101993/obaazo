@@ -16,4 +16,12 @@
     <string name="permission_rationale" />
     <string name="permission_denied_explanation">dfafa</string>
     <string name="settings">safafa</string>
+
+
+    <string-array name="time">
+        <item>Expected Checkin Time</item>
+        <item>12:00 pm To 2:00 Pm</item>
+        <item>02:00 pm To 5:00 Pm</item>
+        <item>05:00 pm To 08:00 Pm</item>
+    </string-array>
 </resources>

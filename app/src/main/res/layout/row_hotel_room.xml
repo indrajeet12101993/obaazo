@@ -7,6 +7,7 @@
     android:layout_marginTop="@dimen/_10sdp"
     android:layout_marginRight="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_2sdp"
+    android:animateLayoutChanges="true"
     app:cardElevation="@dimen/_2sdp">
 
     <LinearLayout
@@ -117,7 +118,8 @@
                     android:fontFamily="sans-serif"
                     android:gravity="end"
                     android:text="Free Breakfast"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_8sdp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btn_select_room"
@@ -125,7 +127,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/shape_orange"
                     android:text="Select Room"
                     android:textColor="@color/mdtp_white"
                     android:textSize="@dimen/_10sdp" />
@@ -134,15 +136,18 @@
         </LinearLayout>
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/_2sdp" />
 
         <RelativeLayout
+            android:id="@+id/rl_room_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/_2sdp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/mdtp_line_background"
+                android:layout_marginTop="@dimen/_2sdp" />
 
             <TextView
                 android:id="@+id/tv_room_adult"

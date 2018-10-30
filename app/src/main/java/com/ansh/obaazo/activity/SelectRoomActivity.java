@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ansh.obaazo.R;
@@ -82,6 +83,13 @@ public class SelectRoomActivity extends BaseActivity implements IItemClick<Hotel
 
     @Override
     protected void initListener() {
+
+        findViewById(R.id.tv_book).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class));
+            }
+        });
 
     }
 

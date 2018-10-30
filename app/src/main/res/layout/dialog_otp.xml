@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/_250sdp"
-    android:layout_height="@dimen/_200sdp"
+    android:layout_height="@dimen/_300sdp"
     android:background="@drawable/shape_dialog"
     android:gravity="center"
     android:minWidth="@dimen/_180sdp"
@@ -15,18 +15,6 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/tv_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:lines="2"
-            android:paddingLeft="@dimen/_16sdp"
-            android:paddingRight="@dimen/_16sdp"
-            android:text="Enter Otp"
-            android:textSize="@dimen/_14sdp" />
 
         <ImageView
             android:id="@+id/iv_close"
@@ -38,55 +26,85 @@
             app:srcCompat="@drawable/ic_close" />
     </RelativeLayout>
 
-    <View
-        android:id="@+id/view_space"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_below="@+id/rl_title"
-        android:background="@color/greay" />
 
     <LinearLayout
-        android:id="@+id/ll_Date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_space"
-        android:layout_marginLeft="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_25sdp"
-        android:gravity="center_vertical"
+        android:layout_below="@+id/rl_title"
         android:orientation="vertical">
 
-
-        <EditText
-            android:id="@+id/et_otp"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_30sdp"
+        <ImageView
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_gravity="center"
-            android:background="@drawable/shape_edit_text"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:hint="Enter Your OTP"
-            android:inputType="number"
-            android:maxLength="6"
-            android:padding="@dimen/_5sdp"
-            android:textSize="@dimen/_10sdp" />
+            app:srcCompat="@drawable/ic_otp_icon" />
 
         <TextView
-            android:id="@+id/tv_resend"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_msg"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:lines="2"
             android:paddingLeft="@dimen/_16sdp"
             android:paddingRight="@dimen/_16sdp"
-            android:text="Resend Otp"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/_12sdp" />
+            android:text="We have sent OTP to your mobile number"
+            android:textSize="@dimen/_14sdp" />
+
+        <LinearLayout
+            android:id="@+id/ll_Date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/et_otp"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_edit_text"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:hint="Enter Your OTP"
+                android:inputType="number"
+                android:maxLength="6"
+                android:padding="@dimen/_5sdp"
+                android:textSize="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:fontFamily="sans-serif"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Didn’t received otp?" />
+
+                <TextView
+                    android:id="@+id/tv_resend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:fontFamily="sans-serif"
+                    android:text=" Resend Otp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <Button
         android:id="@+id/btn_submit"

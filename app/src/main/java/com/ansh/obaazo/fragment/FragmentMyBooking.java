@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import android.widget.Toast;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.BaseActivity;
 import com.ansh.obaazo.adapter.MyBookingAdapter;
+import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.MyBookingResponse;
 import com.ansh.obaazo.resources.service.MyBookingService;
+import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -33,6 +38,7 @@ public class FragmentMyBooking extends BaseFragment {
     private View mView;
     private RecyclerView rvMyBooking;
     private MyBookingAdapter bookingAdapter;
+    private UserDetails userDetails;
 
     public FragmentMyBooking() {
         // Required empty public constructor
@@ -52,18 +58,14 @@ public class FragmentMyBooking extends BaseFragment {
         rvMyBooking.setLayoutManager(new LinearLayoutManager(getActivity()));
         bookingAdapter = new MyBookingAdapter(getContext(), new ArrayList<MyBookingResponse.ResultBean>());
         rvMyBooking.setAdapter(bookingAdapter);
-        hitMyBookingApi();
 
 
     }
 
     private void hitMyBookingApi() {
-        if (getActivity() != null) {
-            ((BaseActivity) getActivity()).showLoadingDialog();
-        }
-
+        if (getActivity() != null) ((BaseActivity) getActivity()).showLoadingDialog();
         BaseRequest request = new BaseRequest();
-        request.setId("58");
+        request.setId(userDetails.getId());
         MyBookingService bookingService = new MyBookingService(getActivity());
         bookingService.execute(request, new ApiCallback<MyBookingResponse>() {
             @Override
@@ -75,20 +77,16 @@ public class FragmentMyBooking extends BaseFragment {
                     mView.findViewById(R.id.iv_no_data).setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), response.getResponse_message(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
             public void onComplete() {
-                if (getActivity() != null) {
-                    ((BaseActivity) getActivity()).hideLoadingDialog();
-                }
-
+                if (getActivity() != null) ((BaseActivity) getActivity()).hideLoadingDialog();
             }
 
             @Override
             public void onFailure(ApiException e) {
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Api error", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -101,6 +99,14 @@ public class FragmentMyBooking extends BaseFragment {
 
     @Override
     protected void bindDataWithUi() {
+        String tempDetails = PreferencesUtils.getString(AppConstant.USER_DETAILS);
+        if (!TextUtils.isEmpty(tempDetails)) {
+            userDetails = new Gson().fromJson(tempDetails, UserDetails.class);
+            hitMyBookingApi();
+        } else {
+            Toast.makeText(getActivity(), "Somethings Went Wrong", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

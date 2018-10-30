@@ -2,7 +2,9 @@ package com.ansh.obaazo.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -27,6 +29,7 @@ import com.ansh.obaazo.activity.BaseActivity;
 import com.ansh.obaazo.activity.LocationActivity;
 import com.ansh.obaazo.adapter.OfferAdapter;
 import com.ansh.obaazo.adapter.TreandingAdapter;
+import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.OfferResponse;
@@ -230,6 +233,12 @@ public class FragmentHome extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(getActivity(), LocationActivity.class), 1001);
+
+              /*  if (checkGPS()) {
+                    startActivityForResult(new Intent(getActivity(), LocationActivity.class), 1001);
+                } else {
+                    buildAlertMessageNoGps();
+                }*/
             }
         });
     }
@@ -373,21 +382,29 @@ public class FragmentHome extends BaseFragment {
 
         if (requestCode == 1004 && resultCode == Activity.RESULT_OK) {
             isPersonSelected = true;
-            String personDetails = PreferencesUtils.getString(AppConstant.PERSON_DETAILS);
+            String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
             if (!TextUtils.isEmpty(personDetails)) {
+                BookingInfo bookingInfo = new Gson().fromJson(personDetails, BookingInfo.class);
                 int count = 0;
-                ArrayList arrayList = new Gson().fromJson(personDetails, ArrayList.class);
-               /* for (int i = 0; i < arrayList.size(); i++) {
-                    Object noOfAdult = ((LinkedTreeMap) arrayList.get(i)).get("noOfAdult");
-                    Object noOfChild = ((LinkedTreeMap) arrayList.get(i)).get("child");
-                    count = count + ((int) noOfAdult) + (int) noOfChild;
-                }*/
-
-                //  tvRoomAdult.setText(arrayList.size() + "Room" + count + "Guest");
-
+                if (bookingInfo.getPersonInfos() != null)
+                    for (int i = 0; i < bookingInfo.getPersonInfos().size(); i++) {
+                        ArrayList<Integer> child = bookingInfo.getPersonInfos().get(i).getChild();
+                        int noOfAdult1 = bookingInfo.getPersonInfos().get(i).getNoOfAdult();
+                        count = count + child.size() + noOfAdult1;
+                    }
+                tvRoomAdult.setText(bookingInfo.getPersonInfos().size() + " Room " + count + " Guest");
             }
 
         }
+    }
+
+
+    public boolean checkGPS() {
+        final LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+       /* if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }*/
     }
 
 

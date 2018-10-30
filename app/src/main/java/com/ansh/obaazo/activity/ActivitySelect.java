@@ -56,7 +56,8 @@ public class ActivitySelect extends BaseActivity {
             @Override
             public void onClick(View view) {
                 setResult(RESULT_OK);
-                PreferencesUtils.putString(AppConstant.PERSON_DETAILS, new Gson().toJson(personAdapter.getDetails()));
+                info.setPersonInfos(personAdapter.getDetails());
+                PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, new Gson().toJson(info));
                 onBackPressed();
             }
         });

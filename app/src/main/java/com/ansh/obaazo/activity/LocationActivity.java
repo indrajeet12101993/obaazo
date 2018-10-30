@@ -2,11 +2,15 @@ package com.ansh.obaazo.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -69,10 +73,40 @@ public class LocationActivity extends AppCompatActivity {
 
         if (!checkPermissions()) {
             requestPermissions();
-        } else {
+        } else if (checkGPS()) {
             getLastLocation();
+        } else {
+            buildAlertMessageNoGps();
         }
     }
+
+    public boolean checkGPS() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        /*if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }*/
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(LocationActivity.this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                        onBackPressed();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
     /**
      * Provides a simple way of getting a device's location and is well suited for
@@ -137,7 +171,7 @@ public class LocationActivity extends AppCompatActivity {
      */
     private boolean checkPermissions() {
         int permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
+                Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -148,9 +182,7 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     private void requestPermissions() {
-        boolean shouldProvideRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION);
+        boolean shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
         // Provide an additional rationale to the user. This would happen if the user denied the
         // request previously, but didn't check the "Don't ask again" checkbox.
@@ -188,8 +220,11 @@ public class LocationActivity extends AppCompatActivity {
                 // receive empty arrays.
                 Log.i(TAG, "User interaction was cancelled.");
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted.
-                getLastLocation();
+                if (checkGPS()) {
+                    getLastLocation();
+                } else {
+                    buildAlertMessageNoGps();
+                }
             } else {
                 // Permission denied.
 
@@ -228,11 +263,13 @@ public class LocationActivity extends AppCompatActivity {
             List<Address> tempAddress = geocoder.getFromLocation(latitude, longitude, 1);
             StringBuilder address = new StringBuilder();
             if (tempAddress != null && tempAddress.size() != 0) {
-                address.append((tempAddress.get(0).getSubLocality() != null) ? tempAddress.get(0).getSubLocality() : "--");
+                address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
+
+               /* address.append((tempAddress.get(0).getSubLocality() != null) ? tempAddress.get(0).getSubLocality() : "--");
                 address.append(" - ");
                 address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
                 address.append(", ");
-                address.append(tempAddress.get(0).getCountryName());
+                address.append(tempAddress.get(0).getCountryName());*/
             }
             return String.valueOf(address);
         } catch (IOException e) {

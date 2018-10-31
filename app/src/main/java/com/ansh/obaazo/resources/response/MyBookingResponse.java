@@ -1,16 +1,20 @@
 package com.ansh.obaazo.resources.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ansh.obaazo.web.ApiResponse;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyBookingResponse extends ApiResponse {
+
 
     /**
      * response_code : 200
      * response_message : success
-     * result : [{"id":"226","booking_id":"OBAAZO330539","user_id":"58","hotel_id":"47","user_name":"sanchit","checkin":"09/20/2018","checkout":"09/20/2018","booking_amount":"200","final_amount":"200","check_status":"1","payment_option":"1","is_settle":"0","guest_time":"12:00 pm to 2:00 pm","gst_value":"0","gst_per":"0","coupon_name":"0","coupon_discount":"0","obaazo_money":"0","created":"2018-09-20","booking_status":"0","cancel_id":"","otp_cancel":"","cancellation_amount":"","cancel_date":"","vendor_amount":"120","obaazo_amount":"80"},{"id":"248","booking_id":"OBAAZO111653","user_id":"58","hotel_id":"57","user_name":"sanchit","checkin":"09/23/2018","checkout":"09/23/2018","booking_amount":"2000","final_amount":"2240","check_status":"1","payment_option":"1","is_settle":"0","guest_time":"12:00 pm to 2:00 pm","gst_value":"240","gst_per":"12","coupon_name":"0","coupon_discount":"0","obaazo_money":"0","created":"2018-09-22","booking_status":"0","cancel_id":"","otp_cancel":"","cancellation_amount":"","cancel_date":"","vendor_amount":"1200","obaazo_amount":"800"}]
+     * result : [{"id":"299","booking_id":"OBAAZO913703","user_id":"94","hotel_id":"97","user_name":"gurpreet","checkin":"10/13/2018","checkout":"10/13/2018","booking_amount":"2000","final_amount":"2240","check_status":"0","payment_option":"1","checkout_status":"0","is_settle":"0","guest_time":"2:00 pm to 5:00 pm","gst_value":"240","gst_per":"12","coupon_name":"0","coupon_discount":"0","obaazo_money":"0","created":"2018-10-13","booking_status":"1","cancel_id":"OBZ634441","otp_cancel":"","cancellation_amount":"","cancel_date":"2018/10/30","vendor_amount":"0","obaazo_amount":"0","txn_id":"","user_email":"","user_mobile":"","discount_status":"0","hotel_name":"Balaji Guest House","hotel_type":"5","address":"Greater Noida","hotel_amenties1":"non-smoking,nearby,TV LCD & Cable TV,Extra Mattress (On Request),Power Backup,Front Desk,Television,Free Parking,Room Service (24 Hours),Housekeeping,Restaurant,Doctor on Call,wifi,cctv,coffee,24 hour reception,battery,snowflake,newspaper,Internet access,Welcome Drink on Arrival (Non-Alcoholic)","Rating":"","hotelrating":"2","check_in":"12:00","check_out":"12:00","city_name":"Greater Noida","google_map":"","no_of_rest":"20","no_of_floor":"1","country":"","locality":"Balaji Guest house, Block B, Sector Sigma 1, Greater Noida, Uttar Pradesh, India","state":"Uttar Pradesh","zipcode":"201310","vendor_id":"77","image1":"https://obaazo.com/vendor/images/users/29906774.jpg","pah":"1","isblocked":"0","lat":"28.4527532","longg":"77.5492138","status":"0","hotel_del":"0","review":""},{"id":"383","booking_id":"OBAAZO414642","user_id":"94","hotel_id":"340","user_name":"gurpreet","checkin":"10/30/2018","checkout":"10/30/2018","booking_amount":"4000","final_amount":"4720","check_status":"0","payment_option":"1","checkout_status":"1","is_settle":"0","guest_time":"12:00 pm to 2:00 pm","gst_value":"720","gst_per":"","coupon_name":"0","coupon_discount":"0","obaazo_money":"0","created":"2018-10-31","booking_status":"0","cancel_id":"","otp_cancel":"","cancellation_amount":"","cancel_date":"","vendor_amount":"3776","obaazo_amount":"944","txn_id":"","user_email":"gurpreet.technowhiz@gmail.com","user_mobile":"9876543210","discount_status":"0","hotel_name":"test","hotel_type":"5","address":"Sector 39, Noida","hotel_amenties1":"","Rating":"4","hotelrating":"4","check_in":"12:00","check_out":"12:00","city_name":"Noida","google_map":"","no_of_rest":"2","no_of_floor":"","country":"","locality":"Noida City Centre Metro, Sector 39, Noida, Uttar Pradesh","state":"Punjab","zipcode":"201301","vendor_id":"315","image1":"https://obaazo.com/vendor/images/users/bed-bedroom-curtains-26139.jpg","pah":"","isblocked":"0","lat":"28.57447","longg":"77.35561","status":"0","hotel_del":"0","review":"1"},{"id":"384","booking_id":"OBAAZO124696","user_id":"94","hotel_id":"340","user_name":"gurpreet","checkin":"10/31/2018","checkout":"10/31/2018","booking_amount":"4000","final_amount":"4720","check_status":"2","payment_option":"1","checkout_status":"0","is_settle":"0","guest_time":"12:00 pm to 2:00 pm","gst_value":"720","gst_per":"","coupon_name":"0","coupon_discount":"0","obaazo_money":"0","created":"2018-10-31","booking_status":"0","cancel_id":"","otp_cancel":"","cancellation_amount":"","cancel_date":"","vendor_amount":"3776","obaazo_amount":"944","txn_id":"","user_email":"gurpreet.technowhiz@gmail.com","user_mobile":"3434343434","discount_status":"0","hotel_name":"test","hotel_type":"5","address":"Sector 39, Noida","hotel_amenties1":"","Rating":"4","hotelrating":"4","check_in":"12:00","check_out":"12:00","city_name":"Noida","google_map":"","no_of_rest":"2","no_of_floor":"","country":"","locality":"Noida City Centre Metro, Sector 39, Noida, Uttar Pradesh","state":"Punjab","zipcode":"201301","vendor_id":"315","image1":"https://obaazo.com/vendor/images/users/bed-bedroom-curtains-26139.jpg","pah":"","isblocked":"0","lat":"28.57447","longg":"77.35561","status":"0","hotel_del":"0","review":"1"}]
      */
 
     private String response_code;
@@ -41,34 +45,64 @@ public class MyBookingResponse extends ApiResponse {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Parcelable {
         /**
-         * id : 226
-         * booking_id : OBAAZO330539
-         * user_id : 58
-         * hotel_id : 47
-         * user_name : sanchit
-         * checkin : 09/20/2018
-         * checkout : 09/20/2018
-         * booking_amount : 200
-         * final_amount : 200
-         * check_status : 1
+         * id : 299
+         * booking_id : OBAAZO913703
+         * user_id : 94
+         * hotel_id : 97
+         * user_name : gurpreet
+         * checkin : 10/13/2018
+         * checkout : 10/13/2018
+         * booking_amount : 2000
+         * final_amount : 2240
+         * check_status : 0
          * payment_option : 1
+         * checkout_status : 0
          * is_settle : 0
-         * guest_time : 12:00 pm to 2:00 pm
-         * gst_value : 0
-         * gst_per : 0
+         * guest_time : 2:00 pm to 5:00 pm
+         * gst_value : 240
+         * gst_per : 12
          * coupon_name : 0
          * coupon_discount : 0
          * obaazo_money : 0
-         * created : 2018-09-20
-         * booking_status : 0
-         * cancel_id :
+         * created : 2018-10-13
+         * booking_status : 1
+         * cancel_id : OBZ634441
          * otp_cancel :
          * cancellation_amount :
-         * cancel_date :
-         * vendor_amount : 120
-         * obaazo_amount : 80
+         * cancel_date : 2018/10/30
+         * vendor_amount : 0
+         * obaazo_amount : 0
+         * txn_id :
+         * user_email :
+         * user_mobile :
+         * discount_status : 0
+         * hotel_name : Balaji Guest House
+         * hotel_type : 5
+         * address : Greater Noida
+         * hotel_amenties1 : non-smoking,nearby,TV LCD & Cable TV,Extra Mattress (On Request),Power Backup,Front Desk,Television,Free Parking,Room Service (24 Hours),Housekeeping,Restaurant,Doctor on Call,wifi,cctv,coffee,24 hour reception,battery,snowflake,newspaper,Internet access,Welcome Drink on Arrival (Non-Alcoholic)
+         * Rating :
+         * hotelrating : 2
+         * check_in : 12:00
+         * check_out : 12:00
+         * city_name : Greater Noida
+         * google_map :
+         * no_of_rest : 20
+         * no_of_floor : 1
+         * country :
+         * locality : Balaji Guest house, Block B, Sector Sigma 1, Greater Noida, Uttar Pradesh, India
+         * state : Uttar Pradesh
+         * zipcode : 201310
+         * vendor_id : 77
+         * image1 : https://obaazo.com/vendor/images/users/29906774.jpg
+         * pah : 1
+         * isblocked : 0
+         * lat : 28.4527532
+         * longg : 77.5492138
+         * status : 0
+         * hotel_del : 0
+         * review :
          */
 
         private String id;
@@ -82,6 +116,7 @@ public class MyBookingResponse extends ApiResponse {
         private String final_amount;
         private String check_status;
         private String payment_option;
+        private String checkout_status;
         private String is_settle;
         private String guest_time;
         private String gst_value;
@@ -97,6 +132,36 @@ public class MyBookingResponse extends ApiResponse {
         private String cancel_date;
         private String vendor_amount;
         private String obaazo_amount;
+        private String txn_id;
+        private String user_email;
+        private String user_mobile;
+        private String discount_status;
+        private String hotel_name;
+        private String hotel_type;
+        private String address;
+        private String hotel_amenties1;
+        private String Rating;
+        private String hotelrating;
+        private String check_in;
+        private String check_out;
+        private String city_name;
+        private String google_map;
+        private String no_of_rest;
+        private String no_of_floor;
+        private String country;
+        private String locality;
+        private String state;
+        private String zipcode;
+        private String vendor_id;
+        private String image1;
+        private String pah;
+        private String isblocked;
+        private String lat;
+        private String longg;
+        @SerializedName("status")
+        private String statusX;
+        private String hotel_del;
+        private String review;
 
         public String getId() {
             return id;
@@ -184,6 +249,14 @@ public class MyBookingResponse extends ApiResponse {
 
         public void setPayment_option(String payment_option) {
             this.payment_option = payment_option;
+        }
+
+        public String getCheckout_status() {
+            return checkout_status;
+        }
+
+        public void setCheckout_status(String checkout_status) {
+            this.checkout_status = checkout_status;
         }
 
         public String getIs_settle() {
@@ -305,5 +378,376 @@ public class MyBookingResponse extends ApiResponse {
         public void setObaazo_amount(String obaazo_amount) {
             this.obaazo_amount = obaazo_amount;
         }
+
+        public String getTxn_id() {
+            return txn_id;
+        }
+
+        public void setTxn_id(String txn_id) {
+            this.txn_id = txn_id;
+        }
+
+        public String getUser_email() {
+            return user_email;
+        }
+
+        public void setUser_email(String user_email) {
+            this.user_email = user_email;
+        }
+
+        public String getUser_mobile() {
+            return user_mobile;
+        }
+
+        public void setUser_mobile(String user_mobile) {
+            this.user_mobile = user_mobile;
+        }
+
+        public String getDiscount_status() {
+            return discount_status;
+        }
+
+        public void setDiscount_status(String discount_status) {
+            this.discount_status = discount_status;
+        }
+
+        public String getHotel_name() {
+            return hotel_name;
+        }
+
+        public void setHotel_name(String hotel_name) {
+            this.hotel_name = hotel_name;
+        }
+
+        public String getHotel_type() {
+            return hotel_type;
+        }
+
+        public void setHotel_type(String hotel_type) {
+            this.hotel_type = hotel_type;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getHotel_amenties1() {
+            return hotel_amenties1;
+        }
+
+        public void setHotel_amenties1(String hotel_amenties1) {
+            this.hotel_amenties1 = hotel_amenties1;
+        }
+
+        public String getRating() {
+            return Rating;
+        }
+
+        public void setRating(String Rating) {
+            this.Rating = Rating;
+        }
+
+        public String getHotelrating() {
+            return hotelrating;
+        }
+
+        public void setHotelrating(String hotelrating) {
+            this.hotelrating = hotelrating;
+        }
+
+        public String getCheck_in() {
+            return check_in;
+        }
+
+        public void setCheck_in(String check_in) {
+            this.check_in = check_in;
+        }
+
+        public String getCheck_out() {
+            return check_out;
+        }
+
+        public void setCheck_out(String check_out) {
+            this.check_out = check_out;
+        }
+
+        public String getCity_name() {
+            return city_name;
+        }
+
+        public void setCity_name(String city_name) {
+            this.city_name = city_name;
+        }
+
+        public String getGoogle_map() {
+            return google_map;
+        }
+
+        public void setGoogle_map(String google_map) {
+            this.google_map = google_map;
+        }
+
+        public String getNo_of_rest() {
+            return no_of_rest;
+        }
+
+        public void setNo_of_rest(String no_of_rest) {
+            this.no_of_rest = no_of_rest;
+        }
+
+        public String getNo_of_floor() {
+            return no_of_floor;
+        }
+
+        public void setNo_of_floor(String no_of_floor) {
+            this.no_of_floor = no_of_floor;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
+
+        public String getLocality() {
+            return locality;
+        }
+
+        public void setLocality(String locality) {
+            this.locality = locality;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public String getZipcode() {
+            return zipcode;
+        }
+
+        public void setZipcode(String zipcode) {
+            this.zipcode = zipcode;
+        }
+
+        public String getVendor_id() {
+            return vendor_id;
+        }
+
+        public void setVendor_id(String vendor_id) {
+            this.vendor_id = vendor_id;
+        }
+
+        public String getImage1() {
+            return image1;
+        }
+
+        public void setImage1(String image1) {
+            this.image1 = image1;
+        }
+
+        public String getPah() {
+            return pah;
+        }
+
+        public void setPah(String pah) {
+            this.pah = pah;
+        }
+
+        public String getIsblocked() {
+            return isblocked;
+        }
+
+        public void setIsblocked(String isblocked) {
+            this.isblocked = isblocked;
+        }
+
+        public String getLat() {
+            return lat;
+        }
+
+        public void setLat(String lat) {
+            this.lat = lat;
+        }
+
+        public String getLongg() {
+            return longg;
+        }
+
+        public void setLongg(String longg) {
+            this.longg = longg;
+        }
+
+        public String getStatusX() {
+            return statusX;
+        }
+
+        public void setStatusX(String statusX) {
+            this.statusX = statusX;
+        }
+
+        public String getHotel_del() {
+            return hotel_del;
+        }
+
+        public void setHotel_del(String hotel_del) {
+            this.hotel_del = hotel_del;
+        }
+
+        public String getReview() {
+            return review;
+        }
+
+        public void setReview(String review) {
+            this.review = review;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.booking_id);
+            dest.writeString(this.user_id);
+            dest.writeString(this.hotel_id);
+            dest.writeString(this.user_name);
+            dest.writeString(this.checkin);
+            dest.writeString(this.checkout);
+            dest.writeString(this.booking_amount);
+            dest.writeString(this.final_amount);
+            dest.writeString(this.check_status);
+            dest.writeString(this.payment_option);
+            dest.writeString(this.checkout_status);
+            dest.writeString(this.is_settle);
+            dest.writeString(this.guest_time);
+            dest.writeString(this.gst_value);
+            dest.writeString(this.gst_per);
+            dest.writeString(this.coupon_name);
+            dest.writeString(this.coupon_discount);
+            dest.writeString(this.obaazo_money);
+            dest.writeString(this.created);
+            dest.writeString(this.booking_status);
+            dest.writeString(this.cancel_id);
+            dest.writeString(this.otp_cancel);
+            dest.writeString(this.cancellation_amount);
+            dest.writeString(this.cancel_date);
+            dest.writeString(this.vendor_amount);
+            dest.writeString(this.obaazo_amount);
+            dest.writeString(this.txn_id);
+            dest.writeString(this.user_email);
+            dest.writeString(this.user_mobile);
+            dest.writeString(this.discount_status);
+            dest.writeString(this.hotel_name);
+            dest.writeString(this.hotel_type);
+            dest.writeString(this.address);
+            dest.writeString(this.hotel_amenties1);
+            dest.writeString(this.Rating);
+            dest.writeString(this.hotelrating);
+            dest.writeString(this.check_in);
+            dest.writeString(this.check_out);
+            dest.writeString(this.city_name);
+            dest.writeString(this.google_map);
+            dest.writeString(this.no_of_rest);
+            dest.writeString(this.no_of_floor);
+            dest.writeString(this.country);
+            dest.writeString(this.locality);
+            dest.writeString(this.state);
+            dest.writeString(this.zipcode);
+            dest.writeString(this.vendor_id);
+            dest.writeString(this.image1);
+            dest.writeString(this.pah);
+            dest.writeString(this.isblocked);
+            dest.writeString(this.lat);
+            dest.writeString(this.longg);
+            dest.writeString(this.statusX);
+            dest.writeString(this.hotel_del);
+            dest.writeString(this.review);
+        }
+
+        public ResultBean() {
+        }
+
+        protected ResultBean(Parcel in) {
+            this.id = in.readString();
+            this.booking_id = in.readString();
+            this.user_id = in.readString();
+            this.hotel_id = in.readString();
+            this.user_name = in.readString();
+            this.checkin = in.readString();
+            this.checkout = in.readString();
+            this.booking_amount = in.readString();
+            this.final_amount = in.readString();
+            this.check_status = in.readString();
+            this.payment_option = in.readString();
+            this.checkout_status = in.readString();
+            this.is_settle = in.readString();
+            this.guest_time = in.readString();
+            this.gst_value = in.readString();
+            this.gst_per = in.readString();
+            this.coupon_name = in.readString();
+            this.coupon_discount = in.readString();
+            this.obaazo_money = in.readString();
+            this.created = in.readString();
+            this.booking_status = in.readString();
+            this.cancel_id = in.readString();
+            this.otp_cancel = in.readString();
+            this.cancellation_amount = in.readString();
+            this.cancel_date = in.readString();
+            this.vendor_amount = in.readString();
+            this.obaazo_amount = in.readString();
+            this.txn_id = in.readString();
+            this.user_email = in.readString();
+            this.user_mobile = in.readString();
+            this.discount_status = in.readString();
+            this.hotel_name = in.readString();
+            this.hotel_type = in.readString();
+            this.address = in.readString();
+            this.hotel_amenties1 = in.readString();
+            this.Rating = in.readString();
+            this.hotelrating = in.readString();
+            this.check_in = in.readString();
+            this.check_out = in.readString();
+            this.city_name = in.readString();
+            this.google_map = in.readString();
+            this.no_of_rest = in.readString();
+            this.no_of_floor = in.readString();
+            this.country = in.readString();
+            this.locality = in.readString();
+            this.state = in.readString();
+            this.zipcode = in.readString();
+            this.vendor_id = in.readString();
+            this.image1 = in.readString();
+            this.pah = in.readString();
+            this.isblocked = in.readString();
+            this.lat = in.readString();
+            this.longg = in.readString();
+            this.statusX = in.readString();
+            this.hotel_del = in.readString();
+            this.review = in.readString();
+        }
+
+        public static final Parcelable.Creator<ResultBean> CREATOR = new Parcelable.Creator<ResultBean>() {
+            @Override
+            public ResultBean createFromParcel(Parcel source) {
+                return new ResultBean(source);
+            }
+
+            @Override
+            public ResultBean[] newArray(int size) {
+                return new ResultBean[size];
+            }
+        };
     }
 }

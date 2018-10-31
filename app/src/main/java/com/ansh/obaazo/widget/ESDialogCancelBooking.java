@@ -9,16 +9,16 @@ import android.view.View;
 import com.ansh.obaazo.R;
 
 
-public class ESDialogSimple extends Dialog {
+public class ESDialogCancelBooking extends Dialog {
     private String msg;
     private ClickListener listener;
 
-    public ESDialogSimple(@NonNull Context context) {
+    public ESDialogCancelBooking(@NonNull Context context) {
         super(context, R.style.My_Dialog);
 
     }
 
-    public ESDialogSimple(@NonNull Context context, String msg, ClickListener listener) {
+    public ESDialogCancelBooking(@NonNull Context context, String msg, ClickListener listener) {
         super(context, R.style.My_Dialog);
         this.listener = listener;
         this.msg = msg;

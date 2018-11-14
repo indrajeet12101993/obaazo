@@ -1,6 +1,7 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.activity.ActivitySelect;
 import com.ansh.obaazo.listener.IItemClick;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.utils.BitmapTransform;
@@ -63,6 +65,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         });
         holder.itemView.findViewById(R.id.rl_room_details).setVisibility(mData.getResult().get(holder.getAdapterPosition()).isSelected() ? View.VISIBLE : View.GONE);
         holder.btnRoom.setText((holder.itemView.findViewById(R.id.rl_room_details).getVisibility() == View.VISIBLE) ? "Remove Room" : "Select Room");
+
+        holder.itemView.findViewById(R.id.rl_room_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ActivitySelect.class));
+            }
+        });
     }
 
     @Override

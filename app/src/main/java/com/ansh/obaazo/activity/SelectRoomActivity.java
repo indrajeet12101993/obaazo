@@ -4,19 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.RoomsAdapter;
 import com.ansh.obaazo.listener.IItemClick;
+import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
 import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.DateUtils;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 
@@ -95,7 +104,31 @@ public class SelectRoomActivity extends BaseActivity implements IItemClick<Hotel
 
     @Override
     protected void bindDataWithUi() {
-
+        String startDate = PreferencesUtils.getString(AppConstant.START_DATE);
+        String endDate = PreferencesUtils.getString(AppConstant.END_DATE);
+        Calendar calStart = DateUtils.formatDate(startDate);
+        Calendar calEnd = DateUtils.formatDate(endDate);
+        String tempDates = "";
+        if (calStart != null && calEnd != null) {
+            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
+                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
+            ((TextView) findViewById(R.id.tv_dates)).setText(tempDates);
+        }
+        String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
+        if (!TextUtils.isEmpty(personDetails)) {
+            BookingInfo bookingInfo = new Gson().fromJson(personDetails, BookingInfo.class);
+            int noOfAdult1 = 0;
+            int noOfChild = 0;
+            if (bookingInfo.getPersonInfos() != null)
+                for (int i = 0; i < bookingInfo.getPersonInfos().size(); i++) {
+                    ArrayList<Integer> child = bookingInfo.getPersonInfos().get(i).getChild();
+                    noOfAdult1 += bookingInfo.getPersonInfos().get(i).getNoOfAdult();
+                    noOfChild += child.size();
+                }
+            ((TextView) findViewById(R.id.tv_room_count)).setText("" + bookingInfo.getPersonInfos().size());
+            ((TextView) findViewById(R.id.tv_adult_count)).setText("" + noOfAdult1);
+            ((TextView) findViewById(R.id.tv_child_count)).setText("" + noOfChild);
+        }
     }
 
     @Override

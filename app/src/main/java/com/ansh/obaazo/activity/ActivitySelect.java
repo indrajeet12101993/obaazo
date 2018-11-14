@@ -1,5 +1,6 @@
 package com.ansh.obaazo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,9 +56,10 @@ public class ActivitySelect extends BaseActivity {
         findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
                 info.setPersonInfos(personAdapter.getDetails());
-                PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, new Gson().toJson(info));
+                Intent intent = new Intent();
+                intent.putExtra(AppConstant.PERSON_DETAILS, new Gson().toJson(info));
+                setResult(RESULT_OK,intent);
                 onBackPressed();
             }
         });

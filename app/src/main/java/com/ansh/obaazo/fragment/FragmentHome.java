@@ -382,9 +382,11 @@ public class FragmentHome extends BaseFragment {
 
         if (requestCode == 1004 && resultCode == Activity.RESULT_OK) {
             isPersonSelected = true;
-            String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
-            if (!TextUtils.isEmpty(personDetails)) {
-                BookingInfo bookingInfo = new Gson().fromJson(personDetails, BookingInfo.class);
+            String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
+            PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, stringExtra);
+          //  String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
+            if (!TextUtils.isEmpty(stringExtra)) {
+                BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
                 int count = 0;
                 if (bookingInfo.getPersonInfos() != null)
                     for (int i = 0; i < bookingInfo.getPersonInfos().size(); i++) {

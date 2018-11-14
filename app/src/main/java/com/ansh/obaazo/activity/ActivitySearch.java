@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AdapterHotelList;
+import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.HotelSearchRequest;
 import com.ansh.obaazo.resources.response.HotelSearchResponse;
@@ -20,9 +22,9 @@ import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
-import com.ansh.obaazo.widget.topSheet.TopSheetDialog;
 import com.ethanhua.skeleton.RecyclerViewSkeletonScreen;
 import com.ethanhua.skeleton.Skeleton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -101,29 +103,33 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void bindDataWithUi() {
-        if (getIntent() != null) {
-            startDate = getIntent().getStringExtra(AppConstant.START_DATE);
-            endDate = getIntent().getStringExtra(AppConstant.END_DATE);
-            int roomCount = getIntent().getIntExtra(AppConstant.NO_OF_ROOM, 0);
-            int noOfAdult = getIntent().getIntExtra(AppConstant.NO_OF_ADULT, 0);
-            int noOfChild = getIntent().getIntExtra(AppConstant.NO_OF_CHILD, 0);
-
-            ((TextView) findViewById(R.id.tv_room_count)).setText("" + roomCount);
-            ((TextView) findViewById(R.id.tv_adult_count)).setText("" + noOfAdult);
+        startDate = PreferencesUtils.getString(AppConstant.START_DATE);
+        endDate = PreferencesUtils.getString(AppConstant.END_DATE);
+        Calendar calStart = DateUtils.formatDate(startDate);
+        Calendar calEnd = DateUtils.formatDate(endDate);
+        String tempDates = "";
+        if (calStart != null && calEnd != null) {
+            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
+                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
+            ((TextView) findViewById(R.id.tv_dates)).setText(tempDates);
+        }
+        String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
+        if (!TextUtils.isEmpty(personDetails)) {
+            BookingInfo bookingInfo = new Gson().fromJson(personDetails, BookingInfo.class);
+            int noOfAdult1 = 0;
+            int noOfChild = 0;
+            if (bookingInfo.getPersonInfos() != null)
+                for (int i = 0; i < bookingInfo.getPersonInfos().size(); i++) {
+                    ArrayList<Integer> child = bookingInfo.getPersonInfos().get(i).getChild();
+                    noOfAdult1 += bookingInfo.getPersonInfos().get(i).getNoOfAdult();
+                    noOfChild += child.size();
+                }
+            ((TextView) findViewById(R.id.tv_room_count)).setText("" + bookingInfo.getPersonInfos().size());
+            ((TextView) findViewById(R.id.tv_adult_count)).setText("" + noOfAdult1);
             ((TextView) findViewById(R.id.tv_child_count)).setText("" + noOfChild);
-
-            Calendar calStart = DateUtils.formatDate(startDate);
-            Calendar calEnd = DateUtils.formatDate(endDate);
-            String tempDates = "";
-            if (calStart != null && calEnd != null) {
-                tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
-                        calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
-                ((TextView) findViewById(R.id.tv_dates)).setText(tempDates);
-            }
-            adapterHotelList.setBookingDetails(startDate, endDate, noOfAdult, noOfChild, roomCount, tempDates);
+            adapterHotelList.setBookingDetails(startDate, endDate, noOfAdult1, noOfChild, bookingInfo.getPersonInfos().size(), tempDates);
         }
         hitHotelSearchApi();
-
     }
 
     private void hitHotelSearchApi() {

@@ -7,12 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AmentiesAdapter;
@@ -21,7 +20,9 @@ import com.ansh.obaazo.adapter.ReviewAdapter;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.HotelImageResponse;
+import com.ansh.obaazo.resources.response.HotelReviewResponse;
 import com.ansh.obaazo.resources.service.HotelImageService;
+import com.ansh.obaazo.resources.service.HotelReviewService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.web.ApiCallback;
@@ -52,11 +53,12 @@ public class ActivityHotelDetails extends BaseActivity {
     private AmentiesAdapter amentiesAdapter;
     private RecyclerView rvHotelGallery;
     private HotelGallaryAdapter galleryAdapter;
+    private ReviewAdapter reviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //  this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
     }
@@ -90,10 +92,44 @@ public class ActivityHotelDetails extends BaseActivity {
 
         RecyclerView rvReview = findViewById(R.id.rv_review);
         rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
-        ReviewAdapter reviewAdapter = new ReviewAdapter(this, new ArrayList<String>());
+        reviewAdapter = new ReviewAdapter(this, new ArrayList<HotelReviewResponse.ResultBean>());
         rvReview.setAdapter(reviewAdapter);
         rvReview.setNestedScrollingEnabled(false);
 
+        hitHotelReviewApi();
+
+    }
+
+    private void hitHotelReviewApi() {
+        showLoadingDialog();
+        BaseRequest baseRequest = new BaseRequest();
+        baseRequest.setId(hotelDetails.getId());
+      //  baseRequest.setId("99");
+        new HotelReviewService(this).execute(baseRequest, new ApiCallback<HotelReviewResponse>() {
+            @Override
+            public void onSuccess(Call<HotelReviewResponse> call, HotelReviewResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    reviewAdapter.setmList(response.getResult());
+                    if (response.getResult() != null && response.getResult().size() != 0) {
+                        findViewById(R.id.tv_no_review).setVisibility(View.GONE);
+                    } else {
+                        findViewById(R.id.tv_no_review).setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Toast.makeText(ActivityHotelDetails.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(ActivityHotelDetails.this, "Api Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void bindIntentData() {
@@ -134,12 +170,7 @@ public class ActivityHotelDetails extends BaseActivity {
             }
         });
 
-        /*findViewById(R.id.tv_question).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new SimpleDialog(ActivityHotelDetails.this, "Question", hotelDetails.getTour_policy()).show();
-            }
-        });*/
+
 
         findViewById(R.id.tv_policy).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,9 +3,11 @@ package com.ansh.obaazo.resources.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.web.ApiResponse;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotelRoomResponse extends ApiResponse {
@@ -18,7 +20,16 @@ public class HotelRoomResponse extends ApiResponse {
 
     private String response_code;
     private String response_message;
-    private List<ResultBean> result;
+    private ArrayList<ResultBean> result;
+    private ArrayList<BookingInfo> bookingInfos=new ArrayList<>() ;
+
+    public ArrayList<BookingInfo> getBookingInfos() {
+        return bookingInfos;
+    }
+
+    public void setBookingInfos(ArrayList<BookingInfo> bookingInfos) {
+        this.bookingInfos = bookingInfos;
+    }
 
     public String getResponse_code() {
         return response_code;
@@ -36,11 +47,11 @@ public class HotelRoomResponse extends ApiResponse {
         this.response_message = response_message;
     }
 
-    public List<ResultBean> getResult() {
+    public ArrayList<ResultBean> getResult() {
         return result;
     }
 
-    public void setResult(List<ResultBean> result) {
+    public void setResult(ArrayList<ResultBean> result) {
         this.result = result;
     }
 

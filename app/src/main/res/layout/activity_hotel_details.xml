@@ -90,8 +90,8 @@
                             android:layout_marginRight="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_bed"
                             android:drawablePadding="@dimen/_5sdp"
-                            android:gravity="center"
                             android:fontFamily="sans-serif"
+                            android:gravity="center"
                             android:textSize="@dimen/_8sdp" />
 
                         <View
@@ -110,8 +110,8 @@
                             android:layout_marginRight="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_child_small"
                             android:drawablePadding="@dimen/_5sdp"
-                            android:gravity="center"
                             android:fontFamily="sans-serif"
+                            android:gravity="center"
                             android:textSize="@dimen/_8sdp" />
 
 
@@ -123,8 +123,8 @@
                             android:layout_marginRight="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_child_small"
                             android:drawablePadding="@dimen/_5sdp"
-                            android:gravity="center"
                             android:fontFamily="sans-serif"
+                            android:gravity="center"
                             android:textSize="@dimen/_8sdp" />
 
 
@@ -226,9 +226,9 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_15sdp"
+                android:fontFamily="sans-serif"
                 android:text="DESCRIPTION"
                 android:textColor="#000"
-                android:fontFamily="sans-serif"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
@@ -239,8 +239,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:ellipsize="end"
-                android:maxLines="1"
                 android:fontFamily="sans-serif"
+                android:maxLines="1"
                 android:textSize="@dimen/_10sdp" />
 
             <RelativeLayout
@@ -254,8 +254,8 @@
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginTop="6dp"
                     android:layout_marginRight="@dimen/_15sdp"
-                    android:text="AMENTIES"
                     android:fontFamily="sans-serif"
+                    android:text="AMENTIES"
                     android:textColor="#000"
                     android:textSize="@dimen/_12sdp" />
 
@@ -292,21 +292,36 @@
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginTop="6dp"
                     android:layout_marginRight="@dimen/_15sdp"
+                    android:fontFamily="sans-serif"
                     android:text="Review"
                     android:textColor="#000"
-                    android:fontFamily="sans-serif"
                     android:textSize="@dimen/_12sdp" />
 
 
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_review"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_10sdp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_no_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="sans-serif"
+                    android:text="No Review"
+                    android:textSize="@dimen/_12sdp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_80sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp" />
+            </RelativeLayout>
 
 
             <TextView
@@ -319,8 +334,8 @@
                 android:background="#efefef"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:drawablePadding="@dimen/_5sdp"
-                android:gravity="center_vertical"
                 android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:text="STANDARD CANCELLATION POLICY"
@@ -336,9 +351,9 @@
                 android:background="#efefef"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
-                android:fontFamily="sans-serif"
                 android:paddingRight="@dimen/_10sdp"
                 android:text="HOTEL SERVICES"
                 android:textSize="@dimen/_14sdp"
@@ -355,9 +370,9 @@
                 android:background="#efefef"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/_10sdp"
-                android:fontFamily="sans-serif"
                 android:paddingRight="@dimen/_10sdp"
                 android:text="TERMS AND CONDITIONS"
                 android:textSize="@dimen/_14sdp" />
@@ -410,8 +425,8 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:text="SELECT ROOM"
         android:fontFamily="sans-serif"
+        android:text="SELECT ROOM"
         android:textColor="@color/mdtp_white" />
 
 

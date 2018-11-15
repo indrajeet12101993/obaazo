@@ -6,8 +6,8 @@
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginTop="@dimen/_10sdp"
     android:layout_marginRight="@dimen/_10sdp"
-    app:cardCornerRadius="@dimen/_2sdp"
     android:animateLayoutChanges="true"
+    app:cardCornerRadius="@dimen/_2sdp"
     app:cardElevation="@dimen/_2sdp">
 
     <LinearLayout
@@ -17,6 +17,7 @@
         android:padding="@dimen/_10sdp">
 
         <TextView
+            android:id="@+id/tv_room_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
@@ -38,6 +39,13 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/_8sdp" />
 
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_fit_person"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:orientation="horizontal" />
+
             <ImageView
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
@@ -50,11 +58,8 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:src="@drawable/ic_user" />
 
-            <ImageView
-                android:layout_width="@dimen/_10sdp"
-                android:layout_height="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:src="@drawable/ic_user" />
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -136,18 +141,18 @@
         </LinearLayout>
 
 
-
         <RelativeLayout
             android:id="@+id/rl_room_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_2sdp">
+            android:layout_marginTop="@dimen/_2sdp"
+            android:visibility="gone">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/mdtp_line_background"
-                android:layout_marginTop="@dimen/_2sdp" />
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@color/mdtp_line_background" />
 
             <TextView
                 android:id="@+id/tv_room_adult"
@@ -157,7 +162,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:fontFamily="sans-serif"
-                android:text="1 Room,1 Adult"
+                android:text="Enter Guest Details"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_16sdp" />
 

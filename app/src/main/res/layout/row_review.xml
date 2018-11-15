@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_5sdp"
     android:layout_marginTop="@dimen/_2sdp"
-    android:layout_marginBottom="@dimen/_2sdp"
     android:layout_marginEnd="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
     app:cardCornerRadius="@dimen/_2sdp"
     app:cardElevation="@dimen/_2sdp"
     app:cardPreventCornerOverlap="false">
@@ -25,6 +25,7 @@
             android:layout_marginBottom="@dimen/_5sdp">
 
             <TextView
+                android:id="@+id/tv_r_rating"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:background="@drawable/shape_orange_rect_white"
@@ -40,6 +41,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_r_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
@@ -48,6 +50,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
+                    android:id="@+id/tv_r_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
@@ -58,6 +61,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_r_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -67,11 +71,12 @@
             android:textSize="@dimen/_10sdp" />
 
         <TextView
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:id="@+id/tv_r_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:fontFamily="sans-serif"
             android:text="rds_ru_3gpp_status_ind, 1877) [RDS-E][RU][EVENT_RU_DM_3GPP_STATUS_IND] Invalid u43gpp_status:0x8 sim:0"
             android:textSize="@dimen/_8sdp" />

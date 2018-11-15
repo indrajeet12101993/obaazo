@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.RoomsAdapter;
-import com.ansh.obaazo.listener.IItemClick;
+import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
@@ -29,11 +29,12 @@ import java.util.Calendar;
 
 import retrofit2.Call;
 
-public class SelectRoomActivity extends BaseActivity implements IItemClick<HotelRoomResponse.ResultBean> {
+public class SelectRoomActivity extends BaseActivity implements RItemListener<HotelRoomResponse.ResultBean> {
     private RecyclerView rvRooms;
     private RoomsAdapter roomsAdapter;
     private HotelInfo hotelDetails;
     private String hotelName = "";
+    private int selectedPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,9 @@ public class SelectRoomActivity extends BaseActivity implements IItemClick<Hotel
         findViewById(R.id.tv_book).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+             /*   startActivity(new Intent(this, ActivityBookRoom.class)
+                        .putExtra(AppConstant.BOOK_ROOM, been)
+                        .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));*/
                 startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class));
             }
         });
@@ -131,10 +135,23 @@ public class SelectRoomActivity extends BaseActivity implements IItemClick<Hotel
         }
     }
 
+
     @Override
-    public void onItemClick(HotelRoomResponse.ResultBean been) {
-        startActivity(new Intent(this, ActivityBookRoom.class)
-                .putExtra(AppConstant.BOOK_ROOM, been)
-                .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
+    public void onItemClick(HotelRoomResponse.ResultBean item, int position) {
+        selectedPosition = position;
+        startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1004 && resultCode == RESULT_OK) {
+            String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
+            if (!TextUtils.isEmpty(stringExtra)) {
+                BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
+                 roomsAdapter.setRoomData(bookingInfo,selectedPosition);
+            }
+
+        }
     }
 }

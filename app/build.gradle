@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.jsibbold:zoomage:1.2.0'
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
     implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
+    implementation 'com.tuyenmonkey:mkloader:1.4.0'
     configurations {
         all*.exclude group: 'com.android.support', module: 'support-v13'
     }

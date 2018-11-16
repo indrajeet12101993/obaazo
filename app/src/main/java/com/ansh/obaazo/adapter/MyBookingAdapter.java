@@ -16,6 +16,7 @@ import com.ansh.obaazo.activity.ActivityMyBookingDetails;
 import com.ansh.obaazo.resources.response.MyBookingResponse;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
+import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.widget.ESDialogCancelBooking;
 import com.ansh.obaazo.widget.ESReviewDialog;
 import com.squareup.picasso.MemoryPolicy;
@@ -117,9 +118,11 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
                     .placeholder(R.drawable.ic_hotel_place_holder)
                     .into(ivHotelImage);
 
-            tvHotelName.setText(bean.getHotel_name());
-            tvCheckInCheckOutTime.setText(bean.getCheck_in() + " - " + bean.getCheck_out());
-            tvBookingAmount.setText("₹" + bean.getBooking_amount());
+
+            tvHotelName.setText("Obaazo " + bean.getHotel_id() + " " + bean.getHotel_name());
+            //   ((TextView)itemView.findViewById(R.id.tv_checkin_details)).setText(bean.get);
+            tvCheckInCheckOutTime.setText(DateUtils.parseDate(bean.getCheckin()) + " - " + DateUtils.parseDate(bean.getCheckout()));
+            tvBookingAmount.setText(" ₹" + bean.getBooking_amount());
         }
     }
 }

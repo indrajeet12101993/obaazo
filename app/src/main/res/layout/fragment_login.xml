@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Obaazo Money"
+        android:text="Login"
         android:textColor="@color/mdtp_white"
         android:textSize="@dimen/_14sdp" />
 
@@ -26,27 +26,39 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
+        <!--    <com.ansh.obaazo.utils.AutoScrollViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_140sdp"/>-->
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            app:srcCompat="@drawable/ic_otp_icon" />
+
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="sans-serif"
-            android:text="Single Click Login"
+            android:text="Single Click Login "
             android:textSize="@dimen/_14sdp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:gravity="center">
 
             <LinearLayout
                 android:id="@+id/ll_facebook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_weight="1"
                 android:background="@drawable/shape_blue"
                 android:gravity="center">
 
@@ -64,16 +76,18 @@
                     android:text="Login Via Facebook"
                     android:textAllCaps="true"
                     android:textColor="@color/mdtp_white"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:id="@+id/ll_google"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_weight="1"
                 android:background="@drawable/shape_button_red"
                 android:gravity="center">
 
@@ -91,7 +105,8 @@
                     android:text="Login Via Google"
                     android:textAllCaps="true"
                     android:textColor="@color/mdtp_white"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -101,7 +116,7 @@
             android:layout_gravity="center"
             android:fontFamily="sans-serif"
             android:text="Or"
-            android:textSize="@dimen/_20sdp" />
+            android:textSize="@dimen/_14sdp" />
 
         <EditText
             android:id="@+id/et_mobile_no"
@@ -128,6 +143,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
             android:background="@drawable/shape_orange"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"

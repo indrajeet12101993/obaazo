@@ -55,18 +55,17 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
         showLoadingDialog();
         BaseRequest baseRequest = new BaseRequest();
         baseRequest.setId(bookingId);
-
         new BookingDetailsService(this).execute(baseRequest, new ApiCallback<BookingDetailsResponse>() {
             @Override
             public void onSuccess(Call<BookingDetailsResponse> call, BookingDetailsResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    if (response.getResult() != null && response.getResult().size() > 0) {
-                        mBookingDetails = response.getResult().get(0);
+                    if (response.getResult() != null) {
+                        mBookingDetails = response.getResult();
                         bindDataWithUi();
                     } else {
+                        onBackPressed();
                         Toast.makeText(ActivityMyBookingDetails.this, "Somethings went wrong", Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Toast.makeText(ActivityMyBookingDetails.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
                 }
@@ -131,6 +130,7 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setAllGesturesEnabled(false);
         LatLng temp = new LatLng(Double.parseDouble(mBookingDetails.getLat()), Double.parseDouble(mBookingDetails.getLongg()));
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(temp);

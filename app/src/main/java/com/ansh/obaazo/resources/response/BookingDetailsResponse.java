@@ -17,7 +17,7 @@ public class BookingDetailsResponse extends ApiResponse {
 
     private String response_code;
     private String response_message;
-    private ArrayList<ResultBean> result;
+    private ResultBean result;
 
     public String getResponse_code() {
         return response_code;
@@ -35,11 +35,11 @@ public class BookingDetailsResponse extends ApiResponse {
         this.response_message = response_message;
     }
 
-    public ArrayList<ResultBean> getResult() {
+    public ResultBean getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<ResultBean> result) {
+    public void setResult(ResultBean result) {
         this.result = result;
     }
 

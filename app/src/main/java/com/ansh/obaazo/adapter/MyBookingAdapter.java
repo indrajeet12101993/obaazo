@@ -10,19 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivityMyBookingDetails;
+import com.ansh.obaazo.activity.BaseActivity;
+import com.ansh.obaazo.model.UserDetails;
+import com.ansh.obaazo.resources.request.AddReviewRequest;
+import com.ansh.obaazo.resources.response.AddReviewResponse;
 import com.ansh.obaazo.resources.response.MyBookingResponse;
+import com.ansh.obaazo.resources.service.AddReviewService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.utils.DateUtils;
+import com.ansh.obaazo.utils.PreferencesUtils;
+import com.ansh.obaazo.web.ApiCallback;
+import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.ESDialogCancelBooking;
 import com.ansh.obaazo.widget.ESReviewDialog;
+import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
@@ -59,6 +71,7 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
                 new ESReviewDialog(mContext, "", new ESReviewDialog.ClickListener() {
                     @Override
                     public void onClick(String rate, String msg) {
+                        hitAddReviewApi(rate, msg, holder.getAdapterPosition());
                         // submitReview(rate, msg);
                         // Toast.makeText(getContext(), msg + " : " + rate, Toast.LENGTH_SHORT).show();
 
@@ -80,6 +93,42 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
         });
 
 
+    }
+
+    private void hitAddReviewApi(String rate, String msg, int adapterPosition) {
+        ((BaseActivity) mContext).showLoadingDialog();
+        AddReviewRequest request = new AddReviewRequest();
+        String tempDetails = PreferencesUtils.getString(AppConstant.USER_DETAILS);
+        if (!TextUtils.isEmpty(tempDetails)) {
+            UserDetails results = new Gson().fromJson(tempDetails, UserDetails.class);
+            request.setUserId(results.getId());
+            request.setUserName(results.getName());
+            request.setHotelId(mData.get(adapterPosition).getHotel_id());
+            request.setHotelName(mData.get(adapterPosition).getHotel_name());
+            request.setHotelRating(rate);
+            request.setComment(msg);
+            new AddReviewService(mContext).execute(request, new ApiCallback<AddReviewResponse>() {
+                @Override
+                public void onSuccess(Call<AddReviewResponse> call, AddReviewResponse response) {
+                    Toast.makeText(mContext, response.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onComplete() {
+                    ((BaseActivity) mContext).hideLoadingDialog();
+
+                }
+
+                @Override
+                public void onFailure(ApiException e) {
+                    Toast.makeText(mContext, "Api Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show();
+            ((BaseActivity) mContext).hideLoadingDialog();
+        }
     }
 
 

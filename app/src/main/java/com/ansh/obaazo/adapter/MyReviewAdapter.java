@@ -48,6 +48,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
 
     @Override
     public void onBindViewHolder(@NonNull MyReviewViewHolder holder, int position) {
+        holder.bindData(mData.get(holder.getAdapterPosition()));
 
     }
 

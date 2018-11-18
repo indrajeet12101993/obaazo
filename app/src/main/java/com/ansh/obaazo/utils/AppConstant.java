@@ -1,6 +1,11 @@
 package com.ansh.obaazo.utils;
 
 public class AppConstant {
+    public static final String PARAMETER_SEP = "&";
+    public static final String PARAMETER_EQUALS = "=";
+    public static final String TRANS_URL = "https://secure.ccavenue.com/transaction/initTrans";
+
+
 
     public static final String SERVER_URL = "https://obaazo.com/";
     // public static final String SERVER_URL = "http://technowhizzit.com/obaazo/";

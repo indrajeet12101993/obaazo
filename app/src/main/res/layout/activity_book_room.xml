@@ -82,8 +82,10 @@
                         <ImageView
                             android:id="@+id/iv_hotel_image"
                             android:layout_width="@dimen/_100sdp"
-                            android:layout_height="@dimen/_60sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:adjustViewBounds="true"
                             android:background="@color/greay"
+                            android:scaleType="fitXY"
                             app:srcCompat="@drawable/ic_place_holer" />
 
                         <LinearLayout
@@ -96,30 +98,34 @@
                                 android:id="@+id/tv_hotel_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
                                 android:text="Taj Hotel"
-                                android:textSize="@dimen/_10sdp" />
+                                android:textColor="#000"
+                                android:textSize="@dimen/_13sdp" />
 
                             <TextView
                                 android:id="@+id/tv_address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:ellipsize="end"
                                 android:text="55 H,cp Road Delhi,India"
-                                android:textSize="@dimen/_8sdp" />
+                                android:textSize="@dimen/_10sdp" />
 
                             <TextView
+                                android:id="@+id/tv_check_in_check_out_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
                                 android:drawableLeft="@drawable/ic_date_small"
                                 android:drawablePadding="@dimen/_5sdp"
                                 android:text="22 jun -29 jun (7 nights)"
-                                android:textSize="@dimen/_8sdp" />
+                                android:textSize="@dimen/_10sdp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -217,6 +223,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_coupon_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -225,23 +232,11 @@
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_coupon_code"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_7sdp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Coupon Code"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
+                    android:layout_height="@dimen/_80sdp"
+                    android:orientation="vertical" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -422,6 +417,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
+                android:animateLayoutChanges="true"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
@@ -448,6 +444,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:background="@drawable/shape_edit_text"
                         android:hint="User Name"
+                        android:inputType="textPersonName"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
@@ -460,6 +457,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/shape_edit_text"
                         android:hint="Email"
+                        android:inputType="textEmailAddress"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
@@ -472,61 +470,76 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/shape_edit_text"
                         android:hint="Mobile No"
+                        android:inputType="number"
+                        android:maxLength="10"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
                     <CheckBox
+                        android:id="@+id/cb_corpatate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="false"
+                        android:fontFamily="sans-serif"
                         android:text="Corporate User? Use GSTIN for this booking (Optional)"
-
                         android:textSize="@dimen/_9sdp" />
 
-                    <EditText
+                    <LinearLayout
+                        android:id="@+id/ll_corparate"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:background="@drawable/shape_edit_text"
-                        android:hint="GST Identification Number"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/et_gst_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@drawable/shape_edit_text"
+                            android:hint="GST Identification Number"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="@dimen/_12sdp" />
 
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@drawable/shape_edit_text"
-                        android:hint="Company Name"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp" />
+                        <EditText
+                            android:id="@+id/et_company_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/shape_edit_text"
+                            android:hint="Company Name"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="@dimen/_12sdp" />
 
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@drawable/shape_edit_text"
-                        android:hint="Company Address"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp" />
+                        <EditText
+                            android:id="@+id/et_company_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/shape_edit_text"
+                            android:hint="Company Address"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="@dimen/_12sdp" />
 
 
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@drawable/shape_edit_text"
-                        android:entries="@array/time"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
-                        android:tooltipText="Expected CheckIn Time" />
+                        <Spinner
+                            android:id="@+id/sp_exp_chekin_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/shape_edit_text"
+                            android:entries="@array/time"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="@dimen/_12sdp"
+                            android:tooltipText="Expected CheckIn Time" />
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -592,6 +605,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_payment"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
 

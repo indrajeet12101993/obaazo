@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -122,7 +121,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             navigation.getMenu().findItem(R.id.nav_bottom_cash).setIcon((R.id.nav_bottom_cash == item.getItemId()) ? R.drawable.ic_cash : R.drawable.ic_cash_u);
             navigation.getMenu().findItem(R.id.nav_bottom_profile).setIcon((R.id.nav_bottom_profile == item.getItemId()) ? R.drawable.ic_profile_bottom : R.drawable.ic_profile_bottom_u);
             navigation.getMenu().findItem(R.id.nav_bottom_my_bookig).setIcon((R.id.nav_bottom_my_bookig == item.getItemId()) ? R.drawable.ic_my_booking_nav_a : R.drawable.ic_my_booking_nav);
-          invalidateOptionsMenu();
+            invalidateOptionsMenu();
             switch (item.getItemId()) {
 
                 case R.id.nav_bottom_search:
@@ -159,11 +158,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-         /*   case R.id.nav_my_booking:
-                startActivity(new Intent(MainActivity.this, ActivityMyBookingDetails.class));
-                break;*/
             case R.id.nav_my_review:
-                startActivity(new Intent(MainActivity.this, ActivityMyReview.class));
+                if (PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                    startActivity(new Intent(MainActivity.this, ActivityMyReview.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
                 break;
             case R.id.nav_rate_us:
                 Intent ishare = new Intent(Intent.ACTION_SEND);

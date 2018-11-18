@@ -97,10 +97,12 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         findViewById(R.id.tv_book).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             /*   startActivity(new Intent(this, ActivityBookRoom.class)
-                        .putExtra(AppConstant.BOOK_ROOM, been)
-                        .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));*/
-                startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class));
+                if (PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                    initBooking();
+                } else {
+                    startActivityForResult(new Intent(SelectRoomActivity.this, LoginActivity.class), 1009);
+                }
+
             }
         });
 
@@ -149,9 +151,18 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
-                 roomsAdapter.setRoomData(bookingInfo,selectedPosition);
+                roomsAdapter.setRoomData(bookingInfo, selectedPosition);
             }
 
         }
+        if (requestCode == 1009 && resultCode == RESULT_OK) {
+            initBooking();
+        }
+    }
+
+
+    public void initBooking() {
+        startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
+                .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
     }
 }

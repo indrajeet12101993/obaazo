@@ -20,9 +20,9 @@
             android:id="@+id/iv_hotel_image"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_120sdp"
+            android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="fitXY"
-            android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_place_holer" />
 
         <LinearLayout
@@ -87,6 +87,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/_4sdp">
 
 
@@ -96,7 +98,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/shape_orange_rect"
                     android:fontFamily="sans-serif"
                     android:paddingLeft="@dimen/_5sdp"
@@ -106,12 +107,13 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
+                    android:id="@+id/tv_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="sans-serif"
                     android:text="1220 Reviews"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_9sdp" />
 
 
             </LinearLayout>
@@ -123,6 +125,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_couple_friendly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -143,15 +146,16 @@
 
 
             </RelativeLayout>
+
             <TextView
-                android:gravity="end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="Free Breakfast"
-                android:visibility="gone"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:textSize="@dimen/_8sdp" />
+                android:fontFamily="sans-serif"
+                android:gravity="end"
+                android:text="Free Breakfast"
+                android:textSize="@dimen/_8sdp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -73,6 +73,14 @@ public class FragmentProfile extends BaseFragment {
                 }
             }
         });
+
+        mView.findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PreferencesUtils.clearSharedPrefs();
+                replaceFragment(new FragmentHome(), R.id.fm_main, false);
+            }
+        });
     }
 
     private boolean validate() {

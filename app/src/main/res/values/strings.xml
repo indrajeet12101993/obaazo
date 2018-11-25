@@ -16,6 +16,7 @@
     <string name="permission_rationale" />
     <string name="permission_denied_explanation">dfafa</string>
     <string name="settings">safafa</string>
+    <string name="photos_lt_amenities">Photos &amp; Amenities</string>
 
 
     <string-array name="time">

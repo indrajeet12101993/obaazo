@@ -92,6 +92,7 @@
                             android:drawablePadding="@dimen/_5sdp"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
+                            android:text="1"
                             android:textSize="@dimen/_8sdp" />
 
                         <View
@@ -112,6 +113,7 @@
                             android:drawablePadding="@dimen/_5sdp"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
+                            android:text="1"
                             android:textSize="@dimen/_8sdp" />
 
 
@@ -169,37 +171,39 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp">
 
-                    <RatingBar
-                        android:id="@+id/rb_hotel_rating"
-                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:max="5"
-                        android:numStars="5"
-                        android:textColor="#fff"
-                        android:theme="@style/RatingBar_normal" />
+                        android:layout_alignParentTop="true">
 
-                    <TextView
-                        android:id="@+id/tv_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="102dp"
-                        android:fontFamily="sans-serif"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_10sdp"
-                        android:textColor="@color/mdtp_white" />
+                        <RatingBar
+                            android:id="@+id/rb_hotel_rating"
+                            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:max="5"
+                            android:numStars="5"
+                            android:textColor="#fff"
+                            android:theme="@style/RatingBar_normal" />
+
+                        <TextView
+                            android:id="@+id/tv_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@drawable/shape_orange_rect"
+                            android:fontFamily="sans-serif"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:textColor="@color/mdtp_white" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
                         android:fontFamily="sans-serif"
                         android:text="200"
                         android:textColor="@color/green"
@@ -231,16 +235,14 @@
                 android:textColor="#000"
                 android:textSize="@dimen/_12sdp" />
 
-            <TextView
+            <com.ansh.obaazo.utils.ExpandableTextView
                 android:id="@+id/tv_hotel_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_15sdp"
-                android:ellipsize="end"
                 android:fontFamily="sans-serif"
-                android:maxLines="1"
                 android:textSize="@dimen/_10sdp" />
 
             <RelativeLayout
@@ -317,10 +319,10 @@
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_80sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_10sdp" />
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:minHeight="@dimen/_80sdp" />
             </RelativeLayout>
 
 

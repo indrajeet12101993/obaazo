@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivityHotelDetails;
 import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.model.HotelPrice;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.squareup.picasso.MemoryPolicy;
@@ -39,6 +40,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
     private int childCount;
     private int roomCount;
     private DecimalFormat format = new DecimalFormat("#.#");
+    private HotelPrice hotelPrices;
 
     public AdapterHotelList(Activity mContext, ArrayList<HotelInfo> mList) {
         this.mContext = mContext;
@@ -92,7 +94,12 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
         return (mList != null) ? mList.size() : 0;
     }
 
+    public void setHotelPrice(HotelPrice hotelPrices) {
+        this.hotelPrices = hotelPrices;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView tvReview;
         private RatingBar rbHotelRating;
         private TextView tvRating;
         private View cbHotel;
@@ -100,6 +107,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
         private TextView tvHotelName;
         private TextView tvDistance;
         private TextView tvAddress;
+        private TextView tvStartFrom;
 
 
         public ViewHolder(View itemView) {
@@ -111,6 +119,8 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvRating = itemView.findViewById(R.id.tv_rating);
             tvDistance = itemView.findViewById(R.id.tv_distance);
             tvAddress = itemView.findViewById(R.id.tv_address);
+            tvReview = itemView.findViewById(R.id.tv_review);
+            tvStartFrom = itemView.findViewById(R.id.tv_start_from);
         }
 
         public void bindData(HotelInfo bean) {
@@ -125,16 +135,29 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                     .into(ivHotelImage);
 
             tvHotelName.setText(bean.getHotel_name());
-            rbHotelRating.setRating(Float.parseFloat((TextUtils.isEmpty(bean.getRating()) ? "0.0" : bean.getRating())));
-            tvRating.setText(bean.getRating() + "/5");
-            String[] split = bean.getAddress().split(",");
-            tvAddress.setText((split.length != 0 ? split[0] : ""));
-            if (bean.getDistance() != 0) {
-                tvDistance.setText(format.format(bean.getDistance()) + " KM");
+            rbHotelRating.setRating(bean.getHotelrating());
+            tvRating.setText(TextUtils.isEmpty(bean.getRating()) ? "N/A" : bean.getRating() + "/5");
+            tvReview.setText(TextUtils.isEmpty(bean.getReview()) ? "" : bean.getReview() + " Reviews");
+            tvAddress.setText(bean.getGoogle_map());
+            tvDistance.setText(bean.getDistance() != 0 ? format.format(bean.getDistance()) + " KM" : "");
+            itemView.findViewById(R.id.tv_couple_friendly).setVisibility(bean.getCouple().equalsIgnoreCase("0") ? View.GONE : View.VISIBLE);
+            //   tvStartFrom.setText();
+
+            if (hotelPrices != null) {
             }
 
-
         }
+    }
+
+    public String getStartPrice(String hotelId) {
+        if (hotelPrices != null && hotelPrices.getPrice() != null) {
+            for (int i = 0; i < hotelPrices.getPrice().size(); i++) {
+                if (hotelPrices.getPrice().get(i).getHotel_id().equalsIgnoreCase(hotelId)) {
+                    return hotelPrices.getPrice().get(i).getAdult_price();
+                }
+            }
+        }
+        return "";
     }
 
 }

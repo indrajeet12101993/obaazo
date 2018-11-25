@@ -40,11 +40,11 @@
                 android:textSize="@dimen/_8sdp" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/ll_fit_person"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_12sdp"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="@dimen/_10sdp"
@@ -59,14 +59,13 @@
                 android:src="@drawable/ic_user" />
 
 
-
-
             <TextView
+                android:id="@+id/tv_photo_aminites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:gravity="end"
-                android:text="Couple friendly"
+                android:text="@string/photos_lt_amenities"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
 

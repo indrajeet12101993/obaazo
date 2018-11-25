@@ -25,6 +25,9 @@ import com.ansh.obaazo.resources.service.HotelImageService;
 import com.ansh.obaazo.resources.service.HotelReviewService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
+import com.ansh.obaazo.utils.DateUtils;
+import com.ansh.obaazo.utils.ExpandableTextView;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.AminityDialog;
@@ -32,6 +35,7 @@ import com.ansh.obaazo.widget.SimpleDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 
@@ -48,12 +52,15 @@ public class ActivityHotelDetails extends BaseActivity {
     private int noOfAdult = 0;
     private int noOfRoom = 0;
 
-    private TextView tvBookingDates, tvNoOfRoom, tvNoOfAdult, tvNoOfChild;
+    //  private TextView tvBookingDates;
+    private TextView tvNoOfRoom, tvNoOfAdult, tvNoOfChild;
     private RecyclerView rvAmenties;
     private AmentiesAdapter amentiesAdapter;
     private RecyclerView rvHotelGallery;
     private HotelGallaryAdapter galleryAdapter;
     private ReviewAdapter reviewAdapter;
+    private TextView tvDates;
+    private String tempDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class ActivityHotelDetails extends BaseActivity {
         bindIntentData();
 
 
-        tvBookingDates = findViewById(R.id.tv_dates);
+        tvDates = findViewById(R.id.tv_dates);
         tvNoOfRoom = findViewById(R.id.tv_no_of_rooms);
         tvNoOfAdult = findViewById(R.id.tv_no_of_adult);
         tvNoOfChild = findViewById(R.id.tv_no_of_child);
@@ -104,7 +111,7 @@ public class ActivityHotelDetails extends BaseActivity {
         showLoadingDialog();
         BaseRequest baseRequest = new BaseRequest();
         baseRequest.setId(hotelDetails.getId());
-      //  baseRequest.setId("99");
+        //  baseRequest.setId("99");
         new HotelReviewService(this).execute(baseRequest, new ApiCallback<HotelReviewResponse>() {
             @Override
             public void onSuccess(Call<HotelReviewResponse> call, HotelReviewResponse response) {
@@ -116,7 +123,7 @@ public class ActivityHotelDetails extends BaseActivity {
                         findViewById(R.id.tv_no_review).setVisibility(View.VISIBLE);
                     }
                 } else {
-                    Toast.makeText(ActivityHotelDetails.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(ActivityHotelDetails.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -171,7 +178,6 @@ public class ActivityHotelDetails extends BaseActivity {
         });
 
 
-
         findViewById(R.id.tv_policy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,21 +185,19 @@ public class ActivityHotelDetails extends BaseActivity {
             }
         });
 
-        tvBookingDates.setOnClickListener(new View.OnClickListener() {
+        tvDates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*  TopSheetDialog dialog = new TopSheetDialog(ActivityHotelDetails.this);
-                dialog.setContentView(R.layout.sheet_content);
-                dialog.show();*/
+                startActivityForResult(new Intent(ActivityHotelDetails.this, ActivityDateSelecte.class), 1003);
             }
         });
-
     }
 
     @Override
     protected void bindDataWithUi() {
         if (hotelDetails != null) {
-            tvBookingDates.setText(bookingDetails);
+            bindDateData();
+            //   tvBookingDates.setText(bookingDetails);
             tvNoOfRoom.setText("" + noOfRoom);
             tvNoOfAdult.setText("" + noOfAdult);
             tvNoOfChild.setText("" + noOfChild);
@@ -204,23 +208,18 @@ public class ActivityHotelDetails extends BaseActivity {
                     .resize(size, size)
                     .error(R.drawable.ic_hotel_place_holder)
                     .placeholder(R.drawable.ic_hotel_place_holder)
-                    /* .placeholder(R.drawable.ani_loader)
-                     .error(R.drawable.ani_loader)*/
                     .into(((ImageView) findViewById(R.id.iv_banner_image)));
 
 
             ((TextView) findViewById(R.id.tv_hotel_name)).setText(hotelDetails.getHotel_name());
             ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getHotel_actual_price());
-            ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(Float.parseFloat((TextUtils.isEmpty(hotelDetails.getRating()) ? "0.0" : hotelDetails.getRating())));
+            ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(hotelDetails.getHotelrating());
+            (findViewById(R.id.tv_rating)).setVisibility(TextUtils.isEmpty(hotelDetails.getRating()) ? View.GONE : View.VISIBLE);
             ((TextView) findViewById(R.id.tv_rating)).setText(hotelDetails.getRating() + "/5");
-            ((TextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getTour_policy());
-
-
+            ((ExpandableTextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getTour_policy());
             amentiesAdapter.setmData(hotelDetails.getHotel_amenties1());
         }
         hitHotelGalleryApi();
-        //  hitAmenityApi();
-
     }
 
 
@@ -248,5 +247,25 @@ public class ActivityHotelDetails extends BaseActivity {
             }
         });
 
+    }
+
+    private void bindDateData() {
+        startDate = PreferencesUtils.getString(AppConstant.START_DATE);
+        endDate = PreferencesUtils.getString(AppConstant.END_DATE);
+        Calendar calStart = DateUtils.formatDate(startDate);
+        Calendar calEnd = DateUtils.formatDate(endDate);
+        if (calStart != null && calEnd != null) {
+            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
+                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
+            tvDates.setText(tempDates);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            bindDateData();
+        }
     }
 }

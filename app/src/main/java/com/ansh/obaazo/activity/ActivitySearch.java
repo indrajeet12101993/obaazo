@@ -2,6 +2,7 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,9 @@ public class ActivitySearch extends BaseActivity {
     private String startDate;
     private String endDate;
     private RecyclerViewSkeletonScreen skeletonScreen;
+    private FloatingActionButton fbSearch;
+    private TextView tvDates;
+    private String tempDates = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,8 @@ public class ActivitySearch extends BaseActivity {
         rvHotelList.setLayoutManager(new LinearLayoutManager(ActivitySearch.this));
         adapterHotelList = new AdapterHotelList(this, mList);
         rvHotelList.setAdapter(adapterHotelList);
-
-
+        fbSearch = findViewById(R.id.fb_filter);
+        tvDates = findViewById(R.id.tv_dates);
     }
 
     @Override
@@ -83,19 +87,35 @@ public class ActivitySearch extends BaseActivity {
         ((TextView) findViewById(R.id.tv_title)).setText(PreferencesUtils.getString(AppConstant.B_LOCATION));
 
 
-        findViewById(R.id.fb_filter).setOnClickListener(new View.OnClickListener() {
+        fbSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(ActivitySearch.this, FilterActivity.class), 1001);
             }
         });
 
-        findViewById(R.id.ll_booking_date).setOnClickListener(new View.OnClickListener() {
+        rvHotelList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && fbSearch.isShown())
+                    fbSearch.hide();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    fbSearch.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
+        tvDates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* TopSheetDialog dialog = new TopSheetDialog(ActivitySearch.this);
-                dialog.setContentView(R.layout.sheet_content);
-                dialog.show();*/
+                startActivityForResult(new Intent(ActivitySearch.this, ActivityDateSelecte.class), 1003);
             }
         });
 
@@ -103,27 +123,19 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void bindDataWithUi() {
-        startDate = PreferencesUtils.getString(AppConstant.START_DATE);
-        endDate = PreferencesUtils.getString(AppConstant.END_DATE);
-        Calendar calStart = DateUtils.formatDate(startDate);
-        Calendar calEnd = DateUtils.formatDate(endDate);
-        String tempDates = "";
-        if (calStart != null && calEnd != null) {
-            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
-                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
-            ((TextView) findViewById(R.id.tv_dates)).setText(tempDates);
-        }
+        bindDateData();
         String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
         if (!TextUtils.isEmpty(personDetails)) {
             BookingInfo bookingInfo = new Gson().fromJson(personDetails, BookingInfo.class);
             int noOfAdult1 = 0;
             int noOfChild = 0;
-            if (bookingInfo.getPersonInfos() != null)
+            if (bookingInfo.getPersonInfos() != null) {
                 for (int i = 0; i < bookingInfo.getPersonInfos().size(); i++) {
                     ArrayList<Integer> child = bookingInfo.getPersonInfos().get(i).getChild();
                     noOfAdult1 += bookingInfo.getPersonInfos().get(i).getNoOfAdult();
                     noOfChild += child.size();
                 }
+            }
             ((TextView) findViewById(R.id.tv_room_count)).setText("" + bookingInfo.getPersonInfos().size());
             ((TextView) findViewById(R.id.tv_adult_count)).setText("" + noOfAdult1);
             ((TextView) findViewById(R.id.tv_child_count)).setText("" + noOfChild);
@@ -132,14 +144,25 @@ public class ActivitySearch extends BaseActivity {
         hitHotelSearchApi();
     }
 
+    private void bindDateData() {
+        startDate = PreferencesUtils.getString(AppConstant.START_DATE);
+        endDate = PreferencesUtils.getString(AppConstant.END_DATE);
+        Calendar calStart = DateUtils.formatDate(startDate);
+        Calendar calEnd = DateUtils.formatDate(endDate);
+        if (calStart != null && calEnd != null) {
+            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
+                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
+            tvDates.setText(tempDates);
+        }
+    }
+
     private void hitHotelSearchApi() {
         skeletonScreen = Skeleton.bind(rvHotelList)
                 .adapter(adapterHotelList)
                 .load(R.layout.item_skeleton_hotel)
                 .show();
-        // showLoadingDialog();
         HotelSearchRequest request = new HotelSearchRequest();
-        request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));    //       28.5355; 77.3910; "09/2/2018";*/"09/2/2018";*/
+        request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));
         request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
         request.setLatitude(PreferencesUtils.getDouble(AppConstant.B_LATITUDE));
         request.setLongitude(PreferencesUtils.getDouble(AppConstant.B_LONGITUDE));
@@ -147,6 +170,7 @@ public class ActivitySearch extends BaseActivity {
             @Override
             public void onSuccess(Call<HotelSearchResponse> call, HotelSearchResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    adapterHotelList.setHotelPrice(response.getHotelPrices());
                     adapterHotelList.setmList(response.getResult());
                     findViewById(R.id.iv_empty).setVisibility((response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);
                 }
@@ -172,5 +196,16 @@ public class ActivitySearch extends BaseActivity {
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.popup_menu, popup.getMenu());
         popup.show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            bindDateData();
+            hitHotelSearchApi();
+        }
+
     }
 }

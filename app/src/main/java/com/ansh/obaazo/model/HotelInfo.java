@@ -66,10 +66,39 @@ public class HotelInfo implements Parcelable {
     private String id;
     private String tour_policy;
     private String cancellation;
+    private String review;
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public void setHotelrating(int hotelrating) {
+        this.hotelrating = hotelrating;
+    }
+
     private String services;
     private String admission;
     private String date_change_allowed;
     private float distance;
+    private String couple;
+    private int hotelrating;
+
+    public int getHotelrating() {
+        return hotelrating;
+    }
+
+    public String getCouple() {
+        return couple;
+    }
+
+    public void setCouple(String couple) {
+        this.couple = couple;
+    }
+
 
     public String getHotel_id() {
         return hotel_id;
@@ -319,6 +348,9 @@ public class HotelInfo implements Parcelable {
         this.distance = distance;
     }
 
+    public HotelInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -357,9 +389,8 @@ public class HotelInfo implements Parcelable {
         dest.writeString(this.admission);
         dest.writeString(this.date_change_allowed);
         dest.writeFloat(this.distance);
-    }
-
-    public HotelInfo() {
+        dest.writeString(this.couple);
+        dest.writeInt(this.hotelrating);
     }
 
     protected HotelInfo(Parcel in) {
@@ -394,9 +425,11 @@ public class HotelInfo implements Parcelable {
         this.admission = in.readString();
         this.date_change_allowed = in.readString();
         this.distance = in.readFloat();
+        this.couple = in.readString();
+        this.hotelrating = in.readInt();
     }
 
-    public static final Parcelable.Creator<HotelInfo> CREATOR = new Parcelable.Creator<HotelInfo>() {
+    public static final Creator<HotelInfo> CREATOR = new Creator<HotelInfo>() {
         @Override
         public HotelInfo createFromParcel(Parcel source) {
             return new HotelInfo(source);

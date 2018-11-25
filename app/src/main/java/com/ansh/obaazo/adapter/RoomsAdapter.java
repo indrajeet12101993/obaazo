@@ -1,6 +1,7 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.activity.ActivityPhotoAminitese;
 import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
@@ -90,6 +91,15 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
                 ((TextView) holder.itemView.findViewById(R.id.tv_room_adult)).setText(bookingInfo.getPersonInfos().size() + " Room " + count + " Guest");
             }
         }
+
+        holder.itemView.findViewById(R.id.tv_photo_aminites).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ActivityPhotoAminitese.class)
+                        .putExtra("HOTEL_ID", mData.getResult().get(holder.getAdapterPosition()).getHotel_id())
+                        .putExtra("AMIN", mData.getResult().get(holder.getAdapterPosition()).getAmenities()));
+            }
+        });
     }
 
     @Override

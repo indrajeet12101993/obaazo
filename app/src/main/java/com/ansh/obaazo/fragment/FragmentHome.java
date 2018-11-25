@@ -8,11 +8,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +128,7 @@ public class FragmentHome extends BaseFragment {
     @Override
     protected void initListener() {
         btnSearch = mView.findViewById(R.id.btn_search);
-        NestedScrollView nsView = mView.findViewById(R.id.ns_home);
+   /*     NestedScrollView nsView = mView.findViewById(R.id.ns_home);
         nsView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -151,7 +149,7 @@ public class FragmentHome extends BaseFragment {
                     Log.i(TAG, "BOTTOM SCROLL");
                 }
             }
-        });
+        });*/
 
         etPlace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,45 +177,12 @@ public class FragmentHome extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(getContext(), ActivityDateSelecte.class), 1003);
-                // calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault()));
-           /*     new TZDatePicker(getActivity(), true, new TZDatePicker.PickerCallback() {
-                    @Override
-                    public void onSelect(String date, boolean isCurrentDate) {
-                        Calendar tempDate = formatDate(date);
-                        if (tempDate != null) {
-                            isSDateSelected = true;
-                            PreferencesUtils.putString(AppConstant.START_DATE, date);
-                            tvStartDate.setText(DateUtils.parseDate(date));
-
-                        } else {
-                            Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });*/
-
             }
         });
         tvEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(getContext(), ActivityDateSelecte.class), 1003);
-
-              /*  new TZDatePicker(getActivity(), true, new TZDatePicker.PickerCallback() {
-                    @Override
-                    public void onSelect(String date, boolean isCurrentDate) {
-                        Calendar tempDate = formatDate(date);
-                        if (tempDate != null) {
-                            isEDateSelected = true;
-                            PreferencesUtils.putString(AppConstant.END_DATE, date);
-                            //  tvEndDate.setText(formatter.format(date));
-                            tvEndDate.setText(DateUtils.parseDate(date));
-
-                        } else {
-                            Toast.makeText(getContext(), "Date picker Error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
             }
         });
 
@@ -233,12 +198,6 @@ public class FragmentHome extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(getActivity(), LocationActivity.class), 1001);
-
-              /*  if (checkGPS()) {
-                    startActivityForResult(new Intent(getActivity(), LocationActivity.class), 1001);
-                } else {
-                    buildAlertMessageNoGps();
-                }*/
             }
         });
     }
@@ -333,12 +292,7 @@ public class FragmentHome extends BaseFragment {
 
         } catch (Exception e) {
             //  GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();
-
-        } /*catch (GooglePlayServicesNotAvailableException e) {
-            String message = "Google Play EditSoftServices is not available: " + GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
-
-
-        }*/
+        }
     }
 
 
@@ -384,7 +338,7 @@ public class FragmentHome extends BaseFragment {
             isPersonSelected = true;
             String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
             PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, stringExtra);
-          //  String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
+            //  String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
                 int count = 0;

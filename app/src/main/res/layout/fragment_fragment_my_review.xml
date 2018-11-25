@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.ActivitySearch">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="My Review"
+        android:textColor="@color/mdtp_white"
+        android:textSize="@dimen/_14sdp" />
+
+
+    <TextView
+
+        android:id="@+id/iv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:drawableTop="@drawable/img_no_data_found"
+        android:gravity="center"
+        android:text="No Review"
+        android:textSize="@dimen/_16sdp"
+        android:visibility="visible" />
+
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/rv_my_review"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_title" />
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.ansh.obaazo.resources.response;
 
 import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.model.HotelPrice;
 import com.ansh.obaazo.web.ApiResponse;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,6 +20,9 @@ public class HotelSearchResponse extends ApiResponse {
     private String response_message;
     @SerializedName("result")
     private ArrayList<HotelInfo> result;
+    @SerializedName("price")
+    private HotelPrice hotelPrices;
+
 
     public String getResponse_code() {
         return response_code;
@@ -44,4 +48,12 @@ public class HotelSearchResponse extends ApiResponse {
         this.result = result;
     }
 
+
+    public HotelPrice getHotelPrices() {
+        return hotelPrices;
+    }
+
+    public void setHotelPrices(HotelPrice hotelPrices) {
+        this.hotelPrices = hotelPrices;
+    }
 }

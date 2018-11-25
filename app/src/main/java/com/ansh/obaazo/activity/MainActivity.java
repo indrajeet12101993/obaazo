@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,18 +22,19 @@ import com.ansh.obaazo.adapter.BottomNavigationViewHelper;
 import com.ansh.obaazo.fragment.FragmentCash;
 import com.ansh.obaazo.fragment.FragmentHome;
 import com.ansh.obaazo.fragment.FragmentMyBooking;
+import com.ansh.obaazo.fragment.FragmentMyReview;
 import com.ansh.obaazo.fragment.FragmentProfile;
 import com.ansh.obaazo.listener.LocationListener;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.PreferencesUtils;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity {
 
 
     private BottomNavigationView navigation;
-    private NavigationView navigationView;
+  //  private NavigationView navigationView;
     private ImageView ivUserImage;
-    private DrawerLayout drawer;
+  //  private DrawerLayout drawer;
     private LocationListener listener;
 
     @Override
@@ -72,7 +72,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         BottomNavigationViewHelper.removeShiftMode(navigation);
         addFragment(new FragmentHome(), R.id.fm_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+  /*      Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -80,29 +80,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             //  toolbar.setTitle(setToolbarName());
             //  toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_dehaze));
 
-        }
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        }*/
+       /* drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);*/
 
 
     }
 
     @Override
     protected void initListener() {
-        ivUserImage = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
+       /* ivUserImage = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
         ivUserImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navigation.setSelectedItemId(R.id.nav_bottom_profile);
                 drawer.closeDrawer(Gravity.START);
             }
-        });
+        });*/
     }
 
     @Override
@@ -121,6 +121,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             navigation.getMenu().findItem(R.id.nav_bottom_cash).setIcon((R.id.nav_bottom_cash == item.getItemId()) ? R.drawable.ic_cash : R.drawable.ic_cash_u);
             navigation.getMenu().findItem(R.id.nav_bottom_profile).setIcon((R.id.nav_bottom_profile == item.getItemId()) ? R.drawable.ic_profile_bottom : R.drawable.ic_profile_bottom_u);
             navigation.getMenu().findItem(R.id.nav_bottom_my_bookig).setIcon((R.id.nav_bottom_my_bookig == item.getItemId()) ? R.drawable.ic_my_booking_nav_a : R.drawable.ic_my_booking_nav);
+            navigation.getMenu().findItem(R.id.nav_bottom_my_review).setIcon((R.id.nav_bottom_my_review == item.getItemId()) ? R.drawable.ic_review_nav_a : R.drawable.ic_review_nav);
+
             invalidateOptionsMenu();
             switch (item.getItemId()) {
 
@@ -148,6 +150,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     }
                     break;
+
+                case R.id.nav_bottom_my_review:
+                    if (PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                        replaceFragment(new FragmentMyReview(), R.id.fm_main, false);
+                    } else {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                    break;
             }
 
             return true;
@@ -155,7 +165,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     };
 
 
-    @Override
+ /*   @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_my_review:
@@ -179,7 +189,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -189,28 +199,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-       /* if (getSupportFragmentManager().findFragmentById(R.id.fm_main) instanceof FragmentProfile) {
+    /*  @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareOptionsMenu(Menu menu) {
+           *//* if (getSupportFragmentManager().findFragmentById(R.id.fm_main) instanceof FragmentProfile) {
             menu.findItem(R.id.action_logout).setVisible(true);
         } else {
             menu.findItem(R.id.action_logout).setVisible(false);
-        }*/
+        }*//*
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
+    }*/
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
             PreferencesUtils.clearSharedPrefs();
             replaceFragment(new FragmentHome(), R.id.fm_main, false);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

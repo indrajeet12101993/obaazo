@@ -165,62 +165,6 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="Accomadation Details"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="Premimum Room x1"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="wrap_content"
-                            android:text="14x16 sq ft"
-                            android:textSize="@dimen/_9sdp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:text="Double Size Bed Room x1"
-                            android:textSize="@dimen/_9sdp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_coupon_code"
@@ -528,19 +472,19 @@
                             android:textSize="@dimen/_12sdp" />
 
 
-                        <Spinner
-                            android:id="@+id/sp_exp_chekin_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_30sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/shape_edit_text"
-                            android:entries="@array/time"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textSize="@dimen/_12sdp"
-                            android:tooltipText="Expected CheckIn Time" />
-                    </LinearLayout>
 
+                    </LinearLayout>
+                    <Spinner
+                        android:id="@+id/sp_exp_chekin_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/shape_edit_text"
+                        android:entries="@array/time"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textSize="@dimen/_12sdp"
+                        android:tooltipText="Expected CheckIn Time" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

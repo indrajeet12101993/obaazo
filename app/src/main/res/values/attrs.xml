@@ -14,4 +14,8 @@
         </attr>
         <attr name="rtl" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="ExpandableTextView">
+        <attr name="trimLength" format="integer"/>
+    </declare-styleable>
+
 </resources>

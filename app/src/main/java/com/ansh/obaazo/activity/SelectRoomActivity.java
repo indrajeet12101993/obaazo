@@ -35,6 +35,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private HotelInfo hotelDetails;
     private String hotelName = "";
     private int selectedPosition = 0;
+    private TextView tvDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     protected void initView() {
         hotelDetails = getIntent().getParcelableExtra(AppConstant.HOTEL_DETAILS);
         hotelName = hotelDetails.getHotel_name();
+        tvDates = findViewById(R.id.tv_dates);
         initCustomToolbar();
         rvRooms = findViewById(R.id.rv_rooms);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
@@ -106,20 +108,19 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             }
         });
 
+        tvDates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(SelectRoomActivity.this, ActivityDateSelecte.class), 1003);
+
+            }
+        });
+
     }
 
     @Override
     protected void bindDataWithUi() {
-        String startDate = PreferencesUtils.getString(AppConstant.START_DATE);
-        String endDate = PreferencesUtils.getString(AppConstant.END_DATE);
-        Calendar calStart = DateUtils.formatDate(startDate);
-        Calendar calEnd = DateUtils.formatDate(endDate);
-        String tempDates = "";
-        if (calStart != null && calEnd != null) {
-            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
-                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
-            ((TextView) findViewById(R.id.tv_dates)).setText(tempDates);
-        }
+        bindDateData();
         String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
         if (!TextUtils.isEmpty(personDetails)) {
             BookingInfo bookingInfo = new Gson().fromJson(personDetails, BookingInfo.class);
@@ -155,6 +156,9 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             }
 
         }
+        if (requestCode == 1003 && resultCode == RESULT_OK) {
+            bindDateData();
+        }
         if (requestCode == 1009 && resultCode == RESULT_OK) {
             initBooking();
         }
@@ -165,4 +169,20 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
                 .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
     }
+
+
+    private void bindDateData() {
+        String startDate = PreferencesUtils.getString(AppConstant.START_DATE);
+        String endDate = PreferencesUtils.getString(AppConstant.END_DATE);
+        Calendar calStart = DateUtils.formatDate(startDate);
+        Calendar calEnd = DateUtils.formatDate(endDate);
+        String tempDates = "";
+        if (calStart != null && calEnd != null) {
+            tempDates = calStart.get(Calendar.DATE) + " " + DateUtils.parseMonth(calStart.get(Calendar.MONTH)) + " - " +
+                    calEnd.get(Calendar.DATE) + " " + DateUtils.parseMonth(calEnd.get(Calendar.MONTH));
+            tvDates.setText(tempDates);
+        }
+    }
+
+
 }

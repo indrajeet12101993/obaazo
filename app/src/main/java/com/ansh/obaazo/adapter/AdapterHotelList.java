@@ -40,7 +40,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
     private int childCount;
     private int roomCount;
     private DecimalFormat format = new DecimalFormat("#.#");
-    private HotelPrice hotelPrices;
+    private ArrayList<HotelPrice> hotelPrices;
 
     public AdapterHotelList(Activity mContext, ArrayList<HotelInfo> mList) {
         this.mContext = mContext;
@@ -84,7 +84,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                         .putExtra(AppConstant.HOTEL_DETAILS, resultBean));
             }
         });
-        holder.bindData(resultBean);
+        holder.bindData(resultBean, holder.getAdapterPosition());
 
 
     }
@@ -94,7 +94,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
         return (mList != null) ? mList.size() : 0;
     }
 
-    public void setHotelPrice(HotelPrice hotelPrices) {
+    public void setHotelPrice(ArrayList<HotelPrice> hotelPrices) {
         this.hotelPrices = hotelPrices;
     }
 
@@ -123,7 +123,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvStartFrom = itemView.findViewById(R.id.tv_start_from);
         }
 
-        public void bindData(HotelInfo bean) {
+        public void bindData(HotelInfo bean, int adapterPosition) {
             Picasso.get()
                     .load((!(TextUtils.isEmpty(bean.getImage1()))) ? bean.getImage1() : null)
                     .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
@@ -141,19 +141,29 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvAddress.setText(bean.getGoogle_map());
             tvDistance.setText(bean.getDistance() != 0 ? format.format(bean.getDistance()) + " KM" : "");
             itemView.findViewById(R.id.tv_couple_friendly).setVisibility(bean.getCouple().equalsIgnoreCase("0") ? View.GONE : View.VISIBLE);
-            //   tvStartFrom.setText();
-
             if (hotelPrices != null) {
+                String startPrice = getStartPrice(bean.getHotel_id());
+                if (TextUtils.isEmpty(startPrice)) {
+                    itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
+                    mList.get(adapterPosition).setAvailable(false);
+                    itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
+                } else {
+                    itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
+                    tvStartFrom.setText("₹" + startPrice);
+                    mList.get(adapterPosition).setStartFrom(startPrice);
+                    mList.get(adapterPosition).setAvailable(true);
+                    itemView.findViewById(R.id.tv_not_avi).setVisibility(View.GONE);
+                }
             }
 
         }
     }
 
     public String getStartPrice(String hotelId) {
-        if (hotelPrices != null && hotelPrices.getPrice() != null) {
-            for (int i = 0; i < hotelPrices.getPrice().size(); i++) {
-                if (hotelPrices.getPrice().get(i).getHotel_id().equalsIgnoreCase(hotelId)) {
-                    return hotelPrices.getPrice().get(i).getAdult_price();
+        if (hotelPrices != null) {
+            for (int i = 0; i < hotelPrices.size(); i++) {
+                if (hotelPrices.get(i).getHotelId().equalsIgnoreCase(hotelId)) {
+                    return hotelPrices.get(i).getAdultPrice();
                 }
             }
         }

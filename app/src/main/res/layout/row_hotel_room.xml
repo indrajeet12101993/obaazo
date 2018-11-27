@@ -100,20 +100,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:text="Double Size Bed"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tv_start_from"
+                <LinearLayout
+                    android:id="@+id/ll_start"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:gravity="end"
-                    android:text="₹500"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_20sdp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Start From"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_start_from"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="-2dp"
+                        android:gravity="end"
+                        android:text="₹500"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_20sdp" />
+                </LinearLayout>
+
 
                 <TextView
                     android:layout_width="match_parent"

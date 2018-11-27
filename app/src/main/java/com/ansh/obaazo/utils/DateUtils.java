@@ -73,7 +73,7 @@ public class DateUtils {
 
 
     public static String parseDate(String date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         try {
             Date parse = simpleDateFormat.parse(date);
             SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");

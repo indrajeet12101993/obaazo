@@ -163,7 +163,9 @@ public class ActivitySearch extends BaseActivity {
                 .show();
         HotelSearchRequest request = new HotelSearchRequest();
         request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));
+       // request.setCheckInDate("10/29/2018");
         request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
+        //request.setCheckOutDate("10/28/2018");
         request.setLatitude(PreferencesUtils.getDouble(AppConstant.B_LATITUDE));
         request.setLongitude(PreferencesUtils.getDouble(AppConstant.B_LONGITUDE));
         new HotelSearchService(this).execute(request, new ApiCallback<HotelSearchResponse>() {

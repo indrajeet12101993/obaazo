@@ -24,12 +24,12 @@ public class SendOtpService extends ApiService<SendOtpService.SendOtpApi, BaseRe
 
     @Override
     protected Call<SendOtpResponse> onExecute(SendOtpApi api, BaseRequest request) {
-        return api.sendOtp(request.getId());
+        return api.sendOtp(request.getId(),request.getId2());
     }
 
     public interface SendOtpApi {
         @FormUrlEncoded
         @POST("Api/login")
-        Call<SendOtpResponse> sendOtp(@Field("mobile") String mobileNo);
+        Call<SendOtpResponse> sendOtp(@Field("mobile") String mobileNo,@Field("type")String type);
     }
 }

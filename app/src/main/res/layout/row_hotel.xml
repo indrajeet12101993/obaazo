@@ -16,14 +16,32 @@
         android:layout_height="wrap_content"
         android:minHeight="@dimen/_80sdp">
 
-        <ImageView
-            android:id="@+id/iv_hotel_image"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_120sdp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@null"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_place_holer" />
+        <RelativeLayout
+            android:layout_width="@dimen/_105sdp"
+            android:layout_height="@dimen/_120sdp">
+
+            <ImageView
+                android:id="@+id/iv_hotel_image"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_place_holer" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_not_avi"
+                android:layout_width="@dimen/_105sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_red"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textSize="@dimen/_10sdp"
+                android:text="Not Available"
+                android:textColor="@color/mdtp_white" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,8 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/_4sdp">
+                android:layout_marginTop="@dimen/_4sdp"
+                android:gravity="center_vertical">
 
 
                 <TextView
@@ -132,17 +150,32 @@
                     android:layout_centerInParent="true"
                     android:fontFamily="sans-serif"
                     android:text="Couple friendly"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
-                <TextView
-                    android:id="@+id/tv_start_from"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_start"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:text="₹500"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_16sdp" />
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Start From"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:id="@+id/tv_start_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_16sdp" />
+                </LinearLayout>
 
 
             </RelativeLayout>

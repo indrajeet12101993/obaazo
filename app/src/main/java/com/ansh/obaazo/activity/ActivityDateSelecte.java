@@ -23,7 +23,7 @@ public class ActivityDateSelecte extends BaseActivity {
     private String TAG = ActivityDateSelecte.class.getSimpleName();
     private TextView tvStartDate;
     private TextView tvEndDate;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private SimpleDateFormat monthFormat = new SimpleDateFormat("dd MMM yyyy");
 
     @Override

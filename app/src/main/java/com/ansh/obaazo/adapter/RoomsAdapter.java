@@ -16,6 +16,7 @@ import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivityPhotoAminitese;
 import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
+import com.ansh.obaazo.model.HotelPrice;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.squareup.picasso.Picasso;
@@ -30,7 +31,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     private Context mContext;
     private HotelRoomResponse mData;
     private RItemListener<HotelRoomResponse.ResultBean> mListener;
-
+    private ArrayList<HotelPrice> roomPrice;
 
     public RoomsAdapter(Context mContext, HotelRoomResponse mData, RItemListener<HotelRoomResponse.ResultBean> mListener) {
         this.mContext = mContext;
@@ -60,10 +61,10 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             @Override
             public void onClick(View view) {
                 if (holder.btnRoom.getText().toString().equalsIgnoreCase("Select Room")) {
-                    //    mContext.startActivity(new Intent(mContext, ActivitySelect.class));
-                    mData.getResult().get(holder.getAdapterPosition()).setSelected(true);
+                    mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 } else {
                     mData.getResult().get(holder.getAdapterPosition()).setSelected(false);
+                    mData.getBookingInfos().set(holder.getAdapterPosition(), new BookingInfo());
                 }
                 notifyDataSetChanged();
                 //  mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()));
@@ -109,7 +110,12 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
 
     public void setRoomData(BookingInfo bookingInfo, int position) {
         mData.getBookingInfos().set(position, bookingInfo);
+        mData.getResult().get(position).setSelected(true);
         notifyItemChanged(position);
+    }
+
+    public void setRoomPriceData(ArrayList<HotelPrice> roomPrice) {
+        this.roomPrice = roomPrice;
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder {
@@ -139,18 +145,31 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             tvRoomSize.setText(bean.getRoom_size());
             tvBedType.setText(bean.getBed_type());
             ((TextView) itemView.findViewById(R.id.tv_room_name)).setText(bean.getName());
-           /* ImageView fit = new ImageView(mContext);
-            fit.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_user));
-            for (int i = 0; i < 5; i++) {
-                ((LinearLayout) itemView.findViewById(R.id.ll_fit_person)).addView(fit);
+
+            String startPrice = getStartPrice(bean.getId());
+            /*if (!TextUtils.isEmpty(startPrice)) {
+                ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + startPrice);
             }*/
 
-            /*((TextView) itemView.findViewById(R.id.tv_max_person)).
-                    setText("Max " + bean.getAdults_max() + "Adult," + bean.getChild_max() + "child");*/
-            ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + bean.getPrice());
-
+            if (TextUtils.isEmpty(startPrice)) {
+                itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
+            } else {
+                itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
+                ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + startPrice);
+            }
         }
     }
 
+
+    public String getStartPrice(String roomId) {
+        if (roomPrice != null) {
+            for (int i = 0; i < roomPrice.size(); i++) {
+                if (roomPrice.get(i).getRoomId().equalsIgnoreCase(roomId)) {
+                    return roomPrice.get(i).getAdultPrice();
+                }
+            }
+        }
+        return "";
+    }
 
 }

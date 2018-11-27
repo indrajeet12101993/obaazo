@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.BaseActivity;
-import com.ansh.obaazo.activity.MainActivity;
 import com.ansh.obaazo.model.UserInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.LoginResponse;
@@ -56,7 +54,8 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
     }
 
     Integer[] imageId = {R.drawable.ic_otp_icon, R.drawable.ic_reset_otp, R.drawable.ic_otp_icon, R.drawable.ic_reset_otp};
-    String[] imagesName = {"image1","image2","image3","image4"};
+    String[] imagesName = {"image1", "image2", "image3", "image4"};
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_login, container, false);
@@ -135,6 +134,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
         ((BaseActivity) getActivity()).showLoadingDialog();
         BaseRequest request = new BaseRequest();
         request.setId(mobileNo);
+        request.setId2("normal");
         new SendOtpService(getContext()).execute(request, new ApiCallback<SendOtpResponse>() {
             @Override
             public void onSuccess(Call<SendOtpResponse> call, SendOtpResponse response) {

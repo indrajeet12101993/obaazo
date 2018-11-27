@@ -21,7 +21,7 @@ public class HotelSearchResponse extends ApiResponse {
     @SerializedName("result")
     private ArrayList<HotelInfo> result;
     @SerializedName("price")
-    private HotelPrice hotelPrices;
+    private ArrayList<HotelPrice> hotelPrices;
 
 
     public String getResponse_code() {
@@ -49,11 +49,11 @@ public class HotelSearchResponse extends ApiResponse {
     }
 
 
-    public HotelPrice getHotelPrices() {
+    public ArrayList<HotelPrice> getHotelPrices() {
         return hotelPrices;
     }
 
-    public void setHotelPrices(HotelPrice hotelPrices) {
+    public void setHotelPrices(ArrayList<HotelPrice> hotelPrices) {
         this.hotelPrices = hotelPrices;
     }
 }

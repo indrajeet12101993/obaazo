@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.ansh.obaazo.model.BookingInfo;
+import com.ansh.obaazo.model.HotelPrice;
 import com.ansh.obaazo.web.ApiResponse;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HotelRoomResponse extends ApiResponse {
 
@@ -21,7 +21,17 @@ public class HotelRoomResponse extends ApiResponse {
     private String response_code;
     private String response_message;
     private ArrayList<ResultBean> result;
-    private ArrayList<BookingInfo> bookingInfos=new ArrayList<>() ;
+    private ArrayList<BookingInfo> bookingInfos = new ArrayList<>();
+    @SerializedName("roomprice")
+    private ArrayList<HotelPrice> roomPrice;
+
+    public ArrayList<HotelPrice> getRoomPrice() {
+        return roomPrice;
+    }
+
+    public void setRoomPrice(ArrayList<HotelPrice> roomPrice) {
+        this.roomPrice = roomPrice;
+    }
 
     public ArrayList<BookingInfo> getBookingInfos() {
         return bookingInfos;

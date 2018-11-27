@@ -21,15 +21,22 @@ import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.payment.AvenuesParams;
 import com.ansh.obaazo.payment.PaymentClient;
 import com.ansh.obaazo.payment.PaymentWebView;
+import com.ansh.obaazo.resources.request.BaseRequest;
+import com.ansh.obaazo.resources.response.CouponListResponse;
+import com.ansh.obaazo.resources.service.CouponListService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
+import com.ansh.obaazo.web.ApiCallback;
+import com.ansh.obaazo.web.ApiException;
 import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
@@ -50,6 +57,7 @@ public class ActivityBookRoom extends BaseActivity {
     private EditText etCompanyAddress;
     private RecyclerView rvCouponCode;
     private CardView cvCouponCode;
+    private AdapterCouponCode adapterCouponCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +93,41 @@ public class ActivityBookRoom extends BaseActivity {
         rvCouponCode = findViewById(R.id.rv_coupon_code);
         rvCouponCode.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvCouponCode.setNestedScrollingEnabled(false);
-        AdapterCouponCode adapterCouponCode = new AdapterCouponCode(this, new ArrayList<String>());
+        adapterCouponCode = new AdapterCouponCode(this, new ArrayList<CouponListResponse.ResultBean>());
         rvCouponCode.setAdapter(adapterCouponCode);
+        hitCouponCodeApi();
+    }
+
+    private void hitCouponCodeApi() {
+        showLoadingDialog();
+        BaseRequest baseRequest = new BaseRequest();
+        baseRequest.setId(hotelDetails.getHotel_id());
+        new CouponListService(this).execute(baseRequest, new ApiCallback<CouponListResponse>() {
+            @Override
+            public void onSuccess(Call<CouponListResponse> call, CouponListResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    if (response.getResult() != null && response.getResult().size() != 0) {
+                        cvCouponCode.setVisibility(View.VISIBLE);
+                        adapterCouponCode.setData(response.getResult());
+                    } else {
+                        cvCouponCode.setVisibility(View.GONE);
+                    }
+                } else {
+                    Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(ActivityBookRoom.this, "Api Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

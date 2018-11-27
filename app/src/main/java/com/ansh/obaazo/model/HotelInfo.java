@@ -67,6 +67,22 @@ public class HotelInfo implements Parcelable {
     private String tour_policy;
     private String cancellation;
     private String review;
+    private boolean isAvailable = true;
+    private String startFrom;
+
+
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public static Creator<HotelInfo> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getReview() {
         return review;
@@ -351,6 +367,14 @@ public class HotelInfo implements Parcelable {
     public HotelInfo() {
     }
 
+    public String getStartFrom() {
+        return startFrom;
+    }
+
+    public void setStartFrom(String startFrom) {
+        this.startFrom = startFrom;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -385,6 +409,9 @@ public class HotelInfo implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.tour_policy);
         dest.writeString(this.cancellation);
+        dest.writeString(this.review);
+        dest.writeByte(this.isAvailable ? (byte) 1 : (byte) 0);
+        dest.writeString(this.startFrom);
         dest.writeString(this.services);
         dest.writeString(this.admission);
         dest.writeString(this.date_change_allowed);
@@ -421,6 +448,9 @@ public class HotelInfo implements Parcelable {
         this.id = in.readString();
         this.tour_policy = in.readString();
         this.cancellation = in.readString();
+        this.review = in.readString();
+        this.isAvailable = in.readByte() != 0;
+        this.startFrom = in.readString();
         this.services = in.readString();
         this.admission = in.readString();
         this.date_change_allowed = in.readString();

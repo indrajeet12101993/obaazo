@@ -25,12 +25,14 @@ public class HotelRoomService extends ApiService<HotelRoomService.HotelRoomApi, 
 
     @Override
     protected Call<HotelRoomResponse> onExecute(HotelRoomApi api, BaseRequest request) {
-        return api.hotelRoomApi(request.getId());
+        return api.hotelRoomApi(request.getId(), request.getId2(), request.getId3());
     }
 
     public interface HotelRoomApi {
         @FormUrlEncoded
         @POST("Api/Listroom")
-        Call<HotelRoomResponse> hotelRoomApi(@Field("hotel_id") String hotelId);
+        Call<HotelRoomResponse> hotelRoomApi(@Field("hotel_id") String hotelId,
+                                             @Field("checkin") String startDate,
+                                             @Field("checkout") String endDate);
     }
 }

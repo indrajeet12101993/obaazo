@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -164,9 +165,11 @@ public class ActivityHotelDetails extends BaseActivity {
         findViewById(R.id.btn_select_room).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class)
-                        .putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id())
-                        .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
+                if (hotelDetails.isAvailable()) {
+                    startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class)
+                            .putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id())
+                            .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
+                }
             }
         });
 
@@ -212,7 +215,13 @@ public class ActivityHotelDetails extends BaseActivity {
 
 
             ((TextView) findViewById(R.id.tv_hotel_name)).setText(hotelDetails.getHotel_name());
-            ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getHotel_actual_price());
+            ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getStartFrom());
+            findViewById(R.id.tv_price).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
+            findViewById(R.id.tv_lbl_start).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
+            findViewById(R.id.tv_not_avi).setVisibility(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
+            ((Button) findViewById(R.id.btn_select_room)).setEnabled(!TextUtils.isEmpty(hotelDetails.getStartFrom()));
+            ((Button) findViewById(R.id.btn_select_room)).setText(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? "Select Room" : "Not Available");
+
             ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(hotelDetails.getHotelrating());
             (findViewById(R.id.tv_rating)).setVisibility(TextUtils.isEmpty(hotelDetails.getRating()) ? View.GONE : View.VISIBLE);
             ((TextView) findViewById(R.id.tv_rating)).setText(hotelDetails.getRating() + "/5");

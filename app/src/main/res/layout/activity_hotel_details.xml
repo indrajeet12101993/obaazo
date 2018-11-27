@@ -151,6 +151,7 @@
                         android:textSize="@dimen/_14sdp" />
 
                     <TextView
+                        android:id="@+id/tv_lbl_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -199,16 +200,35 @@
                             android:textColor="@color/mdtp_white" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <RelativeLayout
                         android:layout_alignParentEnd="true"
-                        android:fontFamily="sans-serif"
-                        android:text="200"
-                        android:textColor="@color/green"
-                        android:textSize="@dimen/_16sdp"
-                        android:textStyle="bold" />
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_20sdp">
+                        <TextView
+                            android:id="@+id/tv_not_avi"
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/color_red"
+                            android:fontFamily="sans-serif"
+                            android:gravity="center"
+                            android:text="Not Available"
+                            android:textColor="@color/mdtp_white"
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/tv_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:text="200"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/_16sdp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+
 
                 </RelativeLayout>
             </RelativeLayout>

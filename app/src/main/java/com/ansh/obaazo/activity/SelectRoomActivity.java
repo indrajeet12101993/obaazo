@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +16,11 @@ import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
+import com.ansh.obaazo.resources.request.RoomPriceRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
+import com.ansh.obaazo.resources.response.RoomPriceResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
+import com.ansh.obaazo.resources.service.RoomPriceService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
@@ -36,6 +40,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private String hotelName = "";
     private int selectedPosition = 0;
     private TextView tvDates;
+    private String roomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +77,17 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         BaseRequest request = new BaseRequest();
         String hotelId = getIntent().getStringExtra(AppConstant.HOTEL_ID);
         request.setId(hotelId);
+        request.setId2(PreferencesUtils.getString(AppConstant.START_DATE));
+        request.setId3(PreferencesUtils.getString(AppConstant.END_DATE));
         new HotelRoomService(this).execute(request, new ApiCallback<HotelRoomResponse>() {
             @Override
             public void onSuccess(Call<HotelRoomResponse> call, HotelRoomResponse response) {
-                if (response.getResponse_code().equalsIgnoreCase("200"))
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    roomsAdapter.setRoomPriceData(response.getRoomPrice());
                     roomsAdapter.setmData(response);
+                } else {
+                    Toast.makeText(SelectRoomActivity.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -142,6 +153,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     @Override
     public void onItemClick(HotelRoomResponse.ResultBean item, int position) {
         selectedPosition = position;
+        roomId = item.getId();
         startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
     }
 
@@ -152,9 +164,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
-                roomsAdapter.setRoomData(bookingInfo, selectedPosition);
+                hitRoomPriceApi(bookingInfo);
             }
-
         }
         if (requestCode == 1003 && resultCode == RESULT_OK) {
             bindDateData();
@@ -185,4 +196,47 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     }
 
 
+    public void hitRoomPriceApi(final BookingInfo info) {
+        //   roomsAdapter.setRoomData(bookingInfo, selectedPosition);
+        showLoadingDialog();
+        RoomPriceRequest roomPriceRequest = new RoomPriceRequest();
+        roomPriceRequest.setCheckIn(PreferencesUtils.getString(AppConstant.START_DATE));
+        roomPriceRequest.setCheckOut(PreferencesUtils.getString(AppConstant.END_DATE));
+        roomPriceRequest.setRoomId(roomId);
+
+        new RoomPriceService(this).execute(roomPriceRequest, new ApiCallback<RoomPriceResponse>() {
+            @Override
+            public void onSuccess(Call<RoomPriceResponse> call, RoomPriceResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    Log.e("", "onSuccess: ");
+                    calculation(response, info);
+                } else {
+                    Toast.makeText(SelectRoomActivity.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(SelectRoomActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    public void calculation(RoomPriceResponse response, BookingInfo info) {
+
+
+        if (response.getResult() != null) {
+            for (int i = 0; i < response.getResult().size(); i++) {
+                RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
+            }
+        }
+
+    }
 }

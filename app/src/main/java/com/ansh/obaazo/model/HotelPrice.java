@@ -1,42 +1,36 @@
 package com.ansh.obaazo.model;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
 public class HotelPrice {
+    @SerializedName("adult_price")
+    private String adultPrice;
+    @SerializedName("hotel_id")
+    private String hotelId;
+    @SerializedName("room_id")
+    private String roomId;
 
-    private ArrayList<PriceBean> price;
-
-    public ArrayList<PriceBean> getPrice() {
-        return price;
+    public String getRoomId() {
+        return roomId;
     }
 
-    public void setPrice(ArrayList<PriceBean> price) {
-        this.price = price;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 
-    public static class PriceBean {
-        /**
-         * adult_price : 1200
-         * hotel_id : 99
-         */
+    public String getAdultPrice() {
+        return adultPrice;
+    }
 
-        private String adult_price;
-        private String hotel_id;
+    public void setAdultPrice(String adultPrice) {
+        this.adultPrice = adultPrice;
+    }
 
-        public String getAdult_price() {
-            return adult_price;
-        }
+    public String getHotelId() {
+        return hotelId;
+    }
 
-        public void setAdult_price(String adult_price) {
-            this.adult_price = adult_price;
-        }
-
-        public String getHotel_id() {
-            return hotel_id;
-        }
-
-        public void setHotel_id(String hotel_id) {
-            this.hotel_id = hotel_id;
-        }
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
     }
 }

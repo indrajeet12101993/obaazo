@@ -141,12 +141,14 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvAddress.setText(bean.getGoogle_map());
             tvDistance.setText(bean.getDistance() != 0 ? format.format(bean.getDistance()) + " KM" : "");
             itemView.findViewById(R.id.tv_couple_friendly).setVisibility(bean.getCouple().equalsIgnoreCase("0") ? View.GONE : View.VISIBLE);
+
             if (hotelPrices != null) {
                 String startPrice = getStartPrice(bean.getHotel_id());
                 if (TextUtils.isEmpty(startPrice)) {
-                    itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
                     mList.get(adapterPosition).setAvailable(false);
                     itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
+                    itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
+
                 } else {
                     itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
                     tvStartFrom.setText("₹" + startPrice);
@@ -154,6 +156,9 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                     mList.get(adapterPosition).setAvailable(true);
                     itemView.findViewById(R.id.tv_not_avi).setVisibility(View.GONE);
                 }
+            } else {
+                itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
+                itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
             }
 
         }

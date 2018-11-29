@@ -24,15 +24,28 @@ public class HotelSearchService extends ApiService<HotelSearchService.HotelSearc
 
     @Override
     protected Call<HotelSearchResponse> onExecute(HotelSearchApi api, HotelSearchRequest request) {
-        return api.hotelSearchApi(request.getLatitude(), request.getLongitude(), request.getCheckInDate(), request.getCheckOutDate());
+        return api.hotelSearchApi(request.getLatitude(),
+                request.getLongitude(),
+                request.getCheckInDate(),
+                request.getCheckOutDate(),
+                request.getMin(),
+                request.getMax(),
+                request.getStar(),
+                request.getHotelType(),
+                request.getAminity());
     }
 
     public interface HotelSearchApi {
         @FormUrlEncoded
-        @POST("Api/Listhotel")
+        @POST("Api/pricefilter")
         Call<HotelSearchResponse> hotelSearchApi(@Field("lat") Double latitude,
-                                                 @Field("longg") Double longitude,
+                                                 @Field("long") Double longitude,
                                                  @Field("checkin") String checkInDate,
-                                                 @Field("checkout") String checkOutDate);
+                                                 @Field("checkout") String checkOutDate,
+                                                 @Field("min") String min,
+                                                 @Field("max") String max,
+                                                 @Field("star") String star,
+                                                 @Field("hoteltype") String hotelType,
+                                                 @Field("amenities") String aminity);
     }
 }

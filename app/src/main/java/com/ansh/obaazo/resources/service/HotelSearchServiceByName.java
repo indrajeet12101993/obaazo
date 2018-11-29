@@ -24,12 +24,12 @@ public class HotelSearchServiceByName extends ApiService<HotelSearchServiceByNam
 
     @Override
     protected Call<HotelSearchResponse> onExecute(HotelApi api, BaseRequest request) {
-        return api.search(request.getId());
+        return api.search(request.getId(), request.getId2());
     }
 
     public interface HotelApi {
         @FormUrlEncoded
         @POST("Api/Searchhotel")
-        Call<HotelSearchResponse> search(@Field("name") String key);
+        Call<HotelSearchResponse> search(@Field("name") String key, @Field("date") String date);
     }
 }

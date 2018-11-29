@@ -14,6 +14,8 @@ import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.HotelSearchResponse;
 import com.ansh.obaazo.resources.service.HotelSearchServiceByName;
+import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 
@@ -26,6 +28,7 @@ public class ActivitySearchByName extends BaseActivity {
     private RecyclerView rvHotelList;
     private AdapterHotelList adapterHotelList;
     private EditText etTitle;
+    private String date = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class ActivitySearchByName extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
+        date = PreferencesUtils.getString(AppConstant.START_DATE);
         return R.layout.activity_search_by_name;
 
     }
@@ -79,11 +83,18 @@ public class ActivitySearchByName extends BaseActivity {
     public void hitHotelApi(String key) {
         BaseRequest request = new BaseRequest();
         request.setId(key);
+        request.setId2(date);
         HotelSearchServiceByName serviceByName = new HotelSearchServiceByName(this);
         serviceByName.execute(request, new ApiCallback<HotelSearchResponse>() {
             @Override
             public void onSuccess(Call<HotelSearchResponse> call, HotelSearchResponse response) {
-                adapterHotelList.setmList(response.getResult());
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    adapterHotelList.setmList(response.getResult());
+                    adapterHotelList.setHotelPrice(response.getHotelPrices());
+                } else {
+                    adapterHotelList.setmList(response.getResult());
+                   // Toast.makeText(ActivitySearchByName.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -93,7 +104,7 @@ public class ActivitySearchByName extends BaseActivity {
 
             @Override
             public void onFailure(ApiException e) {
-                Toast.makeText(ActivitySearchByName.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivitySearchByName.this, "Api Error", Toast.LENGTH_SHORT).show();
             }
         });
 

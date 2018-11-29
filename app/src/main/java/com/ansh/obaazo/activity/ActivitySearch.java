@@ -43,6 +43,11 @@ public class ActivitySearch extends BaseActivity {
     private FloatingActionButton fbSearch;
     private TextView tvDates;
     private String tempDates = "";
+    private String minAmount = "";
+    private String maxAmount = "";
+    private String hotelStar = "";
+    private String hotelType = "";
+    private String aminity = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,11 +168,17 @@ public class ActivitySearch extends BaseActivity {
                 .show();
         HotelSearchRequest request = new HotelSearchRequest();
         request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));
-        // request.setCheckInDate("10/29/2018");
         request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
-        //request.setCheckOutDate("10/28/2018");
         request.setLatitude(PreferencesUtils.getDouble(AppConstant.B_LATITUDE));
         request.setLongitude(PreferencesUtils.getDouble(AppConstant.B_LONGITUDE));
+        //Optional Parms
+
+        request.setMax(minAmount);
+        request.setMax(maxAmount);
+        request.setStar(hotelStar);
+        request.setHotelType(hotelType);
+        request.setAminity(aminity);
+
         new HotelSearchService(this).execute(request, new ApiCallback<HotelSearchResponse>() {
             @Override
             public void onSuccess(Call<HotelSearchResponse> call, HotelSearchResponse response) {

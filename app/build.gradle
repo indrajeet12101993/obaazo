@@ -71,7 +71,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.jsibbold:zoomage:1.2.0'
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
-    implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
+    implementation 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
+  //  implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
     implementation 'com.tuyenmonkey:mkloader:1.4.0'
 
     implementation 'com.google.android.gms:play-services-maps:16.0.0'

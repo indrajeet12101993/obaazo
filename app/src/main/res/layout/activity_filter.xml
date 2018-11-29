@@ -36,6 +36,7 @@
             android:textSize="@dimen/_14sdp" />
 
         <TextView
+            android:id="@+id/tv_rest"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
@@ -92,19 +93,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
+
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="vertical">
 
-                        <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            rsb:absoluteMaxValue="5000"
-                            rsb:absoluteMinValue="0" />
+                        <org.florescu.android.rangeseekbar.RangeSeekBar
+                            android:id="@+id/rb_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_120sdp"
+                            app:valuesAboveThumbs="true"
+                            rsb:absoluteMaxValue="0"
+                            rsb:absoluteMinValue="5000"
+                            rsb:textAboveThumbsColor="@color/colorPrimaryDark" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp">
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:visibility="invisible">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -164,6 +170,7 @@
                         android:orientation="vertical">
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_1_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -171,14 +178,15 @@
                             android:text="1 Star" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_2_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-
                             android:text="2 Star" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_3_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -186,6 +194,7 @@
                             android:text="3 Star" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_4_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -193,6 +202,7 @@
                             android:text="4 Star" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_5_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -207,7 +217,6 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -241,13 +250,15 @@
                         android:orientation="vertical">
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_farm_house"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                            android:text="1 Farm House" />
+                            android:text="Farm House" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_service_apartment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -255,6 +266,7 @@
                             android:text="Service Apartment" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_guest_house"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -262,6 +274,7 @@
                             android:text="Guest House" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_homte_stay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -269,6 +282,7 @@
                             android:text="Home Stay" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_hotel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -276,6 +290,7 @@
                             android:text="Hotel" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_villas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -283,6 +298,7 @@
                             android:text="Villas" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_pent_house"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -290,6 +306,7 @@
                             android:text="Pent House" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_resort"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -297,18 +314,29 @@
                             android:text="Resorts" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_hostel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                            android:text="Resorts" />
+                            android:text="Hostel" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_pg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="PG" />
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_benquet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:button="@null"
+                            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                            android:text="Benquet" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -349,6 +377,7 @@
 
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_all_aminity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -371,6 +400,7 @@
                         android:orientation="vertical">
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_couple_frendly"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -378,6 +408,7 @@
                             android:text="Couple Friendly" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_wi_fi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -385,6 +416,7 @@
                             android:text="WI-FI" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_spa"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -392,6 +424,7 @@
                             android:text="Spa" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_swimming_pool"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -399,6 +432,7 @@
                             android:text="Swimming pool" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_free_parking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -406,6 +440,7 @@
                             android:text="Free Parking" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_room_service"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -413,6 +448,7 @@
                             android:text="Room Service (24 Hours)" />
 
                         <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/cb_outdoor_pool"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:button="@null"
@@ -421,8 +457,6 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
-
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

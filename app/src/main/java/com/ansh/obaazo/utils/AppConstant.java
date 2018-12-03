@@ -42,5 +42,6 @@ public class AppConstant {
     public static final String USER_ID = "user_id";
     public static final String USER_DETAILS = "user_details";
     public static final String MY_BOOKING = "my_booking";
+    public static final String FILTER = "filter";
 }
 

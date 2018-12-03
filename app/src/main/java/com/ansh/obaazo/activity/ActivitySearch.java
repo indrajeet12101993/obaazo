@@ -48,6 +48,7 @@ public class ActivitySearch extends BaseActivity {
     private String hotelStar = "";
     private String hotelType = "";
     private String aminity = "";
+    private HotelSearchRequest request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,19 @@ public class ActivitySearch extends BaseActivity {
     @Override
     protected void initView() {
         initCustomToolbar();
+
+        request = new HotelSearchRequest();
+        request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));
+        request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
+        request.setLatitude(PreferencesUtils.getDouble(AppConstant.B_LATITUDE));
+        request.setLongitude(PreferencesUtils.getDouble(AppConstant.B_LONGITUDE));
+        //Optional Parms
+
+        request.setMax(minAmount);
+        request.setMax(maxAmount);
+        request.setStar(hotelStar);
+        request.setHotelType(hotelType);
+        request.setAminity(aminity);
 
         rvHotelList = findViewById(R.id.rv_hotel_list);
         rvHotelList.setLayoutManager(new LinearLayoutManager(ActivitySearch.this));
@@ -95,7 +109,8 @@ public class ActivitySearch extends BaseActivity {
         fbSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(ActivitySearch.this, FilterActivity.class), 1001);
+                startActivityForResult(new Intent(ActivitySearch.this, FilterActivity.class)
+                        .putExtra(AppConstant.FILTER, request), 1001);
             }
         });
 
@@ -166,18 +181,7 @@ public class ActivitySearch extends BaseActivity {
                 .adapter(adapterHotelList)
                 .load(R.layout.item_skeleton_hotel)
                 .show();
-        HotelSearchRequest request = new HotelSearchRequest();
-        request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));
-        request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
-        request.setLatitude(PreferencesUtils.getDouble(AppConstant.B_LATITUDE));
-        request.setLongitude(PreferencesUtils.getDouble(AppConstant.B_LONGITUDE));
-        //Optional Parms
 
-        request.setMax(minAmount);
-        request.setMax(maxAmount);
-        request.setStar(hotelStar);
-        request.setHotelType(hotelType);
-        request.setAminity(aminity);
 
         new HotelSearchService(this).execute(request, new ApiCallback<HotelSearchResponse>() {
             @Override
@@ -215,7 +219,11 @@ public class ActivitySearch extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+            request = data.getParcelableExtra(AppConstant.FILTER);
+            hitHotelSearchApi();
+        }
+        if (requestCode == 1003 && resultCode == RESULT_OK) {
             bindDateData();
             hitHotelSearchApi();
         }

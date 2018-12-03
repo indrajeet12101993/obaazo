@@ -1,8 +1,11 @@
 package com.ansh.obaazo.resources.request;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ansh.obaazo.web.ApiRequest;
 
-public class HotelSearchRequest extends ApiRequest {
+public class HotelSearchRequest extends ApiRequest implements Parcelable {
     private double latitude;
     private double longitude;
     private String checkInDate;
@@ -85,4 +88,49 @@ public class HotelSearchRequest extends ApiRequest {
     public void setCheckOutDate(String checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.latitude);
+        dest.writeDouble(this.longitude);
+        dest.writeString(this.checkInDate);
+        dest.writeString(this.checkOutDate);
+        dest.writeString(this.min);
+        dest.writeString(this.max);
+        dest.writeString(this.star);
+        dest.writeString(this.hotelType);
+        dest.writeString(this.aminity);
+    }
+
+    public HotelSearchRequest() {
+    }
+
+    protected HotelSearchRequest(Parcel in) {
+        this.latitude = in.readDouble();
+        this.longitude = in.readDouble();
+        this.checkInDate = in.readString();
+        this.checkOutDate = in.readString();
+        this.min = in.readString();
+        this.max = in.readString();
+        this.star = in.readString();
+        this.hotelType = in.readString();
+        this.aminity = in.readString();
+    }
+
+    public static final Parcelable.Creator<HotelSearchRequest> CREATOR = new Parcelable.Creator<HotelSearchRequest>() {
+        @Override
+        public HotelSearchRequest createFromParcel(Parcel source) {
+            return new HotelSearchRequest(source);
+        }
+
+        @Override
+        public HotelSearchRequest[] newArray(int size) {
+            return new HotelSearchRequest[size];
+        }
+    };
 }

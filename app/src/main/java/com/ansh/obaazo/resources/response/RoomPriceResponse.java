@@ -268,6 +268,29 @@ public class RoomPriceResponse extends ApiResponse {
             this.vendor_id = in.readString();
         }
 
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "id='" + id + '\'' +
+                    ", date='" + date + '\'' +
+                    ", availability='" + availability + '\'' +
+                    ", inventory_detail='" + inventory_detail + '\'' +
+                    ", room_id='" + room_id + '\'' +
+                    ", hotel_id='" + hotel_id + '\'' +
+                    ", city_name='" + city_name + '\'' +
+                    ", adult_price='" + adult_price + '\'' +
+                    ", two_adult='" + two_adult + '\'' +
+                    ", extra_adult='" + extra_adult + '\'' +
+                    ", extra_child='" + extra_child + '\'' +
+                    ", gst_adult='" + gst_adult + '\'' +
+                    ", gst_twoadult='" + gst_twoadult + '\'' +
+                    ", gst_extraadult='" + gst_extraadult + '\'' +
+                    ", gst_child='" + gst_child + '\'' +
+                    ", is_blocked='" + is_blocked + '\'' +
+                    ", vendor_id='" + vendor_id + '\'' +
+                    '}';
+        }
+
         public static final Parcelable.Creator<ResultBean> CREATOR = new Parcelable.Creator<ResultBean>() {
             @Override
             public ResultBean createFromParcel(Parcel source) {

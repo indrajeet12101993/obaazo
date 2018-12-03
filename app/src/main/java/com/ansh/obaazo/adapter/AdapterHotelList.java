@@ -140,7 +140,9 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvReview.setText(TextUtils.isEmpty(bean.getReview()) ? "" : bean.getReview() + " Reviews");
             tvAddress.setText(bean.getGoogle_map());
             tvDistance.setText(bean.getDistance() != 0 ? format.format(bean.getDistance()) + " KM" : "");
-            itemView.findViewById(R.id.tv_couple_friendly).setVisibility(bean.getCouple().equalsIgnoreCase("0") ? View.GONE : View.VISIBLE);
+            if (bean.getCouple() != null) {
+                itemView.findViewById(R.id.tv_couple_friendly).setVisibility(bean.getCouple().equalsIgnoreCase("0") ? View.GONE : View.VISIBLE);
+            }
 
             if (hotelPrices != null) {
                 String startPrice = getStartPrice(bean.getHotel_id());

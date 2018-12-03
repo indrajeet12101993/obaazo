@@ -15,6 +15,7 @@ import com.ansh.obaazo.adapter.RoomsAdapter;
 import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.request.RoomPriceRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
@@ -34,6 +35,7 @@ import java.util.Calendar;
 import retrofit2.Call;
 
 public class SelectRoomActivity extends BaseActivity implements RItemListener<HotelRoomResponse.ResultBean> {
+    private static final String TAG = SelectRoomActivity.class.getSimpleName();
     private RecyclerView rvRooms;
     private RoomsAdapter roomsAdapter;
     private HotelInfo hotelDetails;
@@ -230,11 +232,24 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
 
 
     public void calculation(RoomPriceResponse response, BookingInfo info) {
-
-
+        int totalAmount = 0;
         if (response.getResult() != null) {
             for (int i = 0; i < response.getResult().size(); i++) {
                 RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
+                Log.e(TAG, "calculation: " + priceRate.toString());
+                for (int j = 0; j < info.getPersonInfos().size(); j++) {
+                    PersonInfo personInfo = info.getPersonInfos().get(j);
+                    if (personInfo.getNoOfAdult() == 1) {
+                        Log.e(TAG, "calculation: for 1 person " + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price())));
+                    }
+                    if (personInfo.getNoOfAdult() == 2) {
+                        Log.e(TAG, "calculation: for 2 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult())));
+                    }
+                    if (personInfo.getChild().size() != 0) {
+                        int size = personInfo.getChild().size();
+                        Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
+                    }
+                }
             }
         }
 

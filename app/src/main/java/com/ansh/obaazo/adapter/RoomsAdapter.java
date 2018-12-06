@@ -65,6 +65,8 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
                 } else {
                     mData.getResult().get(holder.getAdapterPosition()).setSelected(false);
                     mData.getBookingInfos().set(holder.getAdapterPosition(), new BookingInfo());
+                    mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()), -1);
+
                 }
                 notifyDataSetChanged();
                 //  mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()));
@@ -92,7 +94,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
                 ((TextView) holder.itemView.findViewById(R.id.tv_room_adult)).setText(bookingInfo.getPersonInfos().size() + " Room " + count + " Guest");
             }
         }
-
+        holder.tvPrice.setText("₹ " + mData.getBookingInfos().get(holder.getAdapterPosition()).getPrice());
         holder.itemView.findViewById(R.id.tv_photo_aminites).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,11 +120,24 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         this.roomPrice = roomPrice;
     }
 
+    public int getTotalPrice() {
+        int total = 0;
+        for (int i = 0; i < mData.getBookingInfos().size(); i++) {
+            total += mData.getBookingInfos().get(i).getPrice();
+        }
+        return total;
+    }
+
+    public ArrayList<BookingInfo> getmData() {
+        return mData.getBookingInfos();
+    }
+
     public class RoomViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivHotelImage;
         private TextView tvRoomSize;
         private TextView tvBedType;
         private Button btnRoom;
+        private TextView tvPrice;
 
         public RoomViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +145,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             tvRoomSize = itemView.findViewById(R.id.tv_room_size);
             tvBedType = itemView.findViewById(R.id.tv_bed_type);
             btnRoom = itemView.findViewById(R.id.btn_select_room);
+            tvPrice = itemView.findViewById(R.id.tv_price);
         }
 
         public void bindData(HotelRoomResponse.ResultBean bean) {

@@ -30,8 +30,8 @@ public class PaymentClient {
     private final String cancelUrl = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
 
   //  private final String baseUrl = "https://obaazo.com/Cc/ccavRequestHandler/";
-
-     private final String baseUrl = "https://secure.ccavenue.com/transaction/jsp/";
+    private final String baseUrl = "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction";
+  //   private final String baseUrl = "https://secure.ccavenue.com/transaction/jsp/";
     //  private final String merchantId = "190880";
     private final String merchantId = "190880";
     private String orderId = String.valueOf(ServiceUtility.randInt(0, 9999999));

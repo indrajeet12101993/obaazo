@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,13 +14,12 @@ import com.ansh.obaazo.adapter.RoomsAdapter;
 import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
-import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
-import com.ansh.obaazo.resources.request.RoomPriceRequest;
+import com.ansh.obaazo.resources.request.PriceRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
-import com.ansh.obaazo.resources.response.RoomPriceResponse;
+import com.ansh.obaazo.resources.response.PriceResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
-import com.ansh.obaazo.resources.service.RoomPriceService;
+import com.ansh.obaazo.resources.service.PriceService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
@@ -43,6 +41,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private int selectedPosition = 0;
     private TextView tvDates;
     private String roomId;
+    private TextView tvTotalAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +60,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         tvDates = findViewById(R.id.tv_dates);
         initCustomToolbar();
         rvRooms = findViewById(R.id.rv_rooms);
+        tvTotalAmount = findViewById(R.id.tv_total_amount);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
         roomsAdapter = new RoomsAdapter(this, new HotelRoomResponse(), this);
         rvRooms.setAdapter(roomsAdapter);
@@ -154,9 +154,14 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
 
     @Override
     public void onItemClick(HotelRoomResponse.ResultBean item, int position) {
-        selectedPosition = position;
-        roomId = item.getId();
-        startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
+        if (position != -1) {
+            selectedPosition = position;
+            roomId = item.getId();
+            startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
+        } else {
+            int totalPrice = roomsAdapter.getTotalPrice();
+            tvTotalAmount.setText("Total Amount ₹" + totalPrice);
+        }
     }
 
     @Override
@@ -166,7 +171,12 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
-                hitRoomPriceApi(bookingInfo);
+                // hitRoomPriceApi(bookingInfo);
+                if (bookingInfo != null && bookingInfo.getPersonInfos() != null) {
+                    priceCal(bookingInfo);
+                } else {
+                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         if (requestCode == 1003 && resultCode == RESULT_OK) {
@@ -180,9 +190,9 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
 
     public void initBooking() {
         startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
+                .putParcelableArrayListExtra(AppConstant.PERSON_DETAILS, roomsAdapter.getmData())
                 .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
     }
-
 
     private void bindDateData() {
         String startDate = PreferencesUtils.getString(AppConstant.START_DATE);
@@ -197,25 +207,30 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         }
     }
 
-
-    public void hitRoomPriceApi(final BookingInfo info) {
-        //   roomsAdapter.setRoomData(bookingInfo, selectedPosition);
+    public void priceCal(final BookingInfo info) {
         showLoadingDialog();
-        RoomPriceRequest roomPriceRequest = new RoomPriceRequest();
-        roomPriceRequest.setCheckIn(PreferencesUtils.getString(AppConstant.START_DATE));
-        roomPriceRequest.setCheckOut(PreferencesUtils.getString(AppConstant.END_DATE));
-        roomPriceRequest.setRoomId(roomId);
-
-        new RoomPriceService(this).execute(roomPriceRequest, new ApiCallback<RoomPriceResponse>() {
+        PriceRequest request = new PriceRequest();
+        request.setCheckInDate(PreferencesUtils.getString(AppConstant.START_DATE));
+        request.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
+        request.setRoomId(roomId);
+        ArrayList<PriceRequest.RoomDetailsBean> beans = new ArrayList<>();
+        for (int i = 0; i < info.getPersonInfos().size(); i++) {
+            PriceRequest.RoomDetailsBean bean = new PriceRequest.RoomDetailsBean();
+            bean.setNoOfAdult(info.getPersonInfos().get(i).getNoOfAdult());
+            bean.setNoOfChild(info.getPersonInfos().get(i).getChild().size());
+            beans.add(bean);
+        }
+        request.setRoomDetails(beans);
+        new PriceService(this).execute(request, new ApiCallback<PriceResponse>() {
             @Override
-            public void onSuccess(Call<RoomPriceResponse> call, RoomPriceResponse response) {
+            public void onSuccess(Call<PriceResponse> call, PriceResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    Log.e("", "onSuccess: ");
-                    calculation(response, info);
-                } else {
-                    Toast.makeText(SelectRoomActivity.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                    info.setPrice(response.getPrice());
+                    roomsAdapter.setRoomData(info, selectedPosition);
+                    int totalPrice = roomsAdapter.getTotalPrice();
+                    tvTotalAmount.setText("Total Amount ₹" + totalPrice);
+                    Toast.makeText(SelectRoomActivity.this, "price" + response.getPrice(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -230,28 +245,4 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         });
     }
 
-
-    public void calculation(RoomPriceResponse response, BookingInfo info) {
-        int totalAmount = 0;
-        if (response.getResult() != null) {
-            for (int i = 0; i < response.getResult().size(); i++) {
-                RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
-                Log.e(TAG, "calculation: " + priceRate.toString());
-                for (int j = 0; j < info.getPersonInfos().size(); j++) {
-                    PersonInfo personInfo = info.getPersonInfos().get(j);
-                    if (personInfo.getNoOfAdult() == 1) {
-                        Log.e(TAG, "calculation: for 1 person " + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price())));
-                    }
-                    if (personInfo.getNoOfAdult() == 2) {
-                        Log.e(TAG, "calculation: for 2 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult())));
-                    }
-                    if (personInfo.getChild().size() != 0) {
-                        int size = personInfo.getChild().size();
-                        Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
-                    }
-                }
-            }
-        }
-
-    }
 }

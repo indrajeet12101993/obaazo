@@ -142,6 +142,7 @@
         android:layout_below="@+id/ll_booking_date"
         android:layout_alignParentStart="true"
         android:layout_marginTop="-2dp"
+        android:layout_marginBottom="@dimen/_2sdp"
         android:background="#FFF" />
 
     <RelativeLayout
@@ -152,6 +153,7 @@
         android:background="@color/colorAccent">
 
         <TextView
+            android:id="@+id/tv_total_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

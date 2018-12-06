@@ -161,7 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <View
                 android:layout_width="match_parent"
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:fontFamily="sans-serif"
                 android:text="Enter Guest Details"
@@ -182,12 +182,14 @@
                 android:textSize="@dimen/_16sdp" />
 
             <TextView
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:text="₹500"
+                android:text="₹"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:textColor="#000"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:textSize="@dimen/_14sdp" />
         </RelativeLayout>
 

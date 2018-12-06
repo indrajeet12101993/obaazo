@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class HotelRoomResponse extends ApiResponse {
+public class HotelRoomResponse extends ApiResponse implements Parcelable {
 
     /**
      * response_code : 200
@@ -294,4 +294,42 @@ public class HotelRoomResponse extends ApiResponse {
             }
         };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.response_code);
+        dest.writeString(this.response_message);
+        dest.writeTypedList(this.result);
+        dest.writeTypedList(this.bookingInfos);
+        dest.writeList(this.roomPrice);
+    }
+
+    public HotelRoomResponse() {
+    }
+
+    protected HotelRoomResponse(Parcel in) {
+        this.response_code = in.readString();
+        this.response_message = in.readString();
+        this.result = in.createTypedArrayList(ResultBean.CREATOR);
+        this.bookingInfos = in.createTypedArrayList(BookingInfo.CREATOR);
+        this.roomPrice = new ArrayList<HotelPrice>();
+        in.readList(this.roomPrice, HotelPrice.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<HotelRoomResponse> CREATOR = new Parcelable.Creator<HotelRoomResponse>() {
+        @Override
+        public HotelRoomResponse createFromParcel(Parcel source) {
+            return new HotelRoomResponse(source);
+        }
+
+        @Override
+        public HotelRoomResponse[] newArray(int size) {
+            return new HotelRoomResponse[size];
+        }
+    };
 }

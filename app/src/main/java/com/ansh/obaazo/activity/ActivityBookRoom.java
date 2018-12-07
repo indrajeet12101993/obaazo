@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AdapterCouponCode;
+import com.ansh.obaazo.adapter.PriceRoomAdapter;
+import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.payment.AvenuesParams;
@@ -58,6 +60,10 @@ public class ActivityBookRoom extends BaseActivity {
     private RecyclerView rvCouponCode;
     private CardView cvCouponCode;
     private AdapterCouponCode adapterCouponCode;
+    private CardView cvRoomList;
+    private RecyclerView rvRoomList;
+    private PriceRoomAdapter priceRoomAdapter;
+    private ArrayList<BookingInfo> bookingInfos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,7 @@ public class ActivityBookRoom extends BaseActivity {
         String tempDetails = PreferencesUtils.getString(AppConstant.USER_DETAILS);
         userDetails = new Gson().fromJson(tempDetails, UserDetails.class);
         hotelDetails = getIntent().getParcelableExtra(AppConstant.HOTEL_DETAILS);
+        bookingInfos = getIntent().getParcelableArrayListExtra(AppConstant.PERSON_DETAILS);
         ivRoomImage = findViewById(R.id.iv_hotel_image);
         tvHotelName = findViewById(R.id.tv_hotel_name);
         tvAddress = findViewById(R.id.tv_address);
@@ -95,6 +102,13 @@ public class ActivityBookRoom extends BaseActivity {
         rvCouponCode.setNestedScrollingEnabled(false);
         adapterCouponCode = new AdapterCouponCode(this, new ArrayList<CouponListResponse.ResultBean>());
         rvCouponCode.setAdapter(adapterCouponCode);
+
+        cvRoomList = findViewById(R.id.cv_room_list);
+        rvRoomList = findViewById(R.id.rv_rooms_list);
+        rvRoomList.setLayoutManager(new LinearLayoutManager(this));
+        priceRoomAdapter = new PriceRoomAdapter(this, bookingInfos);
+        rvRoomList.setAdapter(priceRoomAdapter);
+        rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();
     }
 

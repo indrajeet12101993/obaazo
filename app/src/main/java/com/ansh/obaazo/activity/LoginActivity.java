@@ -1,11 +1,9 @@
 package com.ansh.obaazo.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.fragment.FragmentLogin;
-import com.facebook.login.LoginFragment;
 
 public class LoginActivity extends BaseActivity {
 

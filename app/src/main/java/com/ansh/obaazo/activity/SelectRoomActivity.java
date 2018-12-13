@@ -2,9 +2,10 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,12 +15,16 @@ import com.ansh.obaazo.adapter.RoomsAdapter;
 import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.request.PriceRequest;
+import com.ansh.obaazo.resources.request.RoomPriceRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
 import com.ansh.obaazo.resources.response.PriceResponse;
+import com.ansh.obaazo.resources.response.RoomPriceResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
 import com.ansh.obaazo.resources.service.PriceService;
+import com.ansh.obaazo.resources.service.RoomPriceService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
@@ -171,9 +176,10 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             String stringExtra = data.getStringExtra(AppConstant.PERSON_DETAILS);
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
-                // hitRoomPriceApi(bookingInfo);
                 if (bookingInfo != null && bookingInfo.getPersonInfos() != null) {
-                    priceCal(bookingInfo);
+                 //   priceCal(bookingInfo);
+                     hitRoomPriceApi(bookingInfo);
+
                 } else {
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
@@ -245,4 +251,59 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         });
     }
 
+    public void hitRoomPriceApi(final BookingInfo info) {
+        //   roomsAdapter.setRoomData(bookingInfo, selectedPosition);
+        showLoadingDialog();
+        RoomPriceRequest roomPriceRequest = new RoomPriceRequest();
+        roomPriceRequest.setCheckIn(PreferencesUtils.getString(AppConstant.START_DATE));
+        roomPriceRequest.setCheckOut(PreferencesUtils.getString(AppConstant.END_DATE));
+        roomPriceRequest.setRoomId(roomId);
+
+        new RoomPriceService(this).execute(roomPriceRequest, new ApiCallback<RoomPriceResponse>() {
+            @Override
+            public void onSuccess(Call<RoomPriceResponse> call, RoomPriceResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    Log.e("", "onSuccess: ");
+                    calculation(response, info);
+                } else {
+                    Toast.makeText(SelectRoomActivity.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(SelectRoomActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void calculation(RoomPriceResponse response, BookingInfo info) {
+        int totalAmount = 0;
+        if (response.getResult() != null) {
+            for (int i = 0; i < response.getResult().size(); i++) {
+                RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
+                Log.e(TAG, "calculation: " + priceRate.toString());
+                for (int j = 0; j < info.getPersonInfos().size(); j++) {
+                    PersonInfo personInfo = info.getPersonInfos().get(j);
+                    if (personInfo.getNoOfAdult() == 1) {
+                        Log.e(TAG, "calculation: for 1 person " + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price())));
+                    }
+                    if (personInfo.getNoOfAdult() == 2) {
+                        Log.e(TAG, "calculation: for 2 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult())));
+                    }
+                    if (personInfo.getChild().size() != 0) {
+                        int size = personInfo.getChild().size();
+                        Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
+                    }
+                }
+            }
+        }
+
+    }
 }

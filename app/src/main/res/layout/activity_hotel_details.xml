@@ -9,7 +9,7 @@
     tools:context=".activity.ActivityHotelDetails">
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -44,7 +44,7 @@
                     android:layout_height="@dimen/_180sdp"
                     android:background="@color/mdtp_transparent_black" />
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
@@ -132,7 +132,7 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -212,17 +212,16 @@
                             android:background="@color/color_red"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
-                            android:text="Not Available"
+                            android:text="Sold Out"
                             android:textColor="@color/mdtp_white"
                             android:textSize="@dimen/_10sdp"
                             android:visibility="gone" />
                         <TextView
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:id="@+id/tv_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
-                            android:text="200"
                             android:textColor="@color/green"
                             android:textSize="@dimen/_16sdp"
                             android:textStyle="bold" />
@@ -233,7 +232,7 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_hotel_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -241,7 +240,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_10sdp">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
             <TextView
@@ -284,7 +283,7 @@
 
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_amenties"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -335,7 +334,7 @@
                     android:text="No Review"
                     android:textSize="@dimen/_12sdp" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -400,9 +399,9 @@
                 android:textSize="@dimen/_14sdp" />
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
@@ -439,7 +438,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <Button
         android:id="@+id/btn_select_room"

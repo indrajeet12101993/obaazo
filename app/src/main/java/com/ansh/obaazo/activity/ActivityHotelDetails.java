@@ -2,9 +2,9 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -220,7 +220,7 @@ public class ActivityHotelDetails extends BaseActivity {
             findViewById(R.id.tv_lbl_start).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
             findViewById(R.id.tv_not_avi).setVisibility(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
             ((Button) findViewById(R.id.btn_select_room)).setEnabled(!TextUtils.isEmpty(hotelDetails.getStartFrom()));
-            ((Button) findViewById(R.id.btn_select_room)).setText(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? "Select Room" : "Not Available");
+            ((Button) findViewById(R.id.btn_select_room)).setText(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? "Select Room" : "Sold Out");
 
             ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(hotelDetails.getHotelrating());
             (findViewById(R.id.tv_rating)).setVisibility(TextUtils.isEmpty(hotelDetails.getRating()) ? View.GONE : View.VISIBLE);

@@ -2,8 +2,8 @@ package com.ansh.obaazo.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,6 @@ import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.BaseActivity;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.resources.request.BaseRequest;
-import com.ansh.obaazo.resources.response.LoginResponse;
 import com.ansh.obaazo.resources.response.ObazoMoneyResponse;
 import com.ansh.obaazo.resources.service.ObaazoMoneyService;
 import com.ansh.obaazo.utils.AppConstant;

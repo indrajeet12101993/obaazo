@@ -49,7 +49,7 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_apply"
@@ -63,7 +63,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -131,9 +131,9 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -169,7 +169,7 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_1_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="1 Star" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_2_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="2 Star" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_3_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="3 Star" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_4_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="4 Star" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_5_star"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -213,9 +213,9 @@
 
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -249,7 +249,7 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_farm_house"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Farm House" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_service_apartment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -265,7 +265,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Service Apartment" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_guest_house"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -273,7 +273,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Guest House" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_homte_stay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Home Stay" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_hotel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -289,7 +289,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Hotel" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_villas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -297,7 +297,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Villas" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_pent_house"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Pent House" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_resort"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -313,7 +313,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Resorts" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_hostel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -321,7 +321,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Hostel" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_pg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -329,7 +329,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="PG" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_benquet"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -340,9 +340,9 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -376,7 +376,7 @@
                             android:textStyle="bold" />
 
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_all_aminity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -399,7 +399,7 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_couple_frendly"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -407,7 +407,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Couple Friendly" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_wi_fi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -415,7 +415,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="WI-FI" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_spa"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -423,7 +423,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Spa" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_swimming_pool"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -431,7 +431,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Swimming pool" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_free_parking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -439,7 +439,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Free Parking" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_room_service"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -447,7 +447,7 @@
                             android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                             android:text="Room Service (24 Hours)" />
 
-                        <android.support.v7.widget.AppCompatCheckBox
+                        <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/cb_outdoor_pool"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -457,9 +457,9 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/btn_apply"

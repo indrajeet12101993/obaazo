@@ -3,7 +3,7 @@ package com.ansh.obaazo.utils;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 import com.squareup.picasso.Transformation;
 

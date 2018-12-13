@@ -30,7 +30,7 @@
         android:layout_marginRight="@dimen/_15sdp"
         android:background="#cacac9" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_amenties"
         android:layout_marginBottom="@dimen/_2sdp"
         android:layout_width="match_parent"

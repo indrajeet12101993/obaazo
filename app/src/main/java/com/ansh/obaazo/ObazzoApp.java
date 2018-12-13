@@ -3,6 +3,8 @@ package com.ansh.obaazo;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.multidex.MultiDex;
+
 public class ObazzoApp extends Application {
     private static Context mContext;
 
@@ -20,5 +22,6 @@ public class ObazzoApp extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         mContext = base;
+        MultiDex.install(this);
     }
 }

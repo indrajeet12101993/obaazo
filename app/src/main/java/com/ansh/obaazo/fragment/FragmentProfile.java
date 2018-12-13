@@ -2,8 +2,8 @@ package com.ansh.obaazo.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;

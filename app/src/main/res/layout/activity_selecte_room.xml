@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".activity.SelectRoomActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
@@ -44,7 +44,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <View
         android:id="@+id/ll_line"
@@ -134,7 +134,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_rooms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

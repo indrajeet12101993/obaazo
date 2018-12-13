@@ -2,8 +2,8 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,7 +12,6 @@ import com.ansh.obaazo.adapter.PersonAdapter;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.utils.AppConstant;
-import com.ansh.obaazo.utils.PreferencesUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

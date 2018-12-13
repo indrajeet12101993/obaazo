@@ -1,16 +1,11 @@
 package com.ansh.obaazo.adapter;
 
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
-
-import java.lang.reflect.Field;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomNavigationViewHelper {
 
     public static void removeShiftMode(BottomNavigationView view) {
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+       /* BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
             shiftingMode.setAccessible(true);
@@ -26,6 +21,6 @@ public class BottomNavigationViewHelper {
             Log.e("ERROR NO SUCH FIELD", "Unable to get shift mode field");
         } catch (IllegalAccessException e) {
             Log.e("ERROR ILLEGAL ALG", "Unable to change value of shift mode");
-        }
+        }*/
     }
 }

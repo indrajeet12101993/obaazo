@@ -4,17 +4,12 @@ package com.ansh.obaazo.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.ansh.obaazo.R;
@@ -66,7 +61,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation =  findViewById(R.id.navigation);
         navigation.setItemIconTintList(null);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.removeShiftMode(navigation);

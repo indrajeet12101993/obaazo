@@ -1,10 +1,7 @@
 package com.ansh.obaazo.utils;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
-import com.ansh.obaazo.R;
 import com.ansh.obaazo.model.UserInfo;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,6 +17,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 
 /**
@@ -101,7 +103,7 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
     }
 
     public void onDisconnect() {
-        mGoogleApiClient.stopAutoManage(activity);
+     //   mGoogleApiClient.stopAutoManage(activity);
         mGoogleApiClient.disconnect();
     }
 

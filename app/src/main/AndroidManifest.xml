@@ -11,11 +11,26 @@
     <application
         android:name=".ObazzoApp"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_circle"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+        <!--      <meta-data
+                  android:name="com.google.android.geo.API_KEY"
+                  android:value="AIzaSyC4iWVqOGNf59LOodXM_x_szJPWYIRKpto" />-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBn5iU57aYE0p6GGMgWQ6laCKWA_8CgVAM" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
@@ -39,12 +54,6 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-
-        <!--
-            <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAjFIx61XyrnKrZSAx6W7haOHjqeW0xU8I"/>
-        -->
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -55,18 +64,10 @@
         <activity
             android:name=".activity.ActivityHotelDetails"
             android:theme="@style/NoActionBar" />
-        <activity android:name=".activity.LocationSettingActivity" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC4iWVqOGNf59LOodXM_x_szJPWYIRKpto" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
+        <activity
+            android:name=".activity.LocationSettingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.SelectRoomActivity"
             android:screenOrientation="portrait"
@@ -114,12 +115,18 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".payment.PaymentWebView" />
+        <activity
+            android:name=".payment.PaymentWebView"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".payment.StatusActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activity.ActivityPhotoAminitese"></activity>
+        <activity
+            android:name=".activity.ActivityPhotoAminitese"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

@@ -3,7 +3,7 @@ package com.ansh.obaazo.utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 
 import com.ansh.obaazo.model.UserInfo;
@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import androidx.fragment.app.Fragment;
 
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 

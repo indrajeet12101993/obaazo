@@ -1,26 +1,27 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ansh.obaazo.R;
-import com.ansh.obaazo.model.BookingInfo;
+import com.ansh.obaazo.model.MBooking;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Jeevan Gupta on 12/7/2018.
  */
 public class PriceRoomAdapter extends RecyclerView.Adapter<PriceRoomAdapter.PriceViewHolder> {
     private Context mContext;
-    private ArrayList<BookingInfo> mData;
+    private ArrayList<MBooking> mData;
 
 
-    public PriceRoomAdapter(Context mContext, ArrayList<BookingInfo> mData) {
+    public PriceRoomAdapter(Context mContext, ArrayList<MBooking> mData) {
         this.mContext = mContext;
         this.mData = mData;
 
@@ -39,7 +40,8 @@ public class PriceRoomAdapter extends RecyclerView.Adapter<PriceRoomAdapter.Pric
 
     @Override
     public int getItemCount() {
-        return mData != null ? mData.size() : 0;
+        //  return mData != null ? mData.size() : 0;
+        return 3;
     }
 
     public class PriceViewHolder extends RecyclerView.ViewHolder {

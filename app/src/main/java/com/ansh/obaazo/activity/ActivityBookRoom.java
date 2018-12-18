@@ -19,6 +19,7 @@ import com.ansh.obaazo.adapter.AdapterCouponCode;
 import com.ansh.obaazo.adapter.PriceRoomAdapter;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.model.MBooking;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.payment.AvenuesParams;
 import com.ansh.obaazo.payment.PaymentClient;
@@ -106,7 +107,7 @@ public class ActivityBookRoom extends BaseActivity {
         cvRoomList = findViewById(R.id.cv_room_list);
         rvRoomList = findViewById(R.id.rv_rooms_list);
         rvRoomList.setLayoutManager(new LinearLayoutManager(this));
-        priceRoomAdapter = new PriceRoomAdapter(this, bookingInfos);
+        priceRoomAdapter = new PriceRoomAdapter(this, new ArrayList<MBooking>());
         rvRoomList.setAdapter(priceRoomAdapter);
         rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();

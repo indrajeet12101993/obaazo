@@ -299,7 +299,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                     }
                     if (personInfo.getChild().size() != 0) {
                         int size = personInfo.getChild().size();
-                        Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
+                      //  Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
                     }
                 }
             }

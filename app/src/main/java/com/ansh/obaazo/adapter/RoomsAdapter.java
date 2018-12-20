@@ -123,7 +123,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     public int getTotalPrice() {
         int total = 0;
         for (int i = 0; i < mData.getBookingInfos().size(); i++) {
-            total += mData.getBookingInfos().get(i).getPrice();
+            //total += mData.getBookingInfos().get(i).getPrice()[0];
         }
         return total;
     }

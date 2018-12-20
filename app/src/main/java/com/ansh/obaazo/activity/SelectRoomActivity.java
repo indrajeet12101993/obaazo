@@ -177,8 +177,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
                 if (bookingInfo != null && bookingInfo.getPersonInfos() != null) {
-                 //   priceCal(bookingInfo);
-                     hitRoomPriceApi(bookingInfo);
+                    priceCal(bookingInfo);
+                   //  hitRoomPriceApi(bookingInfo);
 
                 } else {
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();

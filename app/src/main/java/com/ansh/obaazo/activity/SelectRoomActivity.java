@@ -2,8 +2,10 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -164,7 +166,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             roomId = item.getId();
             startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
         } else {
-            int totalPrice = roomsAdapter.getTotalPrice();
+            Double totalPrice = roomsAdapter.getTotalPrice();
             tvTotalAmount.setText("Total Amount ₹" + totalPrice);
         }
     }
@@ -177,8 +179,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             if (!TextUtils.isEmpty(stringExtra)) {
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
                 if (bookingInfo != null && bookingInfo.getPersonInfos() != null) {
-                 //   priceCal(bookingInfo);
-                     hitRoomPriceApi(bookingInfo);
+                    // priceCal(bookingInfo);
+                    hitRoomPriceApi(bookingInfo);
 
                 } else {
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -231,9 +233,9 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             @Override
             public void onSuccess(Call<PriceResponse> call, PriceResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    info.setPrice(response.getPrice());
+                    // info.setPrice(response.getPrice());
                     roomsAdapter.setRoomData(info, selectedPosition);
-                    int totalPrice = roomsAdapter.getTotalPrice();
+                    Double totalPrice = roomsAdapter.getTotalPrice();
                     tvTotalAmount.setText("Total Amount ₹" + totalPrice);
                     Toast.makeText(SelectRoomActivity.this, "price" + response.getPrice(), Toast.LENGTH_SHORT).show();
                 }
@@ -284,7 +286,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     }
 
     public void calculation(RoomPriceResponse response, BookingInfo info) {
-        int totalAmount = 0;
+        Double totalAmount = 0.0;
+        Double amt = 0.0;
         if (response.getResult() != null) {
             for (int i = 0; i < response.getResult().size(); i++) {
                 RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
@@ -292,18 +295,34 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                 for (int j = 0; j < info.getPersonInfos().size(); j++) {
                     PersonInfo personInfo = info.getPersonInfos().get(j);
                     if (personInfo.getNoOfAdult() == 1) {
-                        Log.e(TAG, "calculation: for 1 person " + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price())));
+                        Log.e(TAG, "calculation: for 1 person " + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price())) + " Position= " + i);
+                        amt = amt + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price()));
                     }
                     if (personInfo.getNoOfAdult() == 2) {
                         Log.e(TAG, "calculation: for 2 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult())));
+                        amt = amt + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()));
+                    }
+                    if (personInfo.getNoOfAdult() == 3) {
+                        Log.e(TAG, "calculation: for 3 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult())));
+                        amt = amt + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult()) + Double.parseDouble(priceRate.getGst_extraadult()));
                     }
                     if (personInfo.getChild().size() != 0) {
                         int size = personInfo.getChild().size();
                         Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
+                        amt = amt + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size));
                     }
                 }
+                info.setPrice(amt);
+                roomsAdapter.setRoomData(info, selectedPosition);
+                totalAmount=  roomsAdapter.getTotalAmt();
+                tvTotalAmount.setText("Total Amount : ₹" + totalAmount);
+
             }
         }
+
+    }
+
+    public void calc() {
 
     }
 }

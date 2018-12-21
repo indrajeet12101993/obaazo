@@ -113,6 +113,8 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     public void setRoomData(BookingInfo bookingInfo, int position) {
         mData.getBookingInfos().set(position, bookingInfo);
         mData.getResult().get(position).setSelected(true);
+
+
         notifyItemChanged(position);
     }
 
@@ -120,10 +122,19 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         this.roomPrice = roomPrice;
     }
 
-    public int getTotalPrice() {
-        int total = 0;
+    public Double getTotalPrice() {
+        Double total = 0.0;
         for (int i = 0; i < mData.getBookingInfos().size(); i++) {
-            //total += mData.getBookingInfos().get(i).getPrice()[0];
+            if(null!=mData.getBookingInfos().get(i).getPrice())
+            total += mData.getBookingInfos().get(i).getPrice();
+        }
+        return total;
+    }
+    public Double getTotalAmt() {
+        Double total = 0.0;
+        for (int i = 0; i < mData.getBookingInfos().size(); i++) {
+            if(null!=mData.getBookingInfos().get(i).getPrice())
+            total += mData.getBookingInfos().get(i).getPrice();
         }
         return total;
     }

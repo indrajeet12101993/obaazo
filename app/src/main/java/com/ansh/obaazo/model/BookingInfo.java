@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class BookingInfo implements Parcelable {
     private ArrayList<PersonInfo> personInfos;
-    private int[] price;
+    private Double price;
 
 
-    public int[] getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int[] price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

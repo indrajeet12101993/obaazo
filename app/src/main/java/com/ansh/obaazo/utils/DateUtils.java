@@ -9,7 +9,7 @@ public class DateUtils {
 
 
     public static Calendar formatDate(String date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         try {
             Date parse = simpleDateFormat.parse(date);
             Calendar cal = Calendar.getInstance();
@@ -22,7 +22,7 @@ public class DateUtils {
     }
 
     public static String parseMonth(int month) {
-        switch (month) {
+        switch (month+1) {
             case 1:
                 return "Jan";
             case 2:

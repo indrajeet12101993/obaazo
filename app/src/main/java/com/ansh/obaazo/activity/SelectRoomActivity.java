@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.ansh.obaazo.adapter.RoomsAdapter;
 import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
+import com.ansh.obaazo.model.MBooking;
 import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.request.PriceRequest;
@@ -49,6 +51,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private TextView tvDates;
     private String roomId;
     private TextView tvTotalAmount;
+   public ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +202,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     public void initBooking() {
         startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
                 .putParcelableArrayListExtra(AppConstant.PERSON_DETAILS, roomsAdapter.getmData())
-                .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
+                .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails)
+                .putParcelableArrayListExtra(AppConstant.ROOM_INFO,mBookingsPriceList ));
     }
 
     private void bindDateData() {
@@ -288,6 +292,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     public void calculation(RoomPriceResponse response, BookingInfo info) {
         Double totalAmount = 0.0;
         Double amt = 0.0;
+        Double priceWithOutGSt = 0.0;
+        Double roomGstprice = 0.0;
         if (response.getResult() != null) {
             for (int i = 0; i < response.getResult().size(); i++) {
                 RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
@@ -297,25 +303,47 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                     if (personInfo.getNoOfAdult() == 1) {
                         Log.e(TAG, "calculation: for 1 person " + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price())) + " Position= " + i);
                         amt = amt + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price()));
+                        priceWithOutGSt += Double.parseDouble(priceRate.getAdult_price());
+                        roomGstprice += Double.parseDouble(priceRate.getGst_adult());
                     }
                     if (personInfo.getNoOfAdult() == 2) {
                         Log.e(TAG, "calculation: for 2 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult())));
                         amt = amt + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()));
+                        priceWithOutGSt += Double.parseDouble(priceRate.getTwo_adult());
+                        roomGstprice += Double.parseDouble(priceRate.getGst_twoadult());
                     }
                     if (personInfo.getNoOfAdult() == 3) {
                         Log.e(TAG, "calculation: for 3 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult())));
                         amt = amt + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult()) + Double.parseDouble(priceRate.getGst_extraadult()));
+                        priceWithOutGSt += Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult());
+                        roomGstprice += Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getGst_extraadult());
                     }
                     if (personInfo.getChild().size() != 0) {
                         int size = personInfo.getChild().size();
                         Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
                         amt = amt + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size));
-                      //  Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
+                        priceWithOutGSt += (Double.parseDouble(priceRate.getExtra_child()) * size);
+                        roomGstprice += (Double.parseDouble(priceRate.getGst_child()));
+                        //  Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
                     }
                 }
+                int childCount = 0, adultCount = 0;
+                for (int k = 0; k < info.getPersonInfos().size(); k++) {
+                    ArrayList<Integer> child = info.getPersonInfos().get(i).getChild();
+                    adultCount = info.getPersonInfos().get(i).getNoOfAdult();
+                    childCount = child.size();
+                }
+                MBooking mBooking = new MBooking();
+                mBooking.setRoomId(Integer.parseInt(priceRate.getRoom_id()));
+                mBooking.setHotelId(Integer.parseInt(priceRate.getHotel_id()));
+                mBooking.setAdultCount(adultCount);
+                mBooking.setChildCount(childCount);
+                mBooking.setRoomPriceWithoutGst(priceWithOutGSt);
+                mBooking.setRoomGstPrice(roomGstprice);
                 info.setPrice(amt);
                 roomsAdapter.setRoomData(info, selectedPosition);
-                totalAmount=  roomsAdapter.getTotalAmt();
+                mBookingsPriceList.add(mBooking);
+                totalAmount = roomsAdapter.getTotalAmt();
                 tvTotalAmount.setText("Total Amount : ₹" + totalAmount);
 
             }

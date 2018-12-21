@@ -62,8 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:cardCornerRadius="@dimen/_2sdp"
                 app:cardElevation="@dimen/_2sdp"
                 app:cardPreventCornerOverlap="false"
@@ -170,8 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:visibility="visible"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -190,8 +190,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:visibility="gone"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -207,8 +207,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
@@ -253,19 +253,19 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -282,17 +282,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
 
-                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Booking Amount"
+                            android:text="Room Charges (GST Extra)"
                             android:textSize="@dimen/_9sdp" />
 
                         <TextView
+                            android:id="@+id/tv_room_price_without_gst"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -305,8 +305,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-
-                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -328,9 +326,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-
                         android:layout_marginBottom="@dimen/_5sdp"
+
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -354,15 +352,36 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
 
-                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="All Taxes inclusive"
+                            android:text="GST on Room Charges"
                             android:textSize="@dimen/_9sdp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:textSize="@dimen/_9sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Saving"
+                            android:textSize="@dimen/_9sdp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -378,9 +397,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
                 android:animateLayoutChanges="true"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -388,9 +407,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -409,8 +428,8 @@
                         android:background="@drawable/shape_edit_text"
                         android:hint="User Name"
                         android:inputType="textPersonName"
-                        android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
 
@@ -422,8 +441,8 @@
                         android:background="@drawable/shape_edit_text"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
-                        android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
 
@@ -436,8 +455,8 @@
                         android:hint="Mobile No"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
                     <CheckBox
@@ -463,8 +482,8 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/shape_edit_text"
                             android:hint="GST Identification Number"
-                            android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -475,8 +494,8 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/shape_edit_text"
                             android:hint="Company Name"
-                            android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -487,8 +506,8 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/shape_edit_text"
                             android:hint="Company Address"
-                            android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -501,8 +520,8 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/shape_edit_text"
                         android:entries="@array/time"
-                        android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp"
                         android:tooltipText="Expected CheckIn Time" />
 
@@ -532,9 +551,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_15sdp"
-                android:paddingRight="@dimen/_15sdp"
-                android:paddingBottom="@dimen/_10sdp">
+                android:paddingRight="@dimen/_15sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -544,6 +563,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_total_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

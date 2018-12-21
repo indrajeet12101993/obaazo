@@ -2,9 +2,11 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -46,7 +48,7 @@ import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 
 public class ActivityBookRoom extends BaseActivity {
     private ImageView ivRoomImage;
-    private TextView tvHotelName;
+    private TextView tvHotelName, tvRoomPriceWhitoutGst, tvPayableAmount;
     private TextView tvAddress;
     private HotelInfo hotelDetails;
     private TextView tvCheckInCheckOutTime;
@@ -65,6 +67,7 @@ public class ActivityBookRoom extends BaseActivity {
     private RecyclerView rvRoomList;
     private PriceRoomAdapter priceRoomAdapter;
     private ArrayList<BookingInfo> bookingInfos;
+    private ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +87,13 @@ public class ActivityBookRoom extends BaseActivity {
         userDetails = new Gson().fromJson(tempDetails, UserDetails.class);
         hotelDetails = getIntent().getParcelableExtra(AppConstant.HOTEL_DETAILS);
         bookingInfos = getIntent().getParcelableArrayListExtra(AppConstant.PERSON_DETAILS);
+        mBookingsPriceList = getIntent().getParcelableArrayListExtra(AppConstant.ROOM_INFO);
         ivRoomImage = findViewById(R.id.iv_hotel_image);
         tvHotelName = findViewById(R.id.tv_hotel_name);
         tvAddress = findViewById(R.id.tv_address);
         tvCheckInCheckOutTime = findViewById(R.id.tv_check_in_check_out_time);
-
+        tvRoomPriceWhitoutGst = findViewById(R.id.tv_room_price_without_gst);
+        tvPayableAmount = findViewById(R.id.tv_total_amount);
         etName = findViewById(R.id.et_user_name);
         etEmail = findViewById(R.id.et_email);
         etMobile = findViewById(R.id.et_mobile_no);
@@ -107,7 +112,7 @@ public class ActivityBookRoom extends BaseActivity {
         cvRoomList = findViewById(R.id.cv_room_list);
         rvRoomList = findViewById(R.id.rv_rooms_list);
         rvRoomList.setLayoutManager(new LinearLayoutManager(this));
-        priceRoomAdapter = new PriceRoomAdapter(this, new ArrayList<MBooking>());
+        priceRoomAdapter = new PriceRoomAdapter(this, mBookingsPriceList);
         rvRoomList.setAdapter(priceRoomAdapter);
         rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();
@@ -191,10 +196,10 @@ public class ActivityBookRoom extends BaseActivity {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
+        // for (int i)
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details
-
         etName.setText(userDetails.getName());
         etEmail.setText(userDetails.getEmail());
         etMobile.setText(userDetails.getMobile());

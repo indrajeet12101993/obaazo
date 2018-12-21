@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.model.MBooking;
@@ -27,6 +28,11 @@ public class PriceRoomAdapter extends RecyclerView.Adapter<PriceRoomAdapter.Pric
 
     }
 
+    public void setmData(ArrayList<MBooking> mData) {
+        this.mData = mData;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public PriceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,18 +41,25 @@ public class PriceRoomAdapter extends RecyclerView.Adapter<PriceRoomAdapter.Pric
 
     @Override
     public void onBindViewHolder(@NonNull PriceViewHolder holder, int position) {
-
+        MBooking booking = mData.get(position);
+        holder.tvPerson.setText(booking.getAdultCount() + " Adult " + booking.getChildCount() + " Child ");
+        holder.tvPrice.setText(booking.getRoomPriceWithoutGst() + "");
     }
 
     @Override
     public int getItemCount() {
-        //  return mData != null ? mData.size() : 0;
-        return 3;
+        return mData != null ? mData.size() : 0;
+        //return 3;
     }
 
     public class PriceViewHolder extends RecyclerView.ViewHolder {
+        TextView tvPrice, tvPerson;
+
         public PriceViewHolder(View itemView) {
             super(itemView);
+            tvPrice = itemView.findViewById(R.id.tv_price);
+            tvPerson = itemView.findViewById(R.id.tv_person);
+
         }
     }
 }

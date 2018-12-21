@@ -51,7 +51,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private TextView tvDates;
     private String roomId;
     private TextView tvTotalAmount;
-   public ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
+    private ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,7 +203,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
                 .putParcelableArrayListExtra(AppConstant.PERSON_DETAILS, roomsAdapter.getmData())
                 .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails)
-                .putParcelableArrayListExtra(AppConstant.ROOM_INFO,mBookingsPriceList ));
+                .putParcelableArrayListExtra(AppConstant.ROOM_INFO, mBookingsPriceList));
     }
 
     private void bindDateData() {
@@ -274,7 +274,6 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                 } else {
                     Toast.makeText(SelectRoomActivity.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -297,7 +296,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         if (response.getResult() != null) {
             for (int i = 0; i < response.getResult().size(); i++) {
                 RoomPriceResponse.ResultBean priceRate = response.getResult().get(i);
-                Log.e(TAG, "calculation: " + priceRate.toString());
+                // Log.e(TAG, "calculation: " + priceRate.toString());
                 for (int j = 0; j < info.getPersonInfos().size(); j++) {
                     PersonInfo personInfo = info.getPersonInfos().get(j);
                     if (personInfo.getNoOfAdult() == 1) {
@@ -324,34 +323,31 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                         amt = amt + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size));
                         priceWithOutGSt += (Double.parseDouble(priceRate.getExtra_child()) * size);
                         roomGstprice += (Double.parseDouble(priceRate.getGst_child()));
+
                         //  Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
                     }
                 }
-                int childCount = 0, adultCount = 0;
-                for (int k = 0; k < info.getPersonInfos().size(); k++) {
-                    ArrayList<Integer> child = info.getPersonInfos().get(i).getChild();
-                    adultCount = info.getPersonInfos().get(i).getNoOfAdult();
-                    childCount = child.size();
-                }
-                MBooking mBooking = new MBooking();
-                mBooking.setRoomId(Integer.parseInt(priceRate.getRoom_id()));
-                mBooking.setHotelId(Integer.parseInt(priceRate.getHotel_id()));
-                mBooking.setAdultCount(adultCount);
-                mBooking.setChildCount(childCount);
-                mBooking.setRoomPriceWithoutGst(priceWithOutGSt);
-                mBooking.setRoomGstPrice(roomGstprice);
-                info.setPrice(amt);
-                roomsAdapter.setRoomData(info, selectedPosition);
-                mBookingsPriceList.add(mBooking);
-                totalAmount = roomsAdapter.getTotalAmt();
-                tvTotalAmount.setText("Total Amount : ₹" + totalAmount);
-
             }
+            int childCount = 0, adultCount = 0;
+            for (int k = 0; k < info.getPersonInfos().size(); k++) {
+                ArrayList<Integer> child = info.getPersonInfos().get(k).getChild();
+                adultCount = info.getPersonInfos().get(k).getNoOfAdult();
+                childCount = child.size();
+            }
+            MBooking mBooking = new MBooking();
+           // mBooking.setRoomId(Integer.parseInt(priceRate.getRoom_id()));
+           // mBooking.setHotelId(Integer.parseInt(priceRate.getHotel_id()));
+            mBooking.setAdultCount(adultCount);
+            mBooking.setChildCount(childCount);
+            mBooking.setRoomPriceWithoutGst(priceWithOutGSt);
+            mBooking.setRoomGstPrice(roomGstprice);
+            info.setPrice(amt);
+            roomsAdapter.setRoomData(info, selectedPosition);
+            mBookingsPriceList.add(mBooking);
+            totalAmount = roomsAdapter.getTotalAmt();
+            tvTotalAmount.setText("Total Amount : ₹" + totalAmount);
         }
 
     }
 
-    public void calc() {
-
-    }
 }

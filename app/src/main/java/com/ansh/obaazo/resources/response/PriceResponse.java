@@ -12,7 +12,7 @@ public class PriceResponse extends ApiResponse {
 
     private String response_code;
     private String response_message;
-    private int Price;
+    private int[] Price;
 
     public String getResponse_code() {
         return response_code;
@@ -30,11 +30,11 @@ public class PriceResponse extends ApiResponse {
         this.response_message = response_message;
     }
 
-    public int getPrice() {
+    public int[] getPrice() {
         return Price;
     }
 
-    public void setPrice(int Price) {
+    public void setPrice(int[] Price) {
         this.Price = Price;
     }
 }

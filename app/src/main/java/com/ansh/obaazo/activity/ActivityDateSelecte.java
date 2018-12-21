@@ -38,7 +38,7 @@ public class ActivityDateSelecte extends BaseActivity {
         calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
         // calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault()));
 
-        calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
+        calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMM yyyy", Locale.getDefault())) //
                 .inMode(CalendarPickerView.SelectionMode.RANGE) //
                 .withSelectedDate(new Date());
         calendar.setOnInvalidDateSelectedListener(new CalendarPickerView.OnInvalidDateSelectedListener() {

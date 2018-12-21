@@ -1,9 +1,12 @@
 package com.ansh.obaazo.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Jeevan Gupta on 12/18/2018.
  */
-public class MBooking {
+public class MBooking implements Parcelable {
     private int hotelId;
 
     public int getRoomId() {
@@ -91,4 +94,48 @@ public class MBooking {
     private Double extraGst;
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.hotelId);
+        dest.writeInt(this.roomId);
+        dest.writeInt(this.adultCount);
+        dest.writeValue(this.roomPriceWithoutGst);
+        dest.writeValue(this.roomGstPrice);
+        dest.writeInt(this.childCount);
+        dest.writeValue(this.adultPrice);
+        dest.writeValue(this.childPrice);
+        dest.writeValue(this.extraGst);
+    }
+
+    public MBooking() {
+    }
+
+    protected MBooking(Parcel in) {
+        this.hotelId = in.readInt();
+        this.roomId = in.readInt();
+        this.adultCount = in.readInt();
+        this.roomPriceWithoutGst = (Double) in.readValue(Double.class.getClassLoader());
+        this.roomGstPrice = (Double) in.readValue(Double.class.getClassLoader());
+        this.childCount = in.readInt();
+        this.adultPrice = (Double) in.readValue(Double.class.getClassLoader());
+        this.childPrice = (Double) in.readValue(Double.class.getClassLoader());
+        this.extraGst = (Double) in.readValue(Double.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<MBooking> CREATOR = new Parcelable.Creator<MBooking>() {
+        @Override
+        public MBooking createFromParcel(Parcel source) {
+            return new MBooking(source);
+        }
+
+        @Override
+        public MBooking[] newArray(int size) {
+            return new MBooking[size];
+        }
+    };
 }

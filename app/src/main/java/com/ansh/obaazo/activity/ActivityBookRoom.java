@@ -48,7 +48,7 @@ import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 
 public class ActivityBookRoom extends BaseActivity {
     private ImageView ivRoomImage;
-    private TextView tvHotelName, tvRoomPriceWhitoutGst, tvPayableAmount;
+    private TextView tvHotelName, tvRoomPriceWithoutGst, tvPayableAmount, tvRoomGstAmt, tvTotalSaving;
     private TextView tvAddress;
     private HotelInfo hotelDetails;
     private TextView tvCheckInCheckOutTime;
@@ -92,8 +92,10 @@ public class ActivityBookRoom extends BaseActivity {
         tvHotelName = findViewById(R.id.tv_hotel_name);
         tvAddress = findViewById(R.id.tv_address);
         tvCheckInCheckOutTime = findViewById(R.id.tv_check_in_check_out_time);
-        tvRoomPriceWhitoutGst = findViewById(R.id.tv_room_price_without_gst);
+        tvRoomPriceWithoutGst = findViewById(R.id.tv_room_price_without_gst);
         tvPayableAmount = findViewById(R.id.tv_total_amount);
+        tvTotalSaving = findViewById(R.id.tv_total_saving);
+        tvRoomGstAmt = findViewById(R.id.tv_room_gst_amt);
         etName = findViewById(R.id.et_user_name);
         etEmail = findViewById(R.id.et_email);
         etMobile = findViewById(R.id.et_mobile_no);
@@ -185,6 +187,11 @@ public class ActivityBookRoom extends BaseActivity {
 
     @Override
     protected void bindDataWithUi() {
+        Double roomAmt = 0.0;
+        Double gstAmt = 0.0;
+        Double obaazoMoney = 0.0;
+        Double couponDiscount = 0.0;
+
         Picasso.get()
                 .load((!(TextUtils.isEmpty(hotelDetails.getImage1()))) ? hotelDetails.getImage1() : null)
                 .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
@@ -196,7 +203,14 @@ public class ActivityBookRoom extends BaseActivity {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
-        // for (int i)
+        for (int i = 0; i < mBookingsPriceList.size(); i++) {
+            roomAmt += mBookingsPriceList.get(i).getRoomPriceWithoutGst();
+            gstAmt += mBookingsPriceList.get(i).getRoomGstPrice();
+        }
+        tvRoomPriceWithoutGst.setText(roomAmt + " rs");
+        tvRoomGstAmt.setText(gstAmt + " rs");
+        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " rs");
+        tvTotalSaving.setText(obaazoMoney + couponDiscount + " rs");
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details

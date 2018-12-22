@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_toLeftOf="@+id/cb_obazzo_money"
-                        android:text="50rs"
+                        android:text="0rs"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold" />
 
@@ -297,7 +297,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="500rs"
+                            android:text="0rs"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -311,7 +311,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Coupan Discount"
+                            android:text="Coupon Discount"
                             android:textSize="@dimen/_9sdp" />
 
                         <TextView
@@ -319,7 +319,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="-100rs"
+                            android:text="0rs"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -343,7 +343,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="-10rs"
+                            android:text="0rs"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -362,6 +362,7 @@
                             android:textSize="@dimen/_9sdp" />
 
                         <TextView
+                            android:id="@+id/tv_room_gst_amt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -380,14 +381,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Total Saving"
+                            android:textColor="#f7772c"
                             android:textSize="@dimen/_9sdp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_total_saving"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
+                            android:textColor="#f7772c"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -558,7 +562,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payable Ammount"
+                    android:text="Payable Amount"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
@@ -567,7 +571,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="390 Rs"
+                    android:text="0 Rs"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 

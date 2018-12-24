@@ -149,7 +149,8 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
 
             @Override
             public void onComplete() {
-                ((BaseActivity) getActivity()).hideLoadingDialog();
+                if (getActivity() != null)
+                    ((BaseActivity) getActivity()).hideLoadingDialog();
 
             }
 
@@ -181,7 +182,8 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
 
             @Override
             public void onComplete() {
-                ((BaseActivity) getActivity()).hideLoadingDialog();
+                if (getActivity() != null)
+                    ((BaseActivity) getActivity()).hideLoadingDialog();
 
             }
 

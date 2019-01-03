@@ -146,7 +146,8 @@ public class FragmentProfile extends BaseFragment {
 
             @Override
             public void onComplete() {
-                ((BaseActivity) getActivity()).hideLoadingDialog();
+                if (getActivity() != null)
+                    ((BaseActivity) getActivity()).hideLoadingDialog();
             }
 
             @Override

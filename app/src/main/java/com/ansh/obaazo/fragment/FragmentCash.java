@@ -62,7 +62,6 @@ public class FragmentCash extends BaseFragment {
     private void hitObaazoMoneyApi(String id) {
         if (getActivity() == null) return;
         ((BaseActivity) getActivity()).showLoadingDialog();
-
         BaseRequest baseRequest = new BaseRequest();
         //  baseRequest.setId(PreferencesUtils.getString(AppConstant.USER_ID));
         baseRequest.setId(id);
@@ -85,7 +84,8 @@ public class FragmentCash extends BaseFragment {
 
             @Override
             public void onComplete() {
-                ((BaseActivity) getActivity()).hideLoadingDialog();
+                if (getActivity() != null)
+                    ((BaseActivity) getActivity()).hideLoadingDialog();
             }
 
             @Override

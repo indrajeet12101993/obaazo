@@ -6,10 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +43,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 /**
@@ -242,7 +242,8 @@ public class FragmentHome extends BaseFragment {
 
             @Override
             public void onComplete() {
-                ((BaseActivity) getActivity()).hideLoadingDialog();
+                if (getActivity() != null)
+                    ((BaseActivity) getActivity()).hideLoadingDialog();
 
 
             }
@@ -270,7 +271,8 @@ public class FragmentHome extends BaseFragment {
 
             @Override
             public void onComplete() {
-                ((BaseActivity) getActivity()).hideLoadingDialog();
+                if (getActivity() != null)
+                    ((BaseActivity) getActivity()).hideLoadingDialog();
             }
 
             @Override
@@ -280,7 +282,8 @@ public class FragmentHome extends BaseFragment {
         });
     }
 
-    public void openLocationPicker() {
+    private void openLocationPicker() {
+        if (getActivity() == null) return;
         try {
             AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                     .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
@@ -292,7 +295,8 @@ public class FragmentHome extends BaseFragment {
             startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
 
         } catch (Exception e) {
-            //  GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            //    GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();
         }
     }
 

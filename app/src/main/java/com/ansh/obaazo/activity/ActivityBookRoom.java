@@ -2,11 +2,6 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -28,7 +23,9 @@ import com.ansh.obaazo.payment.PaymentClient;
 import com.ansh.obaazo.payment.PaymentWebView;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.CouponListResponse;
+import com.ansh.obaazo.resources.response.ObazoMoneyResponse;
 import com.ansh.obaazo.resources.service.CouponListService;
+import com.ansh.obaazo.resources.service.ObaazoMoneyService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.utils.DateUtils;
@@ -41,6 +38,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
@@ -68,6 +69,10 @@ public class ActivityBookRoom extends BaseActivity {
     private PriceRoomAdapter priceRoomAdapter;
     private ArrayList<BookingInfo> bookingInfos;
     private ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
+    private AppCompatCheckBox cbObaazoMoney;
+
+    private Double tempObaazoMoney;
+    private Double obaazoMoney = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +108,7 @@ public class ActivityBookRoom extends BaseActivity {
         etGstNo = findViewById(R.id.et_gst_no);
         etCompanyName = findViewById(R.id.et_company_name);
         etCompanyAddress = findViewById(R.id.et_company_address);
+        cbObaazoMoney = findViewById(R.id.cb_obazzo_money);
 
         cvCouponCode = findViewById(R.id.cv_coupon_code);
         rvCouponCode = findViewById(R.id.rv_coupon_code);
@@ -118,6 +124,7 @@ public class ActivityBookRoom extends BaseActivity {
         rvRoomList.setAdapter(priceRoomAdapter);
         rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();
+        hitObaazoMoneyApi(userDetails.getId());
     }
 
     private void hitCouponCodeApi() {
@@ -170,6 +177,14 @@ public class ActivityBookRoom extends BaseActivity {
             }
         });
 
+        cbObaazoMoney.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                obaazoMoney= b?tempObaazoMoney:0;
+                 calculateAmmount();
+            }
+        });
+
     }
 
     private void initPayment() {
@@ -187,10 +202,7 @@ public class ActivityBookRoom extends BaseActivity {
 
     @Override
     protected void bindDataWithUi() {
-        Double roomAmt = 0.0;
-        Double gstAmt = 0.0;
-        Double obaazoMoney = 0.0;
-        Double couponDiscount = 0.0;
+
 
         Picasso.get()
                 .load((!(TextUtils.isEmpty(hotelDetails.getImage1()))) ? hotelDetails.getImage1() : null)
@@ -203,20 +215,27 @@ public class ActivityBookRoom extends BaseActivity {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
-        for (int i = 0; i < mBookingsPriceList.size(); i++) {
-            roomAmt += mBookingsPriceList.get(i).getRoomPriceWithoutGst();
-            gstAmt += mBookingsPriceList.get(i).getRoomGstPrice();
-        }
-        tvRoomPriceWithoutGst.setText(roomAmt + " rs");
-        tvRoomGstAmt.setText(gstAmt + " rs");
-        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " rs");
-        tvTotalSaving.setText(obaazoMoney + couponDiscount + " rs");
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details
         etName.setText(userDetails.getName());
         etEmail.setText(userDetails.getEmail());
         etMobile.setText(userDetails.getMobile());
+        calculateAmmount();
+    }
+
+    public void calculateAmmount() {
+         Double roomAmt = 0.0;
+         Double gstAmt = 0.0;
+         Double couponDiscount = 0.0;
+        for (int i = 0; i < mBookingsPriceList.size(); i++) {
+            roomAmt += mBookingsPriceList.get(i).getRoomPriceWithoutGst();
+            gstAmt += mBookingsPriceList.get(i).getRoomGstPrice();
+        }
+        tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
+        tvRoomGstAmt.setText(gstAmt + " ₹");
+        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " ₹");
+        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");
     }
 
 
@@ -249,6 +268,42 @@ public class ActivityBookRoom extends BaseActivity {
 
         }
         return true;
+    }
+
+    private void hitObaazoMoneyApi(String id) {
+        showLoadingDialog();
+
+        BaseRequest baseRequest = new BaseRequest();
+        //  baseRequest.setId(PreferencesUtils.getString(AppConstant.USER_ID));
+        baseRequest.setId(id);
+        new ObaazoMoneyService(this).execute(baseRequest, new ApiCallback<ObazoMoneyResponse>() {
+            @Override
+            public void onSuccess(Call<ObazoMoneyResponse> call, ObazoMoneyResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    if (response.getResult() != null && response.getResult().size() != 0) {
+                        ObazoMoneyResponse.ResultBean resultBean = response.getResult().get(0);
+                        ((TextView) findViewById(R.id.tv_obaazo_money)).setText("₹" + resultBean.getMoney());
+                        tempObaazoMoney = Double.valueOf(resultBean.getMoney());
+                    }
+                } else {
+                    Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(ActivityBookRoom.this, "Api Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
 }

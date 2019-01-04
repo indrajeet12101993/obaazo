@@ -1,6 +1,5 @@
 package com.ansh.obaazo.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,13 +13,12 @@ import android.widget.Toast;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AdapterCouponCode;
 import com.ansh.obaazo.adapter.PriceRoomAdapter;
+import com.ansh.obaazo.listener.IItemClick;
+import com.ansh.obaazo.listener.ItemClickNotiffy;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.model.MBooking;
 import com.ansh.obaazo.model.UserDetails;
-import com.ansh.obaazo.payment.AvenuesParams;
-import com.ansh.obaazo.payment.PaymentClient;
-import com.ansh.obaazo.payment.PaymentWebView;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.CouponListResponse;
 import com.ansh.obaazo.resources.response.ObazoMoneyResponse;
@@ -43,12 +41,15 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 
-public class ActivityBookRoom extends BaseActivity {
+public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private ImageView ivRoomImage;
     private TextView tvHotelName, tvRoomPriceWithoutGst, tvPayableAmount, tvRoomGstAmt, tvTotalSaving;
     private TextView tvAddress;
@@ -121,7 +122,7 @@ public class ActivityBookRoom extends BaseActivity {
         cvRoomList = findViewById(R.id.cv_room_list);
         rvRoomList = findViewById(R.id.rv_rooms_list);
         rvRoomList.setLayoutManager(new LinearLayoutManager(this));
-        priceRoomAdapter = new PriceRoomAdapter(this, mBookingsPriceList);
+        priceRoomAdapter = new PriceRoomAdapter(this, mBookingsPriceList, this);
         rvRoomList.setAdapter(priceRoomAdapter);
         rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();
@@ -188,8 +189,14 @@ public class ActivityBookRoom extends BaseActivity {
 
     }
 
+
     private void initPayment() {
        /* PaymentClient client = new PaymentClient();
+
+    }
+
+/*    private void initPayment() {
+        PaymentClient client = new PaymentClient();
         Intent intent = new Intent(this, PaymentWebView.class);
         intent.putExtra(AvenuesParams.ACCESS_CODE, client.getAccessCode());
         intent.putExtra(AvenuesParams.MERCHANT_ID, client.getMerchantId());
@@ -237,6 +244,8 @@ public class ActivityBookRoom extends BaseActivity {
         startActivityForResult(newPayIntent, 1);
 
     }
+        startActivity(intent);
+    }*/
 
     @Override
     protected void bindDataWithUi() {
@@ -253,6 +262,14 @@ public class ActivityBookRoom extends BaseActivity {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
+        for (int i = 0; i < priceRoomAdapter.getmData().size(); i++) {
+            roomAmt += priceRoomAdapter.getmData().get(i).getRoomPriceWithoutGst();
+            gstAmt += priceRoomAdapter.getmData().get(i).getRoomGstPrice();
+        }
+        tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
+        tvRoomGstAmt.setText(gstAmt + " ₹");
+        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " ₹");
+        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details
@@ -364,4 +381,8 @@ public class ActivityBookRoom extends BaseActivity {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+        bindDataWithUi();
+    }
 }

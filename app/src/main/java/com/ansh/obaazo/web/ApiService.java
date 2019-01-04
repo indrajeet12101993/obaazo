@@ -26,7 +26,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public abstract class ApiService<U, T extends ApiRequest, L extends ApiResponse> {
 
-    private static final int TIME_OUT = 60;
+    private static final int TIME_OUT = 120;
 
     /**
      * Use to build Gson object for serialization and deserialization of pojo

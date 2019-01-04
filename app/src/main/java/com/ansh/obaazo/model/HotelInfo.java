@@ -70,6 +70,7 @@ public class HotelInfo implements Parcelable {
     private String cancellation;
     private String review;
     private boolean isAvailable = true;
+    @SerializedName("Price")
     private String startFrom;
     @SerializedName("Price")
     private String price;

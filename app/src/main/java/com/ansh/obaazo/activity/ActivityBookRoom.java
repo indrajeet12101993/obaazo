@@ -1,12 +1,6 @@
 package com.ansh.obaazo.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -19,13 +13,12 @@ import android.widget.Toast;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AdapterCouponCode;
 import com.ansh.obaazo.adapter.PriceRoomAdapter;
+import com.ansh.obaazo.listener.IItemClick;
+import com.ansh.obaazo.listener.ItemClickNotiffy;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.model.MBooking;
 import com.ansh.obaazo.model.UserDetails;
-import com.ansh.obaazo.payment.AvenuesParams;
-import com.ansh.obaazo.payment.PaymentClient;
-import com.ansh.obaazo.payment.PaymentWebView;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.CouponListResponse;
 import com.ansh.obaazo.resources.service.CouponListService;
@@ -41,12 +34,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 
-public class ActivityBookRoom extends BaseActivity {
+public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private ImageView ivRoomImage;
     private TextView tvHotelName, tvRoomPriceWithoutGst, tvPayableAmount, tvRoomGstAmt, tvTotalSaving;
     private TextView tvAddress;
@@ -114,7 +110,7 @@ public class ActivityBookRoom extends BaseActivity {
         cvRoomList = findViewById(R.id.cv_room_list);
         rvRoomList = findViewById(R.id.rv_rooms_list);
         rvRoomList.setLayoutManager(new LinearLayoutManager(this));
-        priceRoomAdapter = new PriceRoomAdapter(this, mBookingsPriceList);
+        priceRoomAdapter = new PriceRoomAdapter(this, mBookingsPriceList, this);
         rvRoomList.setAdapter(priceRoomAdapter);
         rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();
@@ -208,9 +204,9 @@ public class ActivityBookRoom extends BaseActivity {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
-        for (int i = 0; i < mBookingsPriceList.size(); i++) {
-            roomAmt += mBookingsPriceList.get(i).getRoomPriceWithoutGst();
-            gstAmt += mBookingsPriceList.get(i).getRoomGstPrice();
+        for (int i = 0; i < priceRoomAdapter.getmData().size(); i++) {
+            roomAmt += priceRoomAdapter.getmData().get(i).getRoomPriceWithoutGst();
+            gstAmt += priceRoomAdapter.getmData().get(i).getRoomGstPrice();
         }
         tvRoomPriceWithoutGst.setText(roomAmt + " rs");
         tvRoomGstAmt.setText(gstAmt + " rs");
@@ -256,4 +252,8 @@ public class ActivityBookRoom extends BaseActivity {
         return true;
     }
 
+    @Override
+    public void onItemClick(int position) {
+        bindDataWithUi();
+    }
 }

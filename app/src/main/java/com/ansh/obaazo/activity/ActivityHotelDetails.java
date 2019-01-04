@@ -1,10 +1,8 @@
 package com.ansh.obaazo.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +36,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
@@ -215,7 +216,11 @@ public class ActivityHotelDetails extends BaseActivity {
 
 
             ((TextView) findViewById(R.id.tv_hotel_name)).setText(hotelDetails.getHotel_name());
-            ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getStartFrom());
+            if (!TextUtils.isEmpty(hotelDetails.getStartFrom())) {
+                ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getStartFrom());
+                ((TextView) findViewById(R.id.tv_discount_price)).setText("₹ " + getDisountPrice(hotelDetails.getStartFrom()));
+                ((TextView) findViewById(R.id.tv_discount_price)).setPaintFlags(((TextView) findViewById(R.id.tv_discount_price)).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
             findViewById(R.id.tv_price).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
             findViewById(R.id.tv_lbl_start).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
             findViewById(R.id.tv_not_avi).setVisibility(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
@@ -229,6 +234,14 @@ public class ActivityHotelDetails extends BaseActivity {
             amentiesAdapter.setmData(hotelDetails.getHotel_amenties1());
         }
         hitHotelGalleryApi();
+    }
+
+    private Double getDisountPrice(String startPrice) {
+        Double tempPrice = Double.parseDouble(startPrice);
+        if (!TextUtils.isEmpty(startPrice)) {
+            tempPrice = tempPrice - (tempPrice * 20 / 100);
+        }
+        return tempPrice;
     }
 
 

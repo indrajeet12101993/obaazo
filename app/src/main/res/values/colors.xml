@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff7d31</color>
+    <!--<color name="colorPrimary">#ff7d31</color>
     <color name="colorPrimaryDark">#f78c22</color>
-    <color name="colorAccent">#0baada</color>
+    <color name="colorAccent">#0baada</color>-->
+    <color name="colorPrimary">#0e6e37</color>
+    <color name="colorPrimaryDark">#1c831b</color>
+    <color name="colorAccent">#15782a</color>
     <color name="orange">#f7772c</color>
     <color name="greay">#cfcece</color>
     <color name="greay_transparent">#33000000</color>

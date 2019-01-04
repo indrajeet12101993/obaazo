@@ -132,8 +132,6 @@
                     android:fontFamily="sans-serif"
                     android:text="1220 Reviews"
                     android:textSize="@dimen/_9sdp" />
-
-
             </LinearLayout>
 
             <RelativeLayout
@@ -166,6 +164,14 @@
                         android:text="Start From"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_8sdp" />
+                    <TextView
+                        android:id="@+id/tv_discount_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:fontFamily="sans-serif"
+                        android:text="₹"
+                        android:textSize="@dimen/_10sdp" />
 
                     <TextView
                         android:layout_marginTop="-2dp"

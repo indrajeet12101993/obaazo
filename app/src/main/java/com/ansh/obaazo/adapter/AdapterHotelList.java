@@ -3,6 +3,7 @@ package com.ansh.obaazo.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +110,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
         private TextView tvDistance;
         private TextView tvAddress;
         private TextView tvStartFrom;
+        private TextView tvCrossPrice;
 
 
         public ViewHolder(View itemView) {
@@ -122,6 +124,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvReview = itemView.findViewById(R.id.tv_review);
             tvStartFrom = itemView.findViewById(R.id.tv_start_from);
+            tvCrossPrice = itemView.findViewById(R.id.tv_discount_price);
         }
 
         public void bindData(HotelInfo bean, int adapterPosition) {
@@ -153,7 +156,9 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
 
             } else {
                 itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
-                tvStartFrom.setText("₹" + startPrice);
+                tvStartFrom.setText("₹" + getDisountPrice(startPrice));
+                tvCrossPrice.setText("₹" + startPrice);
+                tvCrossPrice.setPaintFlags(tvCrossPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 mList.get(adapterPosition).setStartFrom(startPrice);
                 mList.get(adapterPosition).setAvailable(true);
                 itemView.findViewById(R.id.tv_not_avi).setVisibility(View.GONE);
@@ -179,6 +184,14 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             }*/
 
         }
+    }
+
+    private Double getDisountPrice(String startPrice) {
+        Double tempPrice = Double.parseDouble(startPrice);
+        if (!TextUtils.isEmpty(startPrice)) {
+            tempPrice = tempPrice - (tempPrice * 20 / 100);
+        }
+        return tempPrice;
     }
 
     public String getStartPrice(String hotelId) {

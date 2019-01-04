@@ -3,6 +3,8 @@ package com.ansh.obaazo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HotelInfo implements Parcelable {
 
     /**
@@ -68,8 +70,8 @@ public class HotelInfo implements Parcelable {
     private String cancellation;
     private String review;
     private boolean isAvailable = true;
+    @SerializedName("Price")
     private String startFrom;
-
 
 
     public boolean isAvailable() {

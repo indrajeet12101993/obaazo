@@ -172,7 +172,12 @@ public class ActivityBookRoom extends BaseActivity {
 
     }
 
+
     private void initPayment() {
+
+    }
+
+/*    private void initPayment() {
         PaymentClient client = new PaymentClient();
         Intent intent = new Intent(this, PaymentWebView.class);
         intent.putExtra(AvenuesParams.ACCESS_CODE, client.getAccessCode());
@@ -183,7 +188,7 @@ public class ActivityBookRoom extends BaseActivity {
         intent.putExtra(AvenuesParams.REDIRECT_URL, client.getRedirectUrl());
         intent.putExtra(AvenuesParams.CANCEL_URL, client.getCancelUrl());
         startActivity(intent);
-    }
+    }*/
 
     @Override
     protected void bindDataWithUi() {

@@ -208,10 +208,10 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             roomAmt += priceRoomAdapter.getmData().get(i).getRoomPriceWithoutGst();
             gstAmt += priceRoomAdapter.getmData().get(i).getRoomGstPrice();
         }
-        tvRoomPriceWithoutGst.setText(roomAmt + " rs");
-        tvRoomGstAmt.setText(gstAmt + " rs");
-        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " rs");
-        tvTotalSaving.setText(obaazoMoney + couponDiscount + " rs");
+        tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
+        tvRoomGstAmt.setText(gstAmt + " ₹");
+        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " ₹");
+        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details

@@ -2,8 +2,7 @@ package com.ansh.obaazo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,9 @@ import com.ansh.obaazo.utils.BitmapTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
@@ -125,16 +127,17 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     public Double getTotalPrice() {
         Double total = 0.0;
         for (int i = 0; i < mData.getBookingInfos().size(); i++) {
-            if(null!=mData.getBookingInfos().get(i).getPrice())
-            total += mData.getBookingInfos().get(i).getPrice();
+            if (null != mData.getBookingInfos().get(i).getPrice())
+                total += mData.getBookingInfos().get(i).getPrice();
         }
         return total;
     }
+
     public Double getTotalAmt() {
         Double total = 0.0;
         for (int i = 0; i < mData.getBookingInfos().size(); i++) {
-            if(null!=mData.getBookingInfos().get(i).getPrice())
-            total += mData.getBookingInfos().get(i).getPrice();
+            if (null != mData.getBookingInfos().get(i).getPrice())
+                total += mData.getBookingInfos().get(i).getPrice();
         }
         return total;
     }
@@ -182,11 +185,21 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
                 itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
             } else {
                 itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
-                ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + startPrice);
+                ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + getDisountPrice(startPrice));
+                ((TextView) itemView.findViewById(R.id.tv_discount_price)).setText("₹" + startPrice);
+                ((TextView) itemView.findViewById(R.id.tv_discount_price)).setPaintFlags(((TextView) itemView.findViewById(R.id.tv_discount_price)).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
             }
         }
     }
 
+    private Double getDisountPrice(String startPrice) {
+        Double tempPrice = Double.parseDouble(startPrice);
+        if (!TextUtils.isEmpty(startPrice)) {
+            tempPrice = tempPrice - (tempPrice * 20 / 100);
+        }
+        return tempPrice;
+    }
 
     public String getStartPrice(String roomId) {
         if (roomPrice != null) {

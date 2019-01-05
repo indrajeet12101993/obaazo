@@ -235,6 +235,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         amountRequest.setOverAllGst(tvRoomGstAmt.getText().toString());
         amountRequest.setFinalAmount(tvPayableAmount.getText().toString());
         amountRequest.setBookingAmount(tvRoomPriceWithoutGst.getText().toString());
+        amountRequest.setPaymentOption("1");
 
         discountRequest.setCouponDiscount(tvCouponDiscount.getText().toString());
         discountRequest.setCouponName(couponName);

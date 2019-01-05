@@ -1,8 +1,6 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +8,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ansh.obaazo.R;
+import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.resources.response.CouponListResponse;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class AdapterCouponCode extends RecyclerView.Adapter<AdapterCouponCode.AdapterCouponCodeViewHolder> {
     private Context mContext;
     private ArrayList<CouponListResponse.ResultBean> mData;
+    RItemListener<CouponListResponse.ResultBean> rItemListener;
 
-    public AdapterCouponCode(Context mContext, ArrayList<CouponListResponse.ResultBean> mData) {
+    public AdapterCouponCode(Context mContext, ArrayList<CouponListResponse.ResultBean> mData, RItemListener<CouponListResponse.ResultBean> rItemListener) {
         this.mContext = mContext;
         this.mData = mData;
+        this.rItemListener = rItemListener;
     }
+
 
     @NonNull
     @Override
@@ -39,7 +44,11 @@ public class AdapterCouponCode extends RecyclerView.Adapter<AdapterCouponCode.Ad
             @Override
             public void onClick(View view) {
                 mData.get(holder.getAdapterPosition()).setSelected(!mData.get(holder.getAdapterPosition()).isSelected());
+                rItemListener.onItemClick(mData.get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 notifyDataSetChanged();
+                //
+                //notifyDataSetChanged();
+
             }
         });
 
@@ -52,6 +61,13 @@ public class AdapterCouponCode extends RecyclerView.Adapter<AdapterCouponCode.Ad
 
     public void setData(ArrayList<CouponListResponse.ResultBean> data) {
         this.mData = data;
+        notifyDataSetChanged();
+    }
+
+    public void resetData() {
+        for (int i = 0; i < mData.size(); i++) {
+            mData.get(i).setSelected(false);
+        }
         notifyDataSetChanged();
     }
 

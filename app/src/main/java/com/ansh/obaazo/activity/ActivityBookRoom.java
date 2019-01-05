@@ -8,21 +8,29 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AdapterCouponCode;
 import com.ansh.obaazo.adapter.PriceRoomAdapter;
-import com.ansh.obaazo.listener.IItemClick;
 import com.ansh.obaazo.listener.ItemClickNotiffy;
+import com.ansh.obaazo.listener.RItemListener;
+import com.ansh.obaazo.model.AmountRequest;
 import com.ansh.obaazo.model.BookingInfo;
+import com.ansh.obaazo.model.DiscountRequest;
 import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.model.MBooking;
+import com.ansh.obaazo.model.RoomDetailRequest;
 import com.ansh.obaazo.model.UserDetails;
+import com.ansh.obaazo.model.UserRequest;
 import com.ansh.obaazo.resources.request.BaseRequest;
+import com.ansh.obaazo.resources.request.BookingRequest;
+import com.ansh.obaazo.resources.response.BaseResponse;
 import com.ansh.obaazo.resources.response.CouponListResponse;
 import com.ansh.obaazo.resources.response.ObazoMoneyResponse;
+import com.ansh.obaazo.resources.service.BookingService;
 import com.ansh.obaazo.resources.service.CouponListService;
 import com.ansh.obaazo.resources.service.ObaazoMoneyService;
 import com.ansh.obaazo.utils.AppConstant;
@@ -41,9 +49,6 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
@@ -51,7 +56,7 @@ import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 
 public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private ImageView ivRoomImage;
-    private TextView tvHotelName, tvRoomPriceWithoutGst, tvPayableAmount, tvRoomGstAmt, tvTotalSaving;
+    private TextView tvHotelName, tvRoomPriceWithoutGst, tvPayableAmount, tvRoomGstAmt, tvTotalSaving, tvCouponDiscount;
     private TextView tvAddress;
     private HotelInfo hotelDetails;
     private TextView tvCheckInCheckOutTime;
@@ -72,9 +77,13 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private ArrayList<BookingInfo> bookingInfos;
     private ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
     private AppCompatCheckBox cbObaazoMoney;
-
+    Spinner spExpChekinTime;
     private Double tempObaazoMoney;
     private Double obaazoMoney = 0.0;
+    private int couponDiscountPer;
+    private double maxDisAmt = 0.0;
+    String couponName;
+    ArrayList<RoomDetailRequest> roomDetails = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +120,32 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         etCompanyName = findViewById(R.id.et_company_name);
         etCompanyAddress = findViewById(R.id.et_company_address);
         cbObaazoMoney = findViewById(R.id.cb_obazzo_money);
+        tvCouponDiscount = findViewById(R.id.tv_coupon_discount);
 
         cvCouponCode = findViewById(R.id.cv_coupon_code);
         rvCouponCode = findViewById(R.id.rv_coupon_code);
+        spExpChekinTime = findViewById(R.id.sp_exp_chekin_time);
         rvCouponCode.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvCouponCode.setNestedScrollingEnabled(false);
-        adapterCouponCode = new AdapterCouponCode(this, new ArrayList<CouponListResponse.ResultBean>());
+        adapterCouponCode = new AdapterCouponCode(this, new ArrayList<CouponListResponse.ResultBean>(), new RItemListener<CouponListResponse.ResultBean>() {
+            @Override
+            public void onItemClick(CouponListResponse.ResultBean item, int position) {
+                if (item.isSelected()) {
+                    couponName = item.getCoupon_name();
+                    if (!TextUtils.isEmpty(item.getCoupon_percent()) && TextUtils.isDigitsOnly(item.getCoupon_percent()))
+                        couponDiscountPer = Integer.parseInt(item.getCoupon_percent());
+                    else
+                        Toast.makeText(ActivityBookRoom.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    maxDisAmt = Double.parseDouble(item.getMax_discount());
+                    calculateAmmount();
+                } else {
+                    couponDiscountPer = 0;
+                    maxDisAmt = 0.0;
+                    couponName = "";
+                    calculateAmmount();
+                }
+            }
+        });
         rvCouponCode.setAdapter(adapterCouponCode);
 
         cvRoomList = findViewById(R.id.cv_room_list);
@@ -191,6 +220,62 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
 
 
     private void initPayment() {
+        showLoadingDialog();
+        BookingRequest request = new BookingRequest();
+        UserRequest user = new UserRequest();
+        AmountRequest amountRequest = new AmountRequest();
+        DiscountRequest discountRequest = new DiscountRequest();
+        user.setUserId(userDetails.getId());
+        user.setName(etName.getText().toString());
+        user.setEmail(etEmail.getText().toString());
+        user.setGuestTime(spExpChekinTime.getSelectedItem().toString());
+
+        amountRequest.setCheckIndate(PreferencesUtils.getString(AppConstant.START_DATE));
+        amountRequest.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
+        amountRequest.setOverAllGst(tvRoomGstAmt.getText().toString());
+        amountRequest.setFinalAmount(tvPayableAmount.getText().toString());
+        amountRequest.setBookingAmount(tvRoomPriceWithoutGst.getText().toString());
+
+        discountRequest.setCouponDiscount(tvCouponDiscount.getText().toString());
+        discountRequest.setCouponName(couponName);
+        discountRequest.setObaazoUsed(obaazoMoney + "");
+        discountRequest.setReward(obaazoMoney + "");
+
+        for (MBooking booking : mBookingsPriceList) {
+            RoomDetailRequest roomDetailRequest = new RoomDetailRequest();
+            roomDetailRequest.setHotelId(booking.getHotelId() + "");
+            roomDetailRequest.setRoomId(booking.getRoomId() + "");
+            roomDetailRequest.setAdult(booking.getAdultCount() + "");
+            roomDetailRequest.setChild(booking.getChildCount() + "");
+            roomDetailRequest.setAdultPrice(booking.getAdultPrice() + "");
+            roomDetailRequest.setChildPrice(booking.getChildPrice() + "");
+            roomDetailRequest.setTotalPrice(booking.getRoomPriceWithoutGst() + "");
+            roomDetailRequest.setRoomId("0");
+            roomDetails.add(roomDetailRequest);
+        }
+
+        request.setRequest(user);
+        request.setAmountRequest(amountRequest);
+        request.setDiscountRequest(discountRequest);
+        request.setRoomDetails(roomDetails);
+
+        new BookingService(this).execute(request, new ApiCallback<BaseResponse>() {
+            @Override
+            public void onSuccess(Call<BaseResponse> call, BaseResponse response) {
+                Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(ActivityBookRoom.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
        /* PaymentClient client = new PaymentClient();
 
     }
@@ -249,8 +334,6 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
 
     @Override
     protected void bindDataWithUi() {
-
-
         Picasso.get()
                 .load((!(TextUtils.isEmpty(hotelDetails.getImage1()))) ? hotelDetails.getImage1() : null)
                 .transform(new BitmapTransform(MAX_WIDTH, MAX_HEIGHT))
@@ -282,15 +365,24 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     public void calculateAmmount() {
         Double roomAmt = 0.0;
         Double gstAmt = 0.0;
-        Double couponDiscount = 0.0;
+        //   Double couponDiscount = 0.0;
         for (int i = 0; i < mBookingsPriceList.size(); i++) {
             roomAmt += mBookingsPriceList.get(i).getRoomPriceWithoutGst();
             gstAmt += mBookingsPriceList.get(i).getRoomGstPrice();
         }
+        if (mBookingsPriceList.size() == 0) {
+            maxDisAmt = 0.0;
+            obaazoMoney = 0.0;
+            cbObaazoMoney.setChecked(false);
+            adapterCouponCode.resetData();
+
+            Toast.makeText(this, "Please select at least one room", Toast.LENGTH_SHORT).show();
+        }
         tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
         tvRoomGstAmt.setText(gstAmt + " ₹");
-        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " ₹");
-        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");
+        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + maxDisAmt)) + " ₹");
+        tvTotalSaving.setText(obaazoMoney + maxDisAmt + " ₹");
+        tvCouponDiscount.setText(maxDisAmt + " ₹");
     }
 
 
@@ -383,6 +475,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
 
     @Override
     public void onItemClick(int position) {
-        bindDataWithUi();
+        calculateAmmount();
+        //bindDataWithUi();
     }
 }

@@ -251,7 +251,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             roomDetailRequest.setAdultPrice(booking.getAdultPrice() + "");
             roomDetailRequest.setChildPrice(booking.getChildPrice() + "");
             roomDetailRequest.setTotalPrice(booking.getRoomPriceWithoutGst() + "");
-            roomDetailRequest.setRoomId("0");
+            roomDetailRequest.setRoomNo(booking.getRoomId()+"");
             roomDetails.add(roomDetailRequest);
         }
 

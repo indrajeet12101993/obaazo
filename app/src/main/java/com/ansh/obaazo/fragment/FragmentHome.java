@@ -99,6 +99,7 @@ public class FragmentHome extends BaseFragment {
                 .error(R.drawable.ic_hotel_place_holder)
                 .placeholder(R.drawable.ic_hotel_place_holder)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .resize(400,200)
                 .into((ImageView) mView.findViewById(R.id.app_banner));
 
         etPlace = mView.findViewById(R.id.et_place);

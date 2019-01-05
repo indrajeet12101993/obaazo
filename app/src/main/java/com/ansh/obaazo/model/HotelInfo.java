@@ -72,7 +72,16 @@ public class HotelInfo implements Parcelable {
     private boolean isAvailable = true;
     @SerializedName("Price")
     private String startFrom;
+    @SerializedName("Price")
+    private String price;
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public boolean isAvailable() {
         return isAvailable;
@@ -414,6 +423,7 @@ public class HotelInfo implements Parcelable {
         dest.writeString(this.review);
         dest.writeByte(this.isAvailable ? (byte) 1 : (byte) 0);
         dest.writeString(this.startFrom);
+        dest.writeString(this.price);
         dest.writeString(this.services);
         dest.writeString(this.admission);
         dest.writeString(this.date_change_allowed);
@@ -453,6 +463,7 @@ public class HotelInfo implements Parcelable {
         this.review = in.readString();
         this.isAvailable = in.readByte() != 0;
         this.startFrom = in.readString();
+        this.price = in.readString();
         this.services = in.readString();
         this.admission = in.readString();
         this.date_change_allowed = in.readString();

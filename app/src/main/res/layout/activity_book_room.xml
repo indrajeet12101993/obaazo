@@ -231,11 +231,12 @@
 
 
                     <TextView
+                        android:id="@+id/tv_obaazo_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_toLeftOf="@+id/cb_obazzo_money"
-                        android:text="0rs"
+                        android:text="0 ₹"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold" />
 
@@ -297,7 +298,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="0rs"
+                            android:text="0 ₹"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -319,7 +320,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="0rs"
+                            android:text="0 ₹"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -343,7 +344,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="0rs"
+                            android:text="0 ₹"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
 
@@ -571,7 +572,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="0 Rs"
+                    android:text="0 ₹"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 

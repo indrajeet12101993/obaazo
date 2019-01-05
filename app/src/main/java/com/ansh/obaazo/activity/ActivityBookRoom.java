@@ -1,5 +1,6 @@
 package com.ansh.obaazo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,7 +31,6 @@ import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
-import com.atom.mobilepaymentsdk.PayActivity;
 import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
@@ -205,7 +205,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         intent.putExtra(AvenuesParams.AMOUNT, "10");
         intent.putExtra(AvenuesParams.REDIRECT_URL, client.getRedirectUrl());
         intent.putExtra(AvenuesParams.CANCEL_URL, client.getCancelUrl());
-        startActivity(intent);*/
+        startActivity(intent);
 
 
         Intent newPayIntent = new Intent(this, PayActivity.class);
@@ -244,8 +244,8 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         startActivityForResult(newPayIntent, 1);
 
     }
-        startActivity(intent);
-    }*/
+        startActivity(intent);*/
+    }
 
     @Override
     protected void bindDataWithUi() {
@@ -262,14 +262,14 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
-        for (int i = 0; i < priceRoomAdapter.getmData().size(); i++) {
+        /*for (int i = 0; i < priceRoomAdapter.getmData().size(); i++) {
             roomAmt += priceRoomAdapter.getmData().get(i).getRoomPriceWithoutGst();
             gstAmt += priceRoomAdapter.getmData().get(i).getRoomGstPrice();
         }
         tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
         tvRoomGstAmt.setText(gstAmt + " ₹");
         tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " ₹");
-        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");
+        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");*/
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details

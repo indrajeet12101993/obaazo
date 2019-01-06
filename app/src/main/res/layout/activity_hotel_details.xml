@@ -223,7 +223,7 @@
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content">
                            <TextView
-                               android:id="@+id/tv_discount_price"
+                               android:id="@+id/tv_price"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:layout_marginStart="@dimen/_2sdp"
@@ -232,7 +232,7 @@
                                android:textColor="@color/mdtp_white"
                                android:textSize="@dimen/_10sdp" />
                            <TextView
-                               android:id="@+id/tv_price"
+                               android:id="@+id/tv_discount_price"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:fontFamily="sans-serif"

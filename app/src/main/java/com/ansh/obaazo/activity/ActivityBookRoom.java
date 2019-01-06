@@ -3,6 +3,7 @@ package com.ansh.obaazo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -204,7 +205,10 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         findViewById(R.id.btn_payment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initPayment();
+                if (isValidDetails()) {
+                    initPayment();
+                }
+
             }
         });
 
@@ -228,6 +232,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         user.setUserId(userDetails.getId());
         user.setName(etName.getText().toString());
         user.setEmail(etEmail.getText().toString());
+        user.setMobile(etMobile.getText().toString());
         user.setGuestTime(spExpChekinTime.getSelectedItem().toString());
 
         amountRequest.setCheckIndate(PreferencesUtils.getString(AppConstant.START_DATE));
@@ -244,14 +249,16 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
 
         for (MBooking booking : mBookingsPriceList) {
             RoomDetailRequest roomDetailRequest = new RoomDetailRequest();
-            roomDetailRequest.setHotelId(booking.getHotelId() + "");
-            roomDetailRequest.setRoomId(booking.getRoomId() + "");
+            // roomDetailRequest.setHotelId(booking.getHotelId() + "");
+            //roomDetailRequest.setRoomId(booking.getRoomId() + "");
+            roomDetailRequest.setHotelId("1065");
+            roomDetailRequest.setRoomId("198");
             roomDetailRequest.setAdult(booking.getAdultCount() + "");
             roomDetailRequest.setChild(booking.getChildCount() + "");
             roomDetailRequest.setAdultPrice(booking.getAdultPrice() + "");
             roomDetailRequest.setChildPrice(booking.getChildPrice() + "");
             roomDetailRequest.setTotalPrice(booking.getRoomPriceWithoutGst() + "");
-            roomDetailRequest.setRoomNo(booking.getRoomId()+"");
+            roomDetailRequest.setRoomNo(booking.getRoomId() + "");
             roomDetails.add(roomDetailRequest);
         }
 
@@ -389,31 +396,30 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
 
     public boolean isValidDetails() {
         if (TextUtils.isEmpty(etName.getText().toString()) || etName.getText().length() < 2) {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter valid  Name", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (TextUtils.isEmpty(etMobile.getText().toString()) || etMobile.getText().length() < 10) {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter valid Mobile No", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (TextUtils.isEmpty(etEmail.getText().toString()) || etEmail.getText().length() < 2) {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        if (!Patterns.EMAIL_ADDRESS.matcher(etEmail.getText()).matches()) {
+            Toast.makeText(this, "enter valid Email address", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (cbCoprate.isChecked()) {
             if (TextUtils.isEmpty(etGstNo.getText().toString()) || etGstNo.getText().length() < 2) {
-                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter GST No", Toast.LENGTH_SHORT).show();
                 return false;
             }
             if (TextUtils.isEmpty(etCompanyName.getText().toString()) || etCompanyName.getText().length() < 2) {
-                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter Company Name", Toast.LENGTH_SHORT).show();
                 return false;
             }
             if (TextUtils.isEmpty(etCompanyAddress.getText().toString()) || etCompanyAddress.getText().length() < 2) {
-                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter Company address", Toast.LENGTH_SHORT).show();
                 return false;
             }
-
         }
         return true;
     }

@@ -166,14 +166,11 @@ public class ActivityHotelDetails extends BaseActivity {
         findViewById(R.id.btn_select_room).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if (hotelDetails.isAvailable()) {
+                if (hotelDetails.isAvailable()) {
                     startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class)
                             .putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id())
                             .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
-                }*/
-                startActivity(new Intent(ActivityHotelDetails.this, SelectRoomActivity.class)
-                        .putExtra(AppConstant.HOTEL_ID, hotelDetails.getHotel_id())
-                        .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails));
+                }
             }
         });
 
@@ -222,7 +219,7 @@ public class ActivityHotelDetails extends BaseActivity {
             if (!TextUtils.isEmpty(hotelDetails.getStartFrom())) {
                 ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getStartFrom());
                 ((TextView) findViewById(R.id.tv_discount_price)).setText("₹ " + getDisountPrice(hotelDetails.getStartFrom()));
-                ((TextView) findViewById(R.id.tv_discount_price)).setPaintFlags(((TextView) findViewById(R.id.tv_discount_price)).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                ((TextView) findViewById(R.id.tv_price)).setPaintFlags(((TextView) findViewById(R.id.tv_price)).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
             findViewById(R.id.tv_price).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
             findViewById(R.id.tv_lbl_start).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);

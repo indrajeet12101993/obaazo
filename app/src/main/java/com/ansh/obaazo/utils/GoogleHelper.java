@@ -2,9 +2,11 @@ package com.ansh.obaazo.utils;
 
 import android.content.Intent;
 
+import com.ansh.obaazo.R;
 import com.ansh.obaazo.model.UserInfo;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,8 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -42,11 +42,11 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
     public GoogleHelper(FragmentActivity activity, OnGoogleListener onGoogleListener) {
         this.activity = activity;
         this.onGoogleListener = onGoogleListener;
-        //  initSDK();
+        initSDK();
     }
 
     public void initSDK() {
-     /*   GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(activity.getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
@@ -54,7 +54,7 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
                 .enableAutoManage(activity, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        mAuth = FirebaseAuth.getInstance();*/
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public Intent signIn() {
@@ -103,7 +103,7 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
     }
 
     public void onDisconnect() {
-     //   mGoogleApiClient.stopAutoManage(activity);
+        //   mGoogleApiClient.stopAutoManage(activity);
         mGoogleApiClient.disconnect();
     }
 

@@ -3,8 +3,6 @@ package com.ansh.obaazo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +28,8 @@ import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.ESOTP;
 import com.google.gson.Gson;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 
 /**
@@ -89,14 +89,14 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // fbHelper.connect();
+                fbHelper.connect();
             }
         });
         google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent intent = googleHelper.signIn();
-                //  startActivityForResult(intent, RC_SIGN_IN);
+                Intent intent = googleHelper.signIn();
+                startActivityForResult(intent, RC_SIGN_IN);
             }
         });
 
@@ -129,7 +129,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
 
     }
 
-    public void sendOtp(String mobileNo) {
+    private void sendOtp(String mobileNo) {
         if (getActivity() == null) return;
         ((BaseActivity) getActivity()).showLoadingDialog();
         BaseRequest request = new BaseRequest();
@@ -161,7 +161,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
         });
     }
 
-    public void verifyOtp(String mobileNo, String otp) {
+    private void verifyOtp(String mobileNo, String otp) {
         if (getActivity() == null) return;
         ((BaseActivity) getActivity()).showLoadingDialog();
         BaseRequest request = new BaseRequest();
@@ -197,22 +197,24 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
 
     @Override
     public void OnFbSuccess(UserInfo user) {
+        Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void OnFbError(String errorMessage) {
-
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void OnGoogleSuccess(UserInfo user) {
+        Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void OnGoogleError(String errorMessage) {
-
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override

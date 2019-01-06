@@ -28,4 +28,14 @@ public class UserInfo {
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", profileImg='" + profileImg + '\'' +
+                '}';
+    }
 }

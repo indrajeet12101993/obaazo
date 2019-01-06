@@ -3,7 +3,6 @@ package com.ansh.obaazo.utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 
 import com.ansh.obaazo.model.UserInfo;
@@ -60,9 +59,9 @@ public class FBHelper {
         callbackManager = CallbackManager.Factory.create();
         LoginManager loginManager = LoginManager.getInstance();
         loginManager.logOut();
-        if (activity != null)
+        if (activity != null) {
             loginManager.logInWithReadPermissions(activity, permissions);
-        else
+        } else
             loginManager.logInWithReadPermissions(fragment, permissions);
         loginManager.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "678206480750",
+    "firebase_url": "https://obaazo.firebaseio.com",
+    "project_id": "obaazo",
+    "storage_bucket": "obaazo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678206480750:android:850522cf9253bcbd",
+        "android_client_info": {
+          "package_name": "com.ansh.obaazo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678206480750-0gdtd1k2lulonitgbqis3h7tu3bobiqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtkTm4hlQosEZEW-7h-hCzt4JS4ry38mk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

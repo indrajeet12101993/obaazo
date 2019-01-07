@@ -6,7 +6,6 @@ public class AppConstant {
     public static final String TRANS_URL = "https://secure.ccavenue.com/transaction/initTrans";
 
 
-
     public static final String SERVER_URL = "https://obaazo.com/";
     // public static final String SERVER_URL = "http://technowhizzit.com/obaazo/";
     public static final int MAX_WIDTH = 1024;
@@ -44,5 +43,8 @@ public class AppConstant {
     public static final String MY_BOOKING = "my_booking";
     public static final String ROOM_INFO = "roomPriceDtl";
     public static final String FILTER = "filter";
+    public static final String USER_CATEGORY = "user_category";
+    public static final String NEW_USER = "NewUser";
+    public static final String OLD_USER = "OldUser";
 }
 

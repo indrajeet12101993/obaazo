@@ -18,6 +18,7 @@ import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.model.HotelPrice;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -189,7 +190,12 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
     private Double getDisountPrice(String startPrice) {
         Double tempPrice = Double.parseDouble(startPrice);
         if (!TextUtils.isEmpty(startPrice)) {
-            tempPrice = tempPrice - (tempPrice * 20 / 100);
+            if (PreferencesUtils.getString(AppConstant.USER_CATEGORY).equalsIgnoreCase(AppConstant.OLD_USER)
+                    && PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                tempPrice = tempPrice - (tempPrice * 10 / 100);
+            } else {
+                tempPrice = tempPrice - (tempPrice * 20 / 100);
+            }
         }
         return tempPrice;
     }

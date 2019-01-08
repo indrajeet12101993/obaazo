@@ -17,7 +17,9 @@ import com.ansh.obaazo.listener.RItemListener;
 import com.ansh.obaazo.model.BookingInfo;
 import com.ansh.obaazo.model.HotelPrice;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
+import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -115,8 +117,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     public void setRoomData(BookingInfo bookingInfo, int position) {
         mData.getBookingInfos().set(position, bookingInfo);
         mData.getResult().get(position).setSelected(true);
-
-
         notifyItemChanged(position);
     }
 
@@ -196,7 +196,12 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     private Double getDisountPrice(String startPrice) {
         Double tempPrice = Double.parseDouble(startPrice);
         if (!TextUtils.isEmpty(startPrice)) {
-            tempPrice = tempPrice - (tempPrice * 20 / 100);
+            if (PreferencesUtils.getString(AppConstant.USER_CATEGORY).equalsIgnoreCase(AppConstant.OLD_USER)
+                    && PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                tempPrice = tempPrice - (tempPrice * 10 / 100);
+            } else {
+                tempPrice = tempPrice - (tempPrice * 20 / 100);
+            }
         }
         return tempPrice;
     }

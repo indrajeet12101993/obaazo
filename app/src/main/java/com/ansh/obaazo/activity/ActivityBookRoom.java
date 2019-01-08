@@ -79,7 +79,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
     private AppCompatCheckBox cbObaazoMoney;
     Spinner spExpChekinTime;
-    private Double tempObaazoMoney;
+    private Double tempObaazoMoney = 0.0;
     private Double obaazoMoney = 0.0;
     private int couponDiscountPer;
     private double maxDisAmt = 0.0;
@@ -205,6 +205,16 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         findViewById(R.id.btn_payment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               /* if (isValidDetails()) {
+                    initPayment();
+                }*/
+
+            }
+        });
+
+        findViewById(R.id.btn_pay_at_hotel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 if (isValidDetails()) {
                     initPayment();
                 }
@@ -212,10 +222,15 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             }
         });
 
+
         cbObaazoMoney.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                obaazoMoney = b ? tempObaazoMoney : 0;
+                if (b) {
+                    obaazoMoney = tempObaazoMoney * 5 / 100;
+                } else {
+                    obaazoMoney = 0.0;
+                }
                 calculateAmmount();
             }
         });
@@ -245,7 +260,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         discountRequest.setCouponDiscount(tvCouponDiscount.getText().toString());
         discountRequest.setCouponName(couponName);
         discountRequest.setObaazoUsed(obaazoMoney + "");
-        discountRequest.setReward(obaazoMoney + "");
+        discountRequest.setReward(tempObaazoMoney + "");
 
         for (MBooking booking : mBookingsPriceList) {
             RoomDetailRequest roomDetailRequest = new RoomDetailRequest();
@@ -353,14 +368,6 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                 .into(ivRoomImage);
         tvHotelName.setText(hotelDetails.getHotel_name());
         tvAddress.setText(hotelDetails.getAddress());
-        /*for (int i = 0; i < priceRoomAdapter.getmData().size(); i++) {
-            roomAmt += priceRoomAdapter.getmData().get(i).getRoomPriceWithoutGst();
-            gstAmt += priceRoomAdapter.getmData().get(i).getRoomGstPrice();
-        }
-        tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
-        tvRoomGstAmt.setText(gstAmt + " ₹");
-        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + couponDiscount)) + " ₹");
-        tvTotalSaving.setText(obaazoMoney + couponDiscount + " ₹");*/
         tvCheckInCheckOutTime.setText(DateUtils.parseDate(PreferencesUtils.getString(AppConstant.START_DATE)) + " - " + DateUtils.parseDate(PreferencesUtils.getString(AppConstant.END_DATE)));
 
         //Person Details
@@ -373,6 +380,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     public void calculateAmmount() {
         Double roomAmt = 0.0;
         Double gstAmt = 0.0;
+        Double discountCoupon = 0.0;
         //   Double couponDiscount = 0.0;
         for (int i = 0; i < mBookingsPriceList.size(); i++) {
             roomAmt += mBookingsPriceList.get(i).getRoomPriceWithoutGst();
@@ -383,14 +391,19 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             obaazoMoney = 0.0;
             cbObaazoMoney.setChecked(false);
             adapterCouponCode.resetData();
-
             Toast.makeText(this, "Please select at least one room", Toast.LENGTH_SHORT).show();
+        }
+
+        discountCoupon = roomAmt * couponDiscountPer / 100;
+        if (discountCoupon > maxDisAmt) {
+            discountCoupon = maxDisAmt;
         }
         tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
         tvRoomGstAmt.setText(gstAmt + " ₹");
-        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + maxDisAmt)) + " ₹");
-        tvTotalSaving.setText(obaazoMoney + maxDisAmt + " ₹");
-        tvCouponDiscount.setText(maxDisAmt + " ₹");
+        ((TextView) findViewById(R.id.tv_use_obaazo)).setText(obaazoMoney + "");
+        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + discountCoupon)) + " ₹");
+        tvTotalSaving.setText(obaazoMoney + discountCoupon + " ₹");
+        tvCouponDiscount.setText(discountCoupon + " ₹");
     }
 
 
@@ -420,6 +433,10 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                 Toast.makeText(this, "Enter Company address", Toast.LENGTH_SHORT).show();
                 return false;
             }
+        }
+        if (spExpChekinTime.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Please selected expected Check In Time", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }

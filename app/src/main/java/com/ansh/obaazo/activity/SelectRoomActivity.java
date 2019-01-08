@@ -2,11 +2,6 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,13 +16,10 @@ import com.ansh.obaazo.model.HotelInfo;
 import com.ansh.obaazo.model.MBooking;
 import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.resources.request.BaseRequest;
-import com.ansh.obaazo.resources.request.PriceRequest;
 import com.ansh.obaazo.resources.request.RoomPriceRequest;
 import com.ansh.obaazo.resources.response.HotelRoomResponse;
-import com.ansh.obaazo.resources.response.PriceResponse;
 import com.ansh.obaazo.resources.response.RoomPriceResponse;
 import com.ansh.obaazo.resources.service.HotelRoomService;
-import com.ansh.obaazo.resources.service.PriceService;
 import com.ansh.obaazo.resources.service.RoomPriceService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.DateUtils;
@@ -39,6 +31,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 public class SelectRoomActivity extends BaseActivity implements RItemListener<HotelRoomResponse.ResultBean> {
@@ -51,7 +45,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private TextView tvDates;
     private String roomId;
     private TextView tvTotalAmount;
-    private ArrayList<MBooking> mBookingsPriceList = new ArrayList<>();
+    private ArrayList<MBooking> mBookingsPriceList;
+    private Double totalPrice = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +58,24 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         return R.layout.activity_selecte_room;
     }
 
+    public void initBookingField() {
+        mBookingsPriceList = new ArrayList<>();
+
+    }
+
     @Override
     protected void initView() {
         hotelDetails = getIntent().getParcelableExtra(AppConstant.HOTEL_DETAILS);
         hotelName = hotelDetails.getHotel_name();
         tvDates = findViewById(R.id.tv_dates);
         initCustomToolbar();
+        initBookingField();
         rvRooms = findViewById(R.id.rv_rooms);
         tvTotalAmount = findViewById(R.id.tv_total_amount);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
         roomsAdapter = new RoomsAdapter(this, new HotelRoomResponse(), this);
         rvRooms.setAdapter(roomsAdapter);
         hitRoomApi();
-
-
     }
 
     @Override
@@ -169,7 +168,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             roomId = item.getId();
             startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
         } else {
-            Double totalPrice = roomsAdapter.getTotalPrice();
+            totalPrice = roomsAdapter.getTotalPrice();
             tvTotalAmount.setText("Total Amount ₹" + totalPrice);
         }
     }
@@ -200,10 +199,14 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
 
 
     public void initBooking() {
-        startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
-                .putParcelableArrayListExtra(AppConstant.PERSON_DETAILS, roomsAdapter.getmData())
-                .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails)
-                .putParcelableArrayListExtra(AppConstant.ROOM_INFO, mBookingsPriceList));
+        if (totalPrice != 0) {
+            startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
+                    .putParcelableArrayListExtra(AppConstant.PERSON_DETAILS, roomsAdapter.getmData())
+                    .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails)
+                    .putParcelableArrayListExtra(AppConstant.ROOM_INFO, mBookingsPriceList));
+        } else {
+            Toast.makeText(this, "First Select Room", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void bindDateData() {
@@ -219,6 +222,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         }
     }
 
+/*
     public void priceCal(final BookingInfo info) {
         showLoadingDialog();
         PriceRequest request = new PriceRequest();
@@ -256,6 +260,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             }
         });
     }
+*/
 
     public void hitRoomPriceApi(final BookingInfo info) {
         //   roomsAdapter.setRoomData(bookingInfo, selectedPosition);
@@ -289,7 +294,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     }
 
     public void calculation(RoomPriceResponse response, BookingInfo info) {
-        Double totalAmount = 0.0;
+        // Double totalAmount = 0.0;
         Double amt = 0.0;
         Double priceWithOutGSt = 0.0;
         Double roomGstprice = 0.0;
@@ -335,8 +340,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                 childCount = child.size();
             }
             MBooking mBooking = new MBooking();
-           // mBooking.setRoomId(Integer.parseInt(priceRate.getRoom_id()));
-           // mBooking.setHotelId(Integer.parseInt(priceRate.getHotel_id()));
+            // mBooking.setRoomId(Integer.parseInt(priceRate.getRoom_id()));
+            // mBooking.setHotelId(Integer.parseInt(priceRate.getHotel_id()));
             mBooking.setAdultCount(adultCount);
             mBooking.setChildCount(childCount);
             mBooking.setRoomPriceWithoutGst(priceWithOutGSt);
@@ -344,8 +349,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             info.setPrice(amt);
             roomsAdapter.setRoomData(info, selectedPosition);
             mBookingsPriceList.add(mBooking);
-            totalAmount = roomsAdapter.getTotalAmt();
-            tvTotalAmount.setText("Total Amount : ₹" + totalAmount);
+            totalPrice = roomsAdapter.getTotalAmt();
+            tvTotalAmount.setText("Total Amount : ₹" + totalPrice);
         }
 
     }

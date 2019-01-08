@@ -47,6 +47,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
     private GoogleHelper googleHelper;
     private ESOTP esotp;
     private AutoScrollViewPager viewPager;
+    private String userType = AppConstant.NEW_USER;
 
 
     public FragmentLogin() {
@@ -139,6 +140,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
             @Override
             public void onSuccess(Call<SendOtpResponse> call, SendOtpResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    userType = response.getCustomerType();
                     Toast.makeText(getContext(), "Otp Send", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -172,12 +174,12 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
             public void onSuccess(Call<LoginResponse> call, LoginResponse response) {
                 if (response.getResponseCode().equalsIgnoreCase("200")) {
                     PreferencesUtils.putBoolean(AppConstant.IS_LOGIN, true);
+                    PreferencesUtils.putString(AppConstant.USER_CATEGORY, userType);
                     PreferencesUtils.putString(AppConstant.USER_DETAILS, new Gson().toJson(response.getData()));
                     getActivity().onBackPressed();
                 } else {
                     Toast.makeText(getContext(), response.getResponseMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override

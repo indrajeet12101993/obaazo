@@ -1,6 +1,7 @@
 package com.ansh.obaazo.resources.response;
 
 import com.ansh.obaazo.web.ApiResponse;
+import com.google.gson.annotations.SerializedName;
 
 public class SendOtpResponse extends ApiResponse {
 
@@ -11,6 +12,17 @@ public class SendOtpResponse extends ApiResponse {
 
     private String response_code;
     private String response_message;
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
+    @SerializedName("Usertype")
+    private String customerType;
 
     public String getResponse_code() {
         return response_code;

@@ -239,7 +239,12 @@ public class ActivityHotelDetails extends BaseActivity {
     private Double getDisountPrice(String startPrice) {
         Double tempPrice = Double.parseDouble(startPrice);
         if (!TextUtils.isEmpty(startPrice)) {
-            tempPrice = tempPrice - (tempPrice * 20 / 100);
+            if (PreferencesUtils.getString(AppConstant.USER_CATEGORY).equalsIgnoreCase(AppConstant.OLD_USER)
+                    && PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                tempPrice = tempPrice - (tempPrice * 10 / 100);
+            } else {
+                tempPrice = tempPrice - (tempPrice * 20 / 100);
+            }
         }
         return tempPrice;
     }

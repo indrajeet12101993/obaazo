@@ -341,6 +341,7 @@
                             android:textSize="@dimen/_9sdp" />
 
                         <TextView
+                            android:id="@+id/tv_use_obaazo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -584,6 +585,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_pay_at_hotel"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginLeft="@dimen/_10sdp"

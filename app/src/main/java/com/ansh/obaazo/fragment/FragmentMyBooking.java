@@ -2,10 +2,6 @@ package com.ansh.obaazo.fragment;
 
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +19,15 @@ import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 /**
@@ -39,6 +40,8 @@ public class FragmentMyBooking extends BaseFragment {
     private RecyclerView rvMyBooking;
     private MyBookingAdapter bookingAdapter;
     private UserDetails userDetails;
+    private TabLayout tabLayout;
+    private String type = "1";
 
     public FragmentMyBooking() {
         // Required empty public constructor
@@ -54,6 +57,11 @@ public class FragmentMyBooking extends BaseFragment {
 
     @Override
     protected void initView() {
+        tabLayout = (TabLayout) mView.findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText("UpComing"));
+        tabLayout.addTab(tabLayout.newTab().setText("Completed"));
+        tabLayout.addTab(tabLayout.newTab().setText("Canceled"));
+
         rvMyBooking = mView.findViewById(R.id.rv_my_booking);
         rvMyBooking.setLayoutManager(new LinearLayoutManager(getActivity()));
         bookingAdapter = new MyBookingAdapter(getContext(), new ArrayList<MyBookingResponse.ResultBean>());
@@ -66,15 +74,18 @@ public class FragmentMyBooking extends BaseFragment {
         if (getActivity() != null) ((BaseActivity) getActivity()).showLoadingDialog();
         BaseRequest request = new BaseRequest();
         request.setId(userDetails.getId());
+        request.setId2(type);
         MyBookingService bookingService = new MyBookingService(getActivity());
         bookingService.execute(request, new ApiCallback<MyBookingResponse>() {
             @Override
             public void onSuccess(Call<MyBookingResponse> call, MyBookingResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    bookingAdapter.setmData(response.getResult());
+                    rvMyBooking.setVisibility(View.VISIBLE);
+                    bookingAdapter.setmData(response.getResult(),type);
                     mView.findViewById(R.id.iv_no_data).setVisibility((response.getResult() != null && response.getResult().size() != 0) ? View.GONE : View.VISIBLE);
                 } else {
                     mView.findViewById(R.id.iv_no_data).setVisibility(View.VISIBLE);
+                    rvMyBooking.setVisibility(View.GONE);
                     Toast.makeText(getContext(), response.getResponse_message(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -94,7 +105,33 @@ public class FragmentMyBooking extends BaseFragment {
 
     @Override
     protected void initListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getText().toString()) {
+                    case "UpComing":
+                        type = "1";
+                        break;
+                    case "Completed":
+                        type = "2";
+                        break;
+                    case "Canceled":
+                        type = "3";
+                        break;
+                }
+                hitMyBookingApi();
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -106,8 +143,6 @@ public class FragmentMyBooking extends BaseFragment {
         } else {
             Toast.makeText(getActivity(), "Somethings Went Wrong", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
 }

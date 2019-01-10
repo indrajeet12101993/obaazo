@@ -2,8 +2,6 @@ package com.ansh.obaazo.fragment;
 
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +21,10 @@ import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 
 /**
@@ -33,6 +35,7 @@ public class FragmentCash extends BaseFragment {
     private View mView;
     private TextView tvMoney;
     private TextView tvExpier;
+    private DecimalFormat format = new DecimalFormat("#.##");
 
     public FragmentCash() {
     }
@@ -51,7 +54,7 @@ public class FragmentCash extends BaseFragment {
         tvExpier = mView.findViewById(R.id.tv_expire);
         String tempDetails = PreferencesUtils.getString(AppConstant.USER_DETAILS);
         if (!TextUtils.isEmpty(tempDetails)) {
-            UserDetails results = new Gson().fromJson(tempDetails,UserDetails.class);
+            UserDetails results = new Gson().fromJson(tempDetails, UserDetails.class);
             String id = results.getId();
             hitObaazoMoneyApi(id);
         } else {
@@ -69,9 +72,10 @@ public class FragmentCash extends BaseFragment {
             @Override
             public void onSuccess(Call<ObazoMoneyResponse> call, ObazoMoneyResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    if (response.getResult() != null && response.getResult().size() != 0) {
-                        ObazoMoneyResponse.ResultBean resultBean = response.getResult().get(0);
-                        tvMoney.setText("₹" + resultBean.getMoney());
+                    if (response.getResult() != null) {
+                        ObazoMoneyResponse.ResultBean resultBean = response.getResult();
+                        String tempData = FragmentCash.this.format.format(resultBean.getMoney());
+                        tvMoney.setText("₹" + tempData);
                         tvExpier.setText("Expires On " + resultBean.getExpiry_date());
                     } else {
                         Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();

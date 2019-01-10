@@ -149,11 +149,18 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                 itemView.findViewById(R.id.tv_couple_friendly).setVisibility(bean.getCouple().equalsIgnoreCase("0") ? View.GONE : View.VISIBLE);
             }
 
+            if (TextUtils.isEmpty(bean.getFlag())) {
+                (itemView.findViewById(R.id.tv_flag_avi)).setVisibility(View.GONE);
+            } else {
+                (itemView.findViewById(R.id.tv_flag_avi)).setVisibility(View.VISIBLE);
+                ((TextView) itemView.findViewById(R.id.tv_flag_avi)).setText(bean.getFlag());
+            }
+
             String startPrice = bean.getStartFrom();
             if (TextUtils.isEmpty(startPrice)) {
                 mList.get(adapterPosition).setAvailable(false);
                 itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
-                itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
+                itemView.findViewById(R.id.ll_start).setVisibility(View.INVISIBLE);
 
             } else {
                 itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
@@ -164,26 +171,6 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
                 mList.get(adapterPosition).setAvailable(true);
                 itemView.findViewById(R.id.tv_not_avi).setVisibility(View.GONE);
             }
-           /* if (hotelPrices != null) {
-                // String startPrice = getStartPrice(bean.getHotel_id());
-                String startPrice = bean.getStartFrom();
-                if (TextUtils.isEmpty(startPrice)) {
-                    mList.get(adapterPosition).setAvailable(false);
-                    itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
-                    itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
-
-                } else {
-                    itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
-                    tvStartFrom.setText("₹" + startPrice);
-                    mList.get(adapterPosition).setStartFrom(startPrice);
-                    mList.get(adapterPosition).setAvailable(true);
-                    itemView.findViewById(R.id.tv_not_avi).setVisibility(View.GONE);
-                }
-            } else {
-                itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
-                itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
-            }*/
-
         }
     }
 

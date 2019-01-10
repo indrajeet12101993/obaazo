@@ -24,12 +24,12 @@ public class MyBookingService extends ApiService<MyBookingService.MyBookingApi, 
 
     @Override
     protected Call<MyBookingResponse> onExecute(MyBookingApi api, BaseRequest request) {
-        return api.myBooking(request.getId());
+        return api.myBooking(request.getId(), request.getId2());
     }
 
     public interface MyBookingApi {
         @FormUrlEncoded
         @POST("Api/Mybooking")
-        Call<MyBookingResponse> myBooking(@Field("user_id") String userId);
+        Call<MyBookingResponse> myBooking(@Field("user_id") String userId, @Field("type") String type);
     }
 }

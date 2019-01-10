@@ -2,7 +2,6 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,8 @@ import com.ansh.obaazo.resources.request.HotelSearchRequest;
 import com.ansh.obaazo.utils.AppConstant;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 
 public class FilterActivity extends BaseActivity {
@@ -112,6 +113,12 @@ public class FilterActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         cvAllAminity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -160,25 +167,35 @@ public class FilterActivity extends BaseActivity {
     private String getHotelType() {
         if (cbFarmHouse.isChecked()) {
             hotelType.append(",5");
-        }  if (cbServiceApartment.isChecked()) {
+        }
+        if (cbServiceApartment.isChecked()) {
             hotelType.append(",6");
-        }  if (cbGuestHouse.isChecked()) {
+        }
+        if (cbGuestHouse.isChecked()) {
             hotelType.append(",7");
-        }  if (cbHomeStay.isChecked()) {
+        }
+        if (cbHomeStay.isChecked()) {
             hotelType.append(",8");
-        }  if (cbHotel.isChecked()) {
+        }
+        if (cbHotel.isChecked()) {
             hotelType.append(",15");
-        }  if (cbVillas.isChecked()) {
+        }
+        if (cbVillas.isChecked()) {
             hotelType.append(",10");
-        }  if (cbPentHouse.isChecked()) {
+        }
+        if (cbPentHouse.isChecked()) {
             hotelType.append(",11");
-        }  if (cbResort.isChecked()) {
+        }
+        if (cbResort.isChecked()) {
             hotelType.append(",12");
-        }  if (cbHostel.isChecked()) {
+        }
+        if (cbHostel.isChecked()) {
             hotelType.append(",13");
-        }  if (cbPg.isChecked()) {
+        }
+        if (cbPg.isChecked()) {
             hotelType.append(",16");
-        }  if (cbBenuest.isChecked()) {
+        }
+        if (cbBenuest.isChecked()) {
             hotelType.append(",17");
         }
         if (!TextUtils.isEmpty(hotelType)) {
@@ -215,17 +232,23 @@ public class FilterActivity extends BaseActivity {
     private String getAminity() {
         if (cbCoupleFrendly.isChecked()) {
             aminity.append(",couple friendly");
-        }  if (cbWify.isChecked()) {
+        }
+        if (cbWify.isChecked()) {
             aminity.append(",wiffy");
-        }  if (cbSpa.isChecked()) {
+        }
+        if (cbSpa.isChecked()) {
             aminity.append(",spa");
-        }  if (cbSwimingPool.isChecked()) {
+        }
+        if (cbSwimingPool.isChecked()) {
             aminity.append(",swiming pool");
-        }  if (cbFreeParking.isChecked()) {
+        }
+        if (cbFreeParking.isChecked()) {
             aminity.append(",free parking");
-        }  if (cbRoomService.isChecked()) {
+        }
+        if (cbRoomService.isChecked()) {
             aminity.append(",room service");
-        }  if (cbbOutdorPool.isChecked()) {
+        }
+        if (cbbOutdorPool.isChecked()) {
             aminity.append(",out door poll");
         }
         if (!TextUtils.isEmpty(aminity)) {
@@ -268,7 +291,107 @@ public class FilterActivity extends BaseActivity {
 
     @Override
     protected void bindDataWithUi() {
+        if (!TextUtils.isEmpty(request.getAminity())) {
+            String[] split = request.getAminity().split(",");
+            for (String s : split) {
+                bindAminity(s);
+            }
+        }
+        if (!TextUtils.isEmpty(request.getStar())) {
+            String[] split = request.getStar().split(",");
+            for (String s : split) {
+                bindStar(s);
+            }
+        }
+        if (!TextUtils.isEmpty(request.getHotelType())) {
+            String[] split = request.getHotelType().split(",");
+            for (String s : split) {
+                bindHotelType(s);
+            }
+        }
+        if (!TextUtils.isEmpty(request.getMin())) {
+            rbSeekBar.setSelectedMinValue(Integer.parseInt(request.getMin()));
+        }
+        if (!TextUtils.isEmpty(request.getMax())) {
+            rbSeekBar.setSelectedMaxValue(Integer.parseInt(request.getMax()));
+        }
+    }
 
+    private void bindHotelType(String s) {
+        if (s.equalsIgnoreCase("5")) {
+            cbFarmHouse.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("6")) {
+            cbServiceApartment.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("7")) {
+            cbGuestHouse.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("8")) {
+            cbHomeStay.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("15")) {
+            cbHotel.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("10")) {
+            cbVillas.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("11")) {
+            cbPentHouse.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("12")) {
+            cbResort.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("13")) {
+            cbHostel.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("16")) {
+            cbPg.setChecked(true);
+        }
+        if (s.equalsIgnoreCase("17")) {
+            cbBenuest.setChecked(true);
+        }
+    }
 
+    public void bindAminity(String aminity) {
+        if (aminity.equalsIgnoreCase("couple friendly")) {
+            cbCoupleFrendly.setChecked(true);
+        }
+        if (aminity.equalsIgnoreCase("wiffy")) {
+            cbWify.setChecked(true);
+        }
+        if (aminity.equalsIgnoreCase("spa")) {
+            cbSpa.setChecked(true);
+        }
+        if (aminity.equalsIgnoreCase("swiming pool")) {
+            cbSwimingPool.setChecked(true);
+        }
+        if (aminity.equalsIgnoreCase("free parking")) {
+            cbFreeParking.setChecked(true);
+        }
+        if (aminity.equalsIgnoreCase("room service")) {
+            cbRoomService.setChecked(true);
+        }
+        if (aminity.equalsIgnoreCase("out door poll")) {
+            cbbOutdorPool.setChecked(true);
+        }
+    }
+
+    public void bindStar(String star) {
+        if (star.equalsIgnoreCase("1")) {
+            cb1Star.setChecked(true);
+        }
+        if (star.equalsIgnoreCase("2")) {
+            cb2Star.setChecked(true);
+        }
+        if (star.equalsIgnoreCase("3")) {
+            cb3Star.setChecked(true);
+        }
+        if (star.equalsIgnoreCase("4")) {
+            cb4Star.setChecked(true);
+        }
+        if (star.equalsIgnoreCase("5")) {
+            cb5Star.setChecked(true);
+        }
     }
 }

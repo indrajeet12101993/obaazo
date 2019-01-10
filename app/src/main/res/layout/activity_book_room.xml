@@ -62,8 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 app:cardCornerRadius="@dimen/_2sdp"
                 app:cardElevation="@dimen/_2sdp"
                 app:cardPreventCornerOverlap="false"
@@ -170,8 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:visibility="visible"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -190,8 +190,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:visibility="gone"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -207,27 +207,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_7sdp">
 
-                    <TextView
-                        android:layout_width="@dimen/_100sdp"
+                    <LinearLayout
+                        android:layout_width="@dimen/_200sdp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerInParent="true"
-                        android:text="Obazzo Money"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Obazzo Money"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_info"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:text="Max. Obazzo Money available to use"
+                            android:textColor="@color/color_red"
+                            android:textSize="@dimen/_8sdp" />
+
+                    </LinearLayout>
 
 
                     <TextView
@@ -254,19 +269,19 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -328,9 +343,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-
                         android:layout_marginTop="@dimen/_5sdp"
+
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -385,8 +400,7 @@
                             android:layout_weight="1"
                             android:text="Total Saving"
                             android:textColor="#f7772c"
-                            android:textSize="@dimen/_9sdp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <TextView
                             android:id="@+id/tv_total_saving"
@@ -404,9 +418,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_15sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:animateLayoutChanges="true"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -414,9 +428,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -435,8 +449,8 @@
                         android:background="@drawable/shape_edit_text"
                         android:hint="User Name"
                         android:inputType="textPersonName"
-                        android:paddingEnd="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
 
@@ -448,8 +462,8 @@
                         android:background="@drawable/shape_edit_text"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
-                        android:paddingEnd="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
 
@@ -462,8 +476,8 @@
                         android:hint="Mobile No"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:paddingEnd="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />
 
                     <CheckBox
@@ -489,8 +503,8 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/shape_edit_text"
                             android:hint="GST Identification Number"
-                            android:paddingEnd="@dimen/_10sdp"
                             android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -501,8 +515,8 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/shape_edit_text"
                             android:hint="Company Name"
-                            android:paddingEnd="@dimen/_10sdp"
                             android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -513,8 +527,8 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/shape_edit_text"
                             android:hint="Company Address"
-                            android:paddingEnd="@dimen/_10sdp"
                             android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -527,8 +541,8 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/shape_edit_text"
                         android:entries="@array/time"
-                        android:paddingEnd="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp"
                         android:tooltipText="Expected CheckIn Time" />
 
@@ -558,9 +572,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_15sdp"
-                android:paddingRight="@dimen/_15sdp">
+                android:paddingRight="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="wrap_content"

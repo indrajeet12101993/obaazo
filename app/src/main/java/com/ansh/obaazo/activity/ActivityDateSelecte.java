@@ -82,6 +82,7 @@ public class ActivityDateSelecte extends BaseActivity {
 
     @Override
     protected void initView() {
+        initCustomToolbar();
         tvStartDate = findViewById(R.id.tv_end_date);
         tvEndDate = findViewById(R.id.tv_start_date);
 

@@ -15,11 +15,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ImageView
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
             android:id="@+id/app_banner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_146sdp" />
+            android:layout_height="@dimen/_146sdp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
 
         <View
             android:layout_width="match_parent"
@@ -97,6 +97,8 @@
                             android:drawablePadding="@dimen/_5sdp"
                             android:fontFamily="sans-serif"
                             android:gravity="center_vertical"
+                            android:lines="1"
+                            android:ellipsize="end"
                             android:text="Select Location"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_16sdp" />

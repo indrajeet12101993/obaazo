@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,6 +18,16 @@
         android:textColor="@color/mdtp_white"
         android:textSize="@dimen/_14sdp" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/tv_title"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@color/colorAccent" />
+
     <ImageView
         android:id="@+id/iv_no_data"
         android:layout_width="match_parent"
@@ -28,7 +39,7 @@
         android:id="@+id/rv_my_booking"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title" />
+        android:layout_below="@id/tabs" />
 
 
 </RelativeLayout>

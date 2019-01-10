@@ -2,12 +2,6 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MenuInflater;
 import android.view.View;
@@ -27,11 +21,16 @@ import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.ethanhua.skeleton.RecyclerViewSkeletonScreen;
 import com.ethanhua.skeleton.Skeleton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 public class ActivitySearch extends BaseActivity {
@@ -191,7 +190,12 @@ public class ActivitySearch extends BaseActivity {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
                     adapterHotelList.setHotelPrice(response.getHotelPrices());
                     adapterHotelList.setmList(response.getResult());
-                    findViewById(R.id.iv_empty).setVisibility((response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);
+                    if (response.getResult() != null) {
+                        findViewById(R.id.iv_empty).setVisibility((response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);
+                    } else {
+                        findViewById(R.id.iv_empty).setVisibility(View.VISIBLE);
+                    }
+                  //  findViewById(R.id.iv_empty).setVisibility((response.getResult() != null || response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);
                 }
             }
 

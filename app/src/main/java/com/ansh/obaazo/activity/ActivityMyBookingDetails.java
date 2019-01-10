@@ -1,6 +1,20 @@
 package com.ansh.obaazo.activity;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +43,8 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
     private ImageView ivHotelImage;
     private String titleText = "";
     private GoogleMap mMap;
+    private String INVOICE_URL = "https://obaazo.com/invoice/";
+    private String tempUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +58,6 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
 
     @Override
     protected void initView() {
-
         //  ((TextView) findViewById(R.id.tv_title)).setText("Booking Details");
         MyBookingResponse.ResultBean tempDetails = getIntent().getParcelableExtra(AppConstant.MY_BOOKING);
         titleText = tempDetails.getHotel_name();
@@ -91,14 +106,26 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
 
     @Override
     protected void initListener() {
+        findViewById(R.id.tv_download_invoice).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    downloadFile();
+                } else {
+                    selfPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+                }
 
+            }
+        });
     }
+
 
     @Override
     protected void bindDataWithUi() {
 
 
         if (mBookingDetails != null) {
+            tempUrl = INVOICE_URL + mBookingDetails.getBooking_rand_id() + ".pdf";
             Picasso.get()
                     .load(mBookingDetails.getImage1())
                     .placeholder(R.drawable.ic_hotel_place_holder)
@@ -136,5 +163,58 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
                 .position(temp);
         mMap.addMarker(markerOptions);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(temp, 10.0f));
+    }
+
+
+    private void downloadFile() {
+        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(tempUrl));
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        request.setAllowedOverRoaming(true);
+        request.setTitle("Nutriverse" + "");
+        request.setDescription("Downloading...");
+        request.setVisibleInDownloadsUi(true);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/Obazzo/" + mBookingDetails.getBooking_rand_id() + ".pdf");
+        if (downloadManager != null) {
+            long refid = downloadManager.enqueue(request);
+        }
+
+    }
+
+
+    BroadcastReceiver onComplete = new BroadcastReceiver() {
+        public void onReceive(Context ctxt, Intent intent) {
+            Intent downloadIntent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+            Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher);
+            PendingIntent pendingIntent = PendingIntent.getActivity(ActivityMyBookingDetails.this, 0, downloadIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification.Builder notificationBuilder = new Notification.Builder(ActivityMyBookingDetails.this);
+            notificationBuilder
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(getResources().getString(R.string.app_name))
+                    .setContentText("Download completed")
+                    .setAutoCancel(true)
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setContentIntent(pendingIntent)
+                    .setLargeIcon(largeIcon)
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri);
+            mNotificationManager.notify(1, notificationBuilder.build());
+        }
+    };
+
+
+    @Override
+    protected void storagePermissionGrant() {
+        downloadFile();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(onComplete);
+
     }
 }

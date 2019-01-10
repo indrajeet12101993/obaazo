@@ -44,6 +44,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -85,6 +86,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private double maxDisAmt = 0.0;
     String couponName;
     ArrayList<RoomDetailRequest> roomDetails = new ArrayList<>();
+    private DecimalFormat format = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,7 +229,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    obaazoMoney = tempObaazoMoney * 5 / 100;
+                    obaazoMoney = tempObaazoMoney /** 5 / 100*/;
                 } else {
                     obaazoMoney = 0.0;
                 }
@@ -267,7 +269,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             roomDetailRequest.setHotelId(booking.getHotelId() + "");
             roomDetailRequest.setRoomId(booking.getRoomId() + "");
             // roomDetailRequest.setHotelId("1065");
-            // roomDetailRequest.setRoomId("198");
+            //  roomDetailRequest.setRoomId("198");
             roomDetailRequest.setAdult(booking.getAdultCount() + "");
             roomDetailRequest.setChild(booking.getChildCount() + "");
             roomDetailRequest.setAdultPrice(booking.getAdultPrice() + "");
@@ -285,7 +287,11 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         new BookingService(this).execute(request, new ApiCallback<BaseResponse>() {
             @Override
             public void onSuccess(Call<BaseResponse> call, BaseResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    startActivity(new Intent(ActivityBookRoom.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
                 Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -400,10 +406,10 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         }
         tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
         tvRoomGstAmt.setText(gstAmt + " ₹");
-        ((TextView) findViewById(R.id.tv_use_obaazo)).setText(obaazoMoney + "");
-        tvPayableAmount.setText((roomAmt + gstAmt - (obaazoMoney + discountCoupon)) + " ₹");
-        tvTotalSaving.setText(obaazoMoney + discountCoupon + " ₹");
-        tvCouponDiscount.setText(discountCoupon + " ₹");
+        ((TextView) findViewById(R.id.tv_use_obaazo)).setText(format.format(obaazoMoney) + "");
+        tvPayableAmount.setText(format.format((roomAmt + gstAmt - (obaazoMoney + discountCoupon))) + " ₹");
+        tvTotalSaving.setText(format.format(obaazoMoney + discountCoupon) + " ₹");
+        tvCouponDiscount.setText(format.format(discountCoupon) + " ₹");
     }
 
 
@@ -451,10 +457,10 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             @Override
             public void onSuccess(Call<ObazoMoneyResponse> call, ObazoMoneyResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    if (response.getResult() != null && response.getResult().size() != 0) {
-                        ObazoMoneyResponse.ResultBean resultBean = response.getResult().get(0);
-                        ((TextView) findViewById(R.id.tv_obaazo_money)).setText("₹" + resultBean.getMoney());
-                        tempObaazoMoney = Double.valueOf(resultBean.getMoney());
+                    if (response.getResult() != null) {
+                        ObazoMoneyResponse.ResultBean resultBean = response.getResult();
+                        tempObaazoMoney = resultBean.getMoney() * 5 / 100;
+                        ((TextView) findViewById(R.id.tv_obaazo_money)).setText("₹" + format.format(tempObaazoMoney));
                     }
                 } else {
                     Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();

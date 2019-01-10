@@ -14,15 +14,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/_80sdp">
+        android:minHeight="@dimen/_80sdp"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="@dimen/_105sdp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp">
 
             <ImageView
                 android:id="@+id/iv_hotel_image"
-                android:layout_width="@dimen/_100sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
@@ -30,7 +31,6 @@
                 app:srcCompat="@drawable/ic_place_holer" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_not_avi"
                 android:layout_width="@dimen/_105sdp"
                 android:layout_height="@dimen/_20sdp"
@@ -38,9 +38,23 @@
                 android:background="@color/color_red"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:textSize="@dimen/_10sdp"
                 android:text="Sold Out"
-                android:textColor="@color/mdtp_white" />
+                android:textColor="@color/mdtp_white"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_flag_avi"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:background="@color/orange"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColor="@color/mdtp_white"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="visible" />
         </RelativeLayout>
 
         <LinearLayout
@@ -92,69 +106,87 @@
                 android:textColor="#000"
                 android:textSize="@dimen/_14sdp" />
 
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif"
-                android:maxLines="1"
-                android:text="address"
-                android:textSize="@dimen/_10sdp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:gravity="center_vertical">
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:baselineAligned="false">
 
-
-                <TextView
-                    android:id="@+id/tv_rating"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/shape_orange_rect"
-                    android:fontFamily="sans-serif"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:text="3/5 "
-                    android:textColor="@color/mdtp_white"
-                    android:textSize="@dimen/_10sdp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="sans-serif"
-                    android:text="1220 Reviews"
-                    android:textSize="@dimen/_9sdp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:maxLines="1"
+                        android:text="address"
+                        android:textSize="@dimen/_10sdp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:gravity="center_vertical">
 
 
-                <TextView
-                    android:id="@+id/tv_couple_friendly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="sans-serif"
-                    android:text="Couple friendly"
-                    android:textSize="@dimen/_12sdp" />
+                        <TextView
+                            android:id="@+id/tv_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/shape_orange_rect"
+                            android:fontFamily="sans-serif"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:text="3/5 "
+                            android:textColor="@color/mdtp_white"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:fontFamily="sans-serif"
+                            android:text="1220 Reviews"
+                            android:textSize="@dimen/_9sdp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp">
+
+
+                        <TextView
+                            android:id="@+id/tv_couple_friendly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="sans-serif"
+                            android:text="Couple friendly"
+                            android:textSize="@dimen/_12sdp" />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_start"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
                     android:gravity="end"
                     android:orientation="vertical">
 
@@ -164,6 +196,7 @@
                         android:text="Start From"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_8sdp" />
+
                     <TextView
                         android:id="@+id/tv_discount_price"
                         android:layout_width="wrap_content"
@@ -174,17 +207,17 @@
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView
-                        android:layout_marginTop="-2dp"
                         android:id="@+id/tv_start_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="-2dp"
                         android:text="₹"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_16sdp" />
                 </LinearLayout>
 
+            </LinearLayout>
 
-            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"

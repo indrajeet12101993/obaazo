@@ -278,6 +278,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return checkPermission(new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
     }
 
+    public boolean hasPermission(@NonNull String permission) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && PackageManager.PERMISSION_GRANTED == checkSelfPermission(permission);
+    }
+
     public boolean hasPermission(String[] permission) {
         for (String s : permission) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -289,6 +293,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+
+
+    protected void storagePermissionGrant() {
+    }
 
     public boolean storagePermission(String[] permission) {
         for (String s : permission) {
@@ -352,6 +360,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                         }
                     });
+        }
+    }
+
+    public void selfPermission(String[] permission, int permissionCode) {
+        if (!hasPermission(permission)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(permission, permissionCode);
+            }
         }
     }
 

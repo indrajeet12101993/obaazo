@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,11 +67,11 @@ public class ActivityHotelDetails extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //  this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         super.onCreate(savedInstanceState);
     }
+
+    //review for totlal no of review  120 review
+    //Rating for total no of rating   4.5/5
 
     @Override
     protected int getLayoutId() {
@@ -192,7 +193,7 @@ public class ActivityHotelDetails extends BaseActivity {
         tvDates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(ActivityHotelDetails.this, ActivityDateSelecte.class), 1003);
+                //   startActivityForResult(new Intent(ActivityHotelDetails.this, ActivityDateSelecte.class), 1003);
             }
         });
     }
@@ -205,6 +206,7 @@ public class ActivityHotelDetails extends BaseActivity {
             tvNoOfRoom.setText("" + noOfRoom);
             tvNoOfAdult.setText("" + noOfAdult);
             tvNoOfChild.setText("" + noOfChild);
+
 
             Picasso.get()
                     .load((!(TextUtils.isEmpty(hotelDetails.getImage1()))) ? hotelDetails.getImage1() : null)
@@ -232,8 +234,49 @@ public class ActivityHotelDetails extends BaseActivity {
             ((TextView) findViewById(R.id.tv_rating)).setText(hotelDetails.getRating() + "/5");
             ((ExpandableTextView) findViewById(R.id.tv_hotel_details)).setText(hotelDetails.getTour_policy());
             amentiesAdapter.setmData(hotelDetails.getHotel_amenties1());
+            bindReviewData();
         }
         hitHotelGalleryApi();
+    }
+
+    private void bindReviewData() {
+        ((TextView) findViewById(R.id.tv_box_rating)).setText(hotelDetails.getRating() + "/5");
+        ((TextView) findViewById(R.id.tv_box_no_review)).setText(hotelDetails.getReview() + " Review");
+
+        ((ProgressBar) findViewById(R.id.pb_5star)).setProgress(hotelDetails.getRatingStart5());
+        ((ProgressBar) findViewById(R.id.pb_4star)).setProgress(hotelDetails.getRatingStart4());
+        ((ProgressBar) findViewById(R.id.pb_3star)).setProgress(hotelDetails.getRatingStart3());
+        ((ProgressBar) findViewById(R.id.pb_2star)).setProgress(hotelDetails.getRatingStart2());
+        ((ProgressBar) findViewById(R.id.pb_1star)).setProgress(hotelDetails.getRatingStart1());
+
+        ((TextView) findViewById(R.id.tv_5star)).setText(hotelDetails.getRatingStart5() + "");
+        ((TextView) findViewById(R.id.tv_4star)).setText(hotelDetails.getRatingStart4() + "");
+        ((TextView) findViewById(R.id.tv_3star)).setText(hotelDetails.getRatingStart3() + "");
+        ((TextView) findViewById(R.id.tv_2star)).setText(hotelDetails.getRatingStart2() + "");
+        ((TextView) findViewById(R.id.tv_1star)).setText(hotelDetails.getRatingStart1() + "");
+
+        LinearLayout boxRate = findViewById(R.id.ll_shape_box_rating);
+        double v = Double.parseDouble(hotelDetails.getRating());
+        switch ((int) v) {
+            case 1:
+                boxRate.setBackgroundResource(R.drawable.shape_orange);
+                break;
+            case 2:
+                boxRate.setBackgroundResource(R.drawable.shape_light_orange);
+                break;
+            case 3:
+                boxRate.setBackgroundResource(R.drawable.shape_fade_green);
+                break;
+            case 4:
+                boxRate.setBackgroundResource(R.drawable.shape_light_green);
+                break;
+            case 5:
+                boxRate.setBackgroundResource(R.drawable.shape_green);
+                break;
+            default:
+                boxRate.setBackgroundResource(R.drawable.shape_orange);
+        }
+
     }
 
     private Double getDisountPrice(String startPrice) {

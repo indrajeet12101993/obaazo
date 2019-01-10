@@ -6,11 +6,16 @@
     <!--<color name="colorPrimary">#0e6e37</color>
     <color name="colorPrimaryDark">#1c831b</color>
     <color name="colorAccent">#15782a</color>-->
-    <color name="orange">#f7772c</color>
+
     <color name="greay">#cfcece</color>
     <color name="greay_transparent">#33000000</color>
     <color name="transparent">#00000000</color>
 
     <color name="calendar_selected_range_bg">#0baada</color>
+
     <color name="green">#1aaf22</color>
+    <color name="light_green">#1cf528</color>
+    <color name="fade_light_green">#68dc6e</color>
+    <color name="light_orange">#f29660</color>
+    <color name="orange">#f7772c</color>
 </resources>

@@ -2,8 +2,6 @@ package com.ansh.obaazo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +32,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
@@ -43,6 +43,7 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
     private Context mContext;
 
     private ArrayList<MyBookingResponse.ResultBean> mData;
+    private String type = "1";
 
     public MyBookingAdapter(Context mContext, ArrayList<MyBookingResponse.ResultBean> mData) {
         this.mContext = mContext;
@@ -132,7 +133,7 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
     }
 
 
-    public void setmData(ArrayList<MyBookingResponse.ResultBean> mData) {
+    public void setmData(ArrayList<MyBookingResponse.ResultBean> mData, String type) {
         this.mData = mData;
         notifyDataSetChanged();
     }

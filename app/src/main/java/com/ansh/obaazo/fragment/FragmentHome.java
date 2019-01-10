@@ -217,6 +217,10 @@ public class FragmentHome extends BaseFragment {
             Toast.makeText(mView.getContext(), "Please select end date", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (tvRoomAdult.getText().toString().equalsIgnoreCase("Enter Guest Details")) {
+            Toast.makeText(mView.getContext(), "Please select Guest Details", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 

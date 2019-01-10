@@ -2,6 +2,7 @@ package com.ansh.obaazo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -72,9 +73,58 @@ public class HotelInfo implements Parcelable {
     private boolean isAvailable = true;
     @SerializedName("Price")
     private String startFrom;
+    @SerializedName("rating5")
+    private int ratingStart5;
+    @SerializedName("rating4")
+    private int ratingStart4;
+    @SerializedName("rating3")
+    private int ratingStart3;
+    @SerializedName("rating2")
+    private int ratingStart2;
+    private String flag;
 
+    public int getRatingStart5() {
+        return ratingStart5;
+    }
 
+    public void setRatingStart5(int ratingStart5) {
+        this.ratingStart5 = ratingStart5;
+    }
 
+    public int getRatingStart4() {
+        return ratingStart4;
+    }
+
+    public void setRatingStart4(int ratingStart4) {
+        this.ratingStart4 = ratingStart4;
+    }
+
+    public int getRatingStart3() {
+        return ratingStart3;
+    }
+
+    public void setRatingStart3(int ratingStart3) {
+        this.ratingStart3 = ratingStart3;
+    }
+
+    public int getRatingStart2() {
+        return ratingStart2;
+    }
+
+    public void setRatingStart2(int ratingStart2) {
+        this.ratingStart2 = ratingStart2;
+    }
+
+    public int getRatingStart1() {
+        return ratingStart1;
+    }
+
+    public void setRatingStart1(int ratingStart1) {
+        this.ratingStart1 = ratingStart1;
+    }
+
+    @SerializedName("rating1")
+    private int ratingStart1;
 
     public boolean isAvailable() {
         return isAvailable;
@@ -89,11 +139,22 @@ public class HotelInfo implements Parcelable {
     }
 
     public String getReview() {
+        if (TextUtils.isEmpty(review)) {
+            return "0";
+        }
         return review;
     }
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     public void setHotelrating(int hotelrating) {
@@ -169,6 +230,8 @@ public class HotelInfo implements Parcelable {
     }
 
     public String getRating() {
+        if (TextUtils.isEmpty(Rating))
+            return "0";
         return Rating;
     }
 
@@ -416,6 +479,12 @@ public class HotelInfo implements Parcelable {
         dest.writeString(this.review);
         dest.writeByte(this.isAvailable ? (byte) 1 : (byte) 0);
         dest.writeString(this.startFrom);
+        dest.writeInt(this.ratingStart5);
+        dest.writeInt(this.ratingStart4);
+        dest.writeInt(this.ratingStart3);
+        dest.writeInt(this.ratingStart2);
+        dest.writeString(this.flag);
+        dest.writeInt(this.ratingStart1);
         dest.writeString(this.services);
         dest.writeString(this.admission);
         dest.writeString(this.date_change_allowed);
@@ -455,6 +524,12 @@ public class HotelInfo implements Parcelable {
         this.review = in.readString();
         this.isAvailable = in.readByte() != 0;
         this.startFrom = in.readString();
+        this.ratingStart5 = in.readInt();
+        this.ratingStart4 = in.readInt();
+        this.ratingStart3 = in.readInt();
+        this.ratingStart2 = in.readInt();
+        this.flag = in.readString();
+        this.ratingStart1 = in.readInt();
         this.services = in.readString();
         this.admission = in.readString();
         this.date_change_allowed = in.readString();

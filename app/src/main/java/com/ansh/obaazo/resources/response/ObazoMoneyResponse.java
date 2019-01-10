@@ -2,8 +2,6 @@ package com.ansh.obaazo.resources.response;
 
 import com.ansh.obaazo.web.ApiResponse;
 
-import java.util.List;
-
 public class ObazoMoneyResponse extends ApiResponse {
 
     /**
@@ -14,7 +12,7 @@ public class ObazoMoneyResponse extends ApiResponse {
 
     private String response_code;
     private String response_message;
-    private List<ResultBean> result;
+    private ResultBean result;
 
     public String getResponse_code() {
         return response_code;
@@ -32,11 +30,11 @@ public class ObazoMoneyResponse extends ApiResponse {
         this.response_message = response_message;
     }
 
-    public List<ResultBean> getResult() {
+    public ResultBean getResult() {
         return result;
     }
 
-    public void setResult(List<ResultBean> result) {
+    public void setResult(ResultBean result) {
         this.result = result;
     }
 
@@ -50,7 +48,7 @@ public class ObazoMoneyResponse extends ApiResponse {
 
         private String id;
         private String user_id;
-        private String money;
+        private Double money;
         private String expiry_date;
 
         public String getId() {
@@ -69,11 +67,11 @@ public class ObazoMoneyResponse extends ApiResponse {
             this.user_id = user_id;
         }
 
-        public String getMoney() {
+        public Double getMoney() {
             return money;
         }
 
-        public void setMoney(String money) {
+        public void setMoney(Double money) {
             this.money = money;
         }
 

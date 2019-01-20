@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
@@ -189,7 +190,9 @@ public class ActivitySearch extends BaseActivity {
             public void onSuccess(Call<HotelSearchResponse> call, HotelSearchResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
                     adapterHotelList.setHotelPrice(response.getHotelPrices());
-                    adapterHotelList.setmList(response.getResult());
+                    ArrayList<HotelInfo> result = response.getResult();
+                    Collections.sort(result);
+                    adapterHotelList.setmList(result);
                     if (response.getResult() != null) {
                         findViewById(R.id.iv_empty).setVisibility((response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);
                     } else {

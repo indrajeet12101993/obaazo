@@ -43,7 +43,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="Obaxofgs124545"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -62,7 +61,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="1 Adult,0kids, 1 Standard room,1 Night"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -81,7 +79,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="thu 4 Oct - Fri 05 Oct"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -100,7 +97,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="Obaco"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -119,7 +115,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="B8/182 Sawarn Nagri Greater Noida"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -156,7 +151,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="Ganesh"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -175,7 +169,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="89214464645"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -194,7 +187,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="jeevan@gmail.com"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -213,7 +205,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="jeevan@gmail.com"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -232,7 +223,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="jeevan@gmail.com"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -251,7 +241,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="jeevan@gmail.com"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -271,7 +260,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="1"
-                    android:text="jeevan@gmail.com"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView

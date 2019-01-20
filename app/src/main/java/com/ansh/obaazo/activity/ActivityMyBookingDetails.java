@@ -8,12 +8,14 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,6 +60,8 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
 
     @Override
     protected void initView() {
+        registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
         //  ((TextView) findViewById(R.id.tv_title)).setText("Booking Details");
         MyBookingResponse.ResultBean tempDetails = getIntent().getParcelableExtra(AppConstant.MY_BOOKING);
         titleText = tempDetails.getHotel_name();
@@ -144,7 +148,10 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
             ((TextView) findViewById(R.id.tv_mobile)).setText(mBookingDetails.getUser_mobile());
             ((TextView) findViewById(R.id.tv_email)).setText(mBookingDetails.getUser_email());
             ((TextView) findViewById(R.id.tv_booking_amount)).setText(" ₹" + mBookingDetails.getBooking_amount());
-            ((TextView) findViewById(R.id.tv_payment_option)).setText(mBookingDetails.getPayment_option());
+            if (!TextUtils.isEmpty(mBookingDetails.getPayment_option())) {
+                String paymentOption = !mBookingDetails.getPayment_option().equalsIgnoreCase("1") ? "Online" : "Book At Hotel";
+                ((TextView) findViewById(R.id.tv_payment_option)).setText(paymentOption);
+            }
             ((TextView) findViewById(R.id.tv_gst)).setText(" ₹" + mBookingDetails.getGst_value());
             ((TextView) findViewById(R.id.tv_total_amount)).setText(" ₹" + mBookingDetails.getFinal_amount());
 
@@ -171,14 +178,13 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(tempUrl));
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
         request.setAllowedOverRoaming(true);
-        request.setTitle("Nutriverse" + "");
+        request.setTitle("Obazzo" + "");
         request.setDescription("Downloading...");
         request.setVisibleInDownloadsUi(true);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/Obazzo/" + mBookingDetails.getBooking_rand_id() + ".pdf");
         if (downloadManager != null) {
             long refid = downloadManager.enqueue(request);
         }
-
     }
 
 

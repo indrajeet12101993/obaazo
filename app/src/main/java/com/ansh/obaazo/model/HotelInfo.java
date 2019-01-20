@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-public class HotelInfo implements Parcelable {
+public class HotelInfo implements Parcelable/*, Comparable<HotelInfo>*/ {
 
     /**
      * hotel_id : 11
@@ -549,4 +549,23 @@ public class HotelInfo implements Parcelable {
             return new HotelInfo[size];
         }
     };
+
+/*
+    @Override
+    public int compareTo(HotelInfo hotelInfo) {
+       *//* if (hotelInfo.getStartFrom() != null && startFrom!=null) {
+            return hotelInfo.getStartFrom().compareTo(startFrom);
+        }
+        return 0;*//*
+        if (hotelInfo.getStartFrom() != null && startFrom != null) {
+            int result = this.startFrom.compareToIgnoreCase(hotelInfo.startFrom);
+            if (result != 0) {
+                return result;
+            } else {
+                return Double.valueOf(this.startFrom).compareTo(Double.valueOf(hotelInfo.startFrom));
+            }
+        } else {
+            return 0;
+        }
+    }*/
 }

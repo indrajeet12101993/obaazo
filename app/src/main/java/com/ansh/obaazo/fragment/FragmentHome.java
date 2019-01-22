@@ -78,6 +78,7 @@ public class FragmentHome extends BaseFragment {
     private boolean isEDateSelected = false;
     private boolean isPersonSelected = false;
     private TextView tvRoomAdult;
+    private BookingInfo bookingInfo = new BookingInfo();
 
 
     public FragmentHome() {
@@ -99,7 +100,7 @@ public class FragmentHome extends BaseFragment {
                 .error(R.drawable.ic_hotel_place_holder)
                 .placeholder(R.drawable.ic_hotel_place_holder)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .resize(400,200)
+                .resize(400, 200)
                 .into((ImageView) mView.findViewById(R.id.app_banner));
 
         etPlace = mView.findViewById(R.id.et_place);
@@ -191,7 +192,11 @@ public class FragmentHome extends BaseFragment {
         tvRoomAdult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getActivity(), ActivitySelect.class), 1004);
+                Intent intent = new Intent(getActivity(), ActivitySelect.class);
+                if (bookingInfo != null) {
+                    intent.putExtra(AppConstant.PERSON_DETAILS, new Gson().toJson(bookingInfo));
+                }
+                startActivityForResult(intent, 1004);
             }
         });
 
@@ -349,7 +354,7 @@ public class FragmentHome extends BaseFragment {
             PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, stringExtra);
             //  String personDetails = PreferencesUtils.getString(AppConstant.BOOKING_DETAILS);
             if (!TextUtils.isEmpty(stringExtra)) {
-                BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
+                bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
                 int count = 0;
                 if (bookingInfo.getPersonInfos() != null)
                     for (int i = 0; i < bookingInfo.getPersonInfos().size(); i++) {

@@ -1,9 +1,6 @@
 package com.ansh.obaazo.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +14,10 @@ import com.ansh.obaazo.model.PersonInfo;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
     private Context mContext;
 
@@ -24,8 +25,12 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     public PersonAdapter(Context mContext, ArrayList<PersonInfo> mList) {
         this.mContext = mContext;
-        this.mList = mList;
-        addRoom();
+        if (mList != null) {
+            this.mList = mList;
+        } else {
+            this.mList = new ArrayList<>();
+            addRoom();
+        }
     }
 
     @NonNull
@@ -88,7 +93,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         holder.itemView.findViewById(R.id.iv_c_minus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mList.get(holder.getAdapterPosition()).getChild().size() > 1) {
+                if (mList.get(holder.getAdapterPosition()).getChild().size() != 0) {
                     mList.get(holder.getAdapterPosition()).getChild().remove(holder.getAdapterPosition());
                     notifyItemChanged(holder.getAdapterPosition());
                 }

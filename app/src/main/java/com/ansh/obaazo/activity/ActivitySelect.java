@@ -2,19 +2,18 @@ package com.ansh.obaazo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.PersonAdapter;
 import com.ansh.obaazo.model.BookingInfo;
-import com.ansh.obaazo.model.PersonInfo;
 import com.ansh.obaazo.utils.AppConstant;
+import com.ansh.obaazo.utils.PreferencesUtils;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ActivitySelect extends BaseActivity {
     private RecyclerView rvPersonDetails;
@@ -34,10 +33,15 @@ public class ActivitySelect extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (getIntent() != null) {
+            String stringExtra = getIntent().getStringExtra(AppConstant.PERSON_DETAILS);
+            PreferencesUtils.putString(AppConstant.BOOKING_DETAILS, stringExtra);
+            info = new Gson().fromJson(stringExtra, BookingInfo.class);
+        }
 
         rvPersonDetails = findViewById(R.id.rv_person_details);
         rvPersonDetails.setLayoutManager(new LinearLayoutManager(this));
-        personAdapter = new PersonAdapter(this, new ArrayList<PersonInfo>());
+        personAdapter = new PersonAdapter(this, info.getPersonInfos());
         rvPersonDetails.getItemAnimator().setChangeDuration(0);
         rvPersonDetails.setAdapter(personAdapter);
     }
@@ -58,7 +62,7 @@ public class ActivitySelect extends BaseActivity {
                 info.setPersonInfos(personAdapter.getDetails());
                 Intent intent = new Intent();
                 intent.putExtra(AppConstant.PERSON_DETAILS, new Gson().toJson(info));
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_OK, intent);
                 onBackPressed();
             }
         });

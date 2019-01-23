@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#000"
     android:layout_height="match_parent"
     tools:context=".activity.ZoomImageViewActivity">
 
@@ -26,6 +27,7 @@
         android:layout_below="@+id/toolbar"
         android:minHeight="@dimen/_220sdp"
         app:cardCornerRadius="@dimen/_2sdp"
+        android:visibility="gone"
         app:cardElevation="@dimen/_2sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_5sdp"
@@ -49,10 +51,10 @@
     </androidx.cardview.widget.CardView>
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
         android:id="@+id/rv_photo_slide"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp"
-        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_height="@dimen/_200sdp"
         android:layout_marginBottom="@dimen/_10sdp" />
 </RelativeLayout>

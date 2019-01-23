@@ -75,13 +75,14 @@ public class FragmentMyBooking extends BaseFragment {
         BaseRequest request = new BaseRequest();
         request.setId(userDetails.getId());
         request.setId2(type);
-        MyBookingService bookingService = new MyBookingService(getActivity());
+        final MyBookingService bookingService = new MyBookingService(getActivity());
         bookingService.execute(request, new ApiCallback<MyBookingResponse>() {
             @Override
             public void onSuccess(Call<MyBookingResponse> call, MyBookingResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
                     rvMyBooking.setVisibility(View.VISIBLE);
                     bookingAdapter.setmData(response.getResult(),type);
+                    bookingAdapter.setType(type);
                     mView.findViewById(R.id.iv_no_data).setVisibility((response.getResult() != null && response.getResult().size() != 0) ? View.GONE : View.VISIBLE);
                 } else {
                     mView.findViewById(R.id.iv_no_data).setVisibility(View.VISIBLE);

@@ -124,6 +124,7 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:fontFamily="sans-serif"
                         android:text="₹"
+                        android:visibility="gone"
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_my_booking"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_130sdp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginTop="@dimen/_10sdp"
     android:layout_marginRight="@dimen/_10sdp"
@@ -112,10 +112,12 @@
             android:background="@color/mdtp_line_background" />
 
         <LinearLayout
+            android:id="@+id/ll_book_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:gravity="end"
+            android:visibility="visible"
             android:orientation="horizontal">
 
             <TextView

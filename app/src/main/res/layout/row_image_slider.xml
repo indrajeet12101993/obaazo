@@ -2,14 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_slider"
-    android:layout_width="@dimen/_120sdp"
-    android:layout_height="@dimen/_75sdp"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_200sdp"
     android:layout_marginBottom="@dimen/_5sdp"
     android:layout_marginStart="@dimen/_5sdp"
     app:cardElevation="@dimen/_2sdp"
     app:cardCornerRadius="@dimen/_2sdp"
     app:cardUseCompatPadding="true"
     android:layout_marginTop="@dimen/_5sdp">
+<!--
 
     <ImageView
         android:id="@+id/iv_slider_images"
@@ -17,6 +18,19 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitXY" />
+-->
+
+
+    <com.jsibbold.zoomage.ZoomageView
+        android:id="@+id/iv_slider_images"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:zoomage_animateOnReset="true"
+        app:zoomage_maxScale="8"
+        app:zoomage_minScale="0.6"
+        app:zoomage_restrictBounds="false"
+        app:zoomage_translatable="true"
+        app:zoomage_zoomable="true" />
 
 
 </androidx.cardview.widget.CardView>

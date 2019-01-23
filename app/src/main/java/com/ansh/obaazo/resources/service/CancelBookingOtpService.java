@@ -31,6 +31,6 @@ public class CancelBookingOtpService extends ApiService<CancelBookingOtpService.
         @FormUrlEncoded
         @POST("Api/newotp_cancel")
         Call<BaseResponse> cancelBookingOtp(@Field("booking_id") String bookingId,
-                                            @Field("user_mobile") String usreMobile);
+                                            @Field("user_mobile") String userMobile);
     }
 }

@@ -404,12 +404,12 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         if (discountCoupon > maxDisAmt) {
             discountCoupon = maxDisAmt;
         }
-        tvRoomPriceWithoutGst.setText(roomAmt + " ₹");
-        tvRoomGstAmt.setText(gstAmt + " ₹");
+        tvRoomPriceWithoutGst.setText("₹ " +roomAmt);
+        tvRoomGstAmt.setText("₹ " +gstAmt  );
         ((TextView) findViewById(R.id.tv_use_obaazo)).setText(format.format(obaazoMoney) + "");
-        tvPayableAmount.setText(format.format((roomAmt + gstAmt - (obaazoMoney + discountCoupon))) + " ₹");
-        tvTotalSaving.setText(format.format(obaazoMoney + discountCoupon) + " ₹");
-        tvCouponDiscount.setText(format.format(discountCoupon) + " ₹");
+        tvPayableAmount.setText(" ₹ "+format.format((roomAmt + gstAmt - (obaazoMoney + discountCoupon))));
+        tvTotalSaving.setText( "₹ "+format.format(obaazoMoney + discountCoupon) );
+        tvCouponDiscount.setText("₹ "+format.format(discountCoupon));
     }
 
 
@@ -460,7 +460,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                     if (response.getResult() != null) {
                         ObazoMoneyResponse.ResultBean resultBean = response.getResult();
                         tempObaazoMoney = resultBean.getMoney() * 5 / 100;
-                        ((TextView) findViewById(R.id.tv_obaazo_money)).setText("₹" + format.format(tempObaazoMoney));
+                        ((TextView) findViewById(R.id.tv_obaazo_money)).setText("₹ " + format.format(tempObaazoMoney));
                     }
                 } else {
                     Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();

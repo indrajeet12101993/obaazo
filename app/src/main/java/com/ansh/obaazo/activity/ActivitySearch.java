@@ -191,7 +191,7 @@ public class ActivitySearch extends BaseActivity {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
                     adapterHotelList.setHotelPrice(response.getHotelPrices());
                     ArrayList<HotelInfo> result = response.getResult();
-                    Collections.sort(result);
+                  //  Collections.sort(result);
                     adapterHotelList.setmList(result);
                     if (response.getResult() != null) {
                         findViewById(R.id.iv_empty).setVisibility((response.getResult().size() == 0) ? View.VISIBLE : View.INVISIBLE);

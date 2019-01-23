@@ -15,9 +15,13 @@ import com.ansh.obaazo.activity.ActivityMyBookingDetails;
 import com.ansh.obaazo.activity.BaseActivity;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.resources.request.AddReviewRequest;
+import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.AddReviewResponse;
+import com.ansh.obaazo.resources.response.BaseResponse;
 import com.ansh.obaazo.resources.response.MyBookingResponse;
 import com.ansh.obaazo.resources.service.AddReviewService;
+import com.ansh.obaazo.resources.service.CancelBookingOtpService;
+import com.ansh.obaazo.resources.service.CancelBookingService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.BitmapTransform;
 import com.ansh.obaazo.utils.DateUtils;
@@ -25,6 +29,7 @@ import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
 import com.ansh.obaazo.widget.ESDialogCancelBooking;
+import com.ansh.obaazo.widget.ESOTP;
 import com.ansh.obaazo.widget.ESReviewDialog;
 import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
@@ -44,10 +49,18 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
 
     private ArrayList<MyBookingResponse.ResultBean> mData;
     private String type = "1";
+    private ESOTP esotp;
 
     public MyBookingAdapter(Context mContext, ArrayList<MyBookingResponse.ResultBean> mData) {
         this.mContext = mContext;
         this.mData = mData;
+
+
+    }
+
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @NonNull
@@ -87,6 +100,8 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
                 new ESDialogCancelBooking(mContext, "Are you sure to cancel this Booking ?", new ESDialogCancelBooking.ClickListener() {
                     @Override
                     public void onClick() {
+                        sendOtpDialog(mData.get(holder.getAdapterPosition()).getBooking_id(),
+                                mData.get(holder.getAdapterPosition()).getUser_mobile());
 
                     }
                 }).show();
@@ -94,6 +109,28 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
         });
 
 
+    }
+
+    public void sendOtp(String bookingId, String mobileNo) {
+        BaseRequest request = new BaseRequest();
+        request.setId(bookingId);
+        request.setId2(mobileNo);
+        new CancelBookingOtpService(mContext).execute(request, new ApiCallback<BaseResponse>() {
+            @Override
+            public void onSuccess(Call<BaseResponse> call, BaseResponse response) {
+                Toast.makeText(mContext, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(mContext, "Api Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void hitAddReviewApi(String rate, String msg, int adapterPosition) {
@@ -173,6 +210,46 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
             //   ((TextView)itemView.findViewById(R.id.tv_checkin_details)).setText(bean.get);
             tvCheckInCheckOutTime.setText(DateUtils.parseDate(bean.getCheckin()) + " - " + DateUtils.parseDate(bean.getCheckout()));
             tvBookingAmount.setText(" ₹" + bean.getBooking_amount());
+
+            itemView.findViewById(R.id.ll_book_action).setVisibility(type.equalsIgnoreCase("1") ? View.VISIBLE : View.GONE);
         }
+    }
+
+    public void sendOtpDialog(final String bookingId, String mobileNo) {
+        esotp = new ESOTP(mContext, mobileNo, new ESOTP.ClickListener() {
+            @Override
+            public void obVerifyOtp(String rating, String message) {
+                CancelBooking(bookingId, message);
+            }
+
+            @Override
+            public void onResendOtp(String mobileNO, String message) {
+                sendOtp(bookingId, mobileNO);
+            }
+        });
+        esotp.show();
+        sendOtp(bookingId, mobileNo);
+    }
+
+    public void CancelBooking(String bookingId, String otp) {
+        BaseRequest request = new BaseRequest();
+        request.setId(bookingId);
+        request.setId2(otp);
+        new CancelBookingService(mContext).execute(request, new ApiCallback<BaseResponse>() {
+            @Override
+            public void onSuccess(Call<BaseResponse> call, BaseResponse response) {
+                Toast.makeText(mContext, response.getResponse_message(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(mContext, "Api Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

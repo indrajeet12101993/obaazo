@@ -167,6 +167,7 @@
 
 
                         <TextView
+                            android:drawableLeft="@drawable/ic_heart"
                             android:id="@+id/tv_couple_friendly"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -174,6 +175,7 @@
                             android:layout_centerInParent="true"
                             android:fontFamily="sans-serif"
                             android:text="Couple friendly"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp" />
 
 

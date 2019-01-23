@@ -3,13 +3,15 @@ package com.ansh.obaazo.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ansh.obaazo.R;
+
+import androidx.annotation.NonNull;
 
 
 public class ESOTP extends Dialog {
@@ -41,6 +43,8 @@ public class ESOTP extends Dialog {
         setContentView(R.layout.dialog_otp);
 
         etOtp = findViewById(R.id.et_otp);
+
+        ((TextView) findViewById(R.id.tv_msg)).setText("We have sent OTP to your mobile number " + mobileNO);
 
 
         findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {

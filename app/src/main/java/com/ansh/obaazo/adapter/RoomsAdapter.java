@@ -60,13 +60,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final RoomViewHolder holder, int position) {
-        holder.bindData(mData.getResult().get(holder.getAdapterPosition()));
+
         holder.btnRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (holder.btnRoom.getText().toString().equalsIgnoreCase("Select Room")) {
                     mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()), holder.getAdapterPosition());
-                } else {
+                } else if (holder.btnRoom.getText().toString().equalsIgnoreCase("Remove Room")) {
                     mData.getResult().get(holder.getAdapterPosition()).setSelected(false);
                     mData.getBookingInfos().set(holder.getAdapterPosition(), new BookingInfo());
                     mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()), -1);
@@ -76,9 +76,10 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
                 //  mListener.onItemClick(mData.getResult().get(holder.getAdapterPosition()));
             }
         });
+
         holder.itemView.findViewById(R.id.rl_room_details).setVisibility(mData.getResult().get(holder.getAdapterPosition()).isSelected() ? View.VISIBLE : View.GONE);
         holder.btnRoom.setText((holder.itemView.findViewById(R.id.rl_room_details).getVisibility() == View.VISIBLE) ? "Remove Room" : "Select Room");
-
+        holder.bindData(mData.getResult().get(holder.getAdapterPosition()));
         holder.itemView.findViewById(R.id.rl_room_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,6 +184,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
 
             if (TextUtils.isEmpty(startPrice)) {
                 itemView.findViewById(R.id.ll_start).setVisibility(View.GONE);
+                btnRoom.setText("Sold Out");
             } else {
                 itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
                 ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + getDisountPrice(startPrice));

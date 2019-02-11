@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class BookingInfo implements Parcelable {
-    private ArrayList<PersonInfo> personInfos;
+    private ArrayList<PersonInfo> personInfos=new ArrayList<>();
     private Double price;
 
 

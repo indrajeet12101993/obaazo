@@ -618,6 +618,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:background="@drawable/shape_orange"
                     android:text="Pay Now"
                     android:textColor="@color/mdtp_white"

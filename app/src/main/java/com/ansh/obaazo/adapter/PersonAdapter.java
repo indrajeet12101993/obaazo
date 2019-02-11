@@ -25,7 +25,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     public PersonAdapter(Context mContext, ArrayList<PersonInfo> mList) {
         this.mContext = mContext;
-        if (mList != null) {
+        if (mList != null && mList.size() != 0) {
             this.mList = mList;
         } else {
             this.mList = new ArrayList<>();
@@ -300,6 +300,6 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     public ArrayList<PersonInfo> getDetails() {
-        return mList;
+        return mList!=null?mList:new ArrayList<PersonInfo>();
     }
 }

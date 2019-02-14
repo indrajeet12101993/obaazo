@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-       // getHashkey();
+        getHashkey();
         CountDownTimer timer = new CountDownTimer(3000, 3000) {
             @Override
             public void onTick(long l) {

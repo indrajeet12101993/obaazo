@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse extends ApiResponse {
     private String response_code;
+    @SerializedName("result")
+    private UserDetails data;
 
     public String getResponseCode() {
         return this.response_code;
@@ -24,8 +26,6 @@ public class LoginResponse extends ApiResponse {
     public void setResponseMessage(String response_message) {
         this.response_message = response_message;
     }
-
-    private UserDetails data;
 
     public UserDetails getData() {
         return this.data;

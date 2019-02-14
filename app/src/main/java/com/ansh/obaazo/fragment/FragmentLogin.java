@@ -17,6 +17,7 @@ import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.LoginResponse;
 import com.ansh.obaazo.resources.response.SendOtpResponse;
 import com.ansh.obaazo.resources.service.SendOtpService;
+import com.ansh.obaazo.resources.service.SocialLoginService;
 import com.ansh.obaazo.resources.service.VerifyOtpService;
 import com.ansh.obaazo.utils.AppConstant;
 import com.ansh.obaazo.utils.AutoScrollViewPager;
@@ -182,6 +183,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
                 }
             }
 
+
             @Override
             public void onComplete() {
                 if (getActivity() != null)
@@ -199,7 +201,8 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
 
     @Override
     public void OnFbSuccess(UserInfo user) {
-        Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
+        hitSocialLoginApi(user.getEmail());
 
     }
 
@@ -211,7 +214,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
     @Override
     public void OnGoogleSuccess(UserInfo user) {
         Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
-
+        hitSocialLoginApi(user.getEmail());
     }
 
     @Override
@@ -227,5 +230,38 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
         } else {
             fbHelper.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+
+    public void hitSocialLoginApi(String email) {
+        if (getActivity() == null) return;
+        ((BaseActivity) getActivity()).showLoadingDialog();
+        BaseRequest baseRequest = new BaseRequest();
+        baseRequest.setId("social");
+        baseRequest.setId2(email);
+        new SocialLoginService(getContext()).execute(baseRequest, new ApiCallback<LoginResponse>() {
+            @Override
+            public void onSuccess(Call<LoginResponse> call, LoginResponse response) {
+                if (response.getResponseCode().equalsIgnoreCase("200")) {
+                    PreferencesUtils.putBoolean(AppConstant.IS_LOGIN, true);
+                    PreferencesUtils.putString(AppConstant.USER_CATEGORY, userType);
+                    PreferencesUtils.putString(AppConstant.USER_DETAILS, new Gson().toJson(response.getData()));
+                    getActivity().onBackPressed();
+                } else {
+                    Toast.makeText(getContext(), response.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) getActivity()).hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Toast.makeText(getContext(), "Api Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

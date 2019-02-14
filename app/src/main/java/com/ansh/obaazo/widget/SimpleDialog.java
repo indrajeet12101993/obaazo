@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -57,6 +59,7 @@ public class SimpleDialog extends Dialog {
         TextView tvMessage = findViewById(R.id.tv_msg);
         tvTitle.setText(title);
         tvMessage.setText(msg);
+     //   tvMessage.setMovementMethod(new ScrollingMovementMethod());
 
 
     }

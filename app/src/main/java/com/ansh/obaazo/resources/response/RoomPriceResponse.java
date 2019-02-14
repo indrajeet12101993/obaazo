@@ -2,11 +2,11 @@ package com.ansh.obaazo.resources.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.ansh.obaazo.web.ApiResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoomPriceResponse extends ApiResponse {
 
@@ -164,7 +164,7 @@ public class RoomPriceResponse extends ApiResponse {
         }
 
         public String getExtra_child() {
-            return extra_child;
+            return TextUtils.isEmpty(extra_child) ? "0" : extra_child;
         }
 
         public void setExtra_child(String extra_child) {
@@ -196,7 +196,7 @@ public class RoomPriceResponse extends ApiResponse {
         }
 
         public String getGst_child() {
-            return gst_child;
+            return TextUtils.isEmpty(gst_child) ? "0" : gst_child;
         }
 
         public void setGst_child(String gst_child) {

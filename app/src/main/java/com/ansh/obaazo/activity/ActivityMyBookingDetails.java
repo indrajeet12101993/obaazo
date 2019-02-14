@@ -149,7 +149,7 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
             ((TextView) findViewById(R.id.tv_email)).setText(mBookingDetails.getUser_email());
             ((TextView) findViewById(R.id.tv_booking_amount)).setText(" ₹" + mBookingDetails.getBooking_amount());
             if (!TextUtils.isEmpty(mBookingDetails.getPayment_option())) {
-                String paymentOption = !mBookingDetails.getPayment_option().equalsIgnoreCase("1") ? "Online" : "Book At Hotel";
+                String paymentOption = !mBookingDetails.getPayment_option().equalsIgnoreCase("1") ? "Online" : "Pay At Hotel";
                 ((TextView) findViewById(R.id.tv_payment_option)).setText(paymentOption);
             }
             ((TextView) findViewById(R.id.tv_gst)).setText(" ₹" + mBookingDetails.getGst_value());

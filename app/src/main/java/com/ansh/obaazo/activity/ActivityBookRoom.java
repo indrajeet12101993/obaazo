@@ -87,6 +87,11 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     String couponName;
     ArrayList<RoomDetailRequest> roomDetails = new ArrayList<>();
     private DecimalFormat format = new DecimalFormat("#.##");
+    private String mGstAmount;
+    private String mFinalAmout = "";
+    private String mRoomPriceWithoutGst = "";
+    private String mCouponDiscount = "";
+    private int mAdultCount = 0, mChildCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +164,23 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         rvRoomList.setNestedScrollingEnabled(false);
         hitCouponCodeApi();
         hitObaazoMoneyApi(userDetails.getId());
+
+
+        for (int i = 0; i < bookingInfos.size(); i++) {
+            for (int j = 0; j < bookingInfos.get(i).getPersonInfos().size(); j++) {
+                mAdultCount = mAdultCount + bookingInfos.get(i).getPersonInfos().get(j).getNoOfAdult();
+                mChildCount = mChildCount + bookingInfos.get(i).getPersonInfos().get(j).getChild().size();
+            }
+        }
+        bindPersonData(priceRoomAdapter.getItemCount(), mAdultCount, mChildCount);
+    }
+
+
+    public void bindPersonData(int roomCount, int adultCount, int childCount) {
+        ((TextView) findViewById(R.id.tv_room_count)).setText("" + roomCount);
+        ((TextView) findViewById(R.id.tv_adult_count)).setText("" + adultCount);
+        ((TextView) findViewById(R.id.tv_child_count)).setText("" + childCount);
+
     }
 
     private void hitCouponCodeApi() {
@@ -218,7 +240,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             @Override
             public void onClick(View view) {
                 if (isValidDetails()) {
-                    initPayment();
+                    initPayment("1");
                 }
 
             }
@@ -240,7 +262,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     }
 
 
-    private void initPayment() {
+    private void initPayment(String mode) {
         showLoadingDialog();
         BookingRequest request = new BookingRequest();
         UserRequest user = new UserRequest();
@@ -254,12 +276,12 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
 
         amountRequest.setCheckIndate(PreferencesUtils.getString(AppConstant.START_DATE));
         amountRequest.setCheckOutDate(PreferencesUtils.getString(AppConstant.END_DATE));
-        amountRequest.setOverAllGst(tvRoomGstAmt.getText().toString());
-        amountRequest.setFinalAmount(tvPayableAmount.getText().toString());
-        amountRequest.setBookingAmount(tvRoomPriceWithoutGst.getText().toString());
-        amountRequest.setPaymentOption("1");
+        amountRequest.setOverAllGst(mGstAmount);
+        amountRequest.setFinalAmount(mFinalAmout);
+        amountRequest.setBookingAmount(mRoomPriceWithoutGst);
+        amountRequest.setPaymentOption(mode);
 
-        discountRequest.setCouponDiscount(tvCouponDiscount.getText().toString());
+        discountRequest.setCouponDiscount(mCouponDiscount);
         discountRequest.setCouponName(couponName);
         discountRequest.setObaazoUsed(obaazoMoney + "");
         discountRequest.setReward(tempObaazoMoney + "");
@@ -404,12 +426,17 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         if (discountCoupon > maxDisAmt) {
             discountCoupon = maxDisAmt;
         }
-        tvRoomPriceWithoutGst.setText("₹ " +roomAmt);
-        tvRoomGstAmt.setText("₹ " +gstAmt  );
+
+        tvRoomPriceWithoutGst.setText("₹ " + roomAmt);
+        mRoomPriceWithoutGst = "" + roomAmt;
+        tvRoomGstAmt.setText("₹ " + gstAmt);
+        mGstAmount = "" + gstAmt;
         ((TextView) findViewById(R.id.tv_use_obaazo)).setText(format.format(obaazoMoney) + "");
-        tvPayableAmount.setText(" ₹ "+format.format((roomAmt + gstAmt - (obaazoMoney + discountCoupon))));
-        tvTotalSaving.setText( "₹ "+format.format(obaazoMoney + discountCoupon) );
-        tvCouponDiscount.setText("₹ "+format.format(discountCoupon));
+        mFinalAmout = format.format((roomAmt + gstAmt - (obaazoMoney + discountCoupon)));
+        tvPayableAmount.setText(" ₹ " + format.format((roomAmt + gstAmt - (obaazoMoney + discountCoupon))));
+        tvTotalSaving.setText("₹ " + format.format(obaazoMoney + discountCoupon));
+        mCouponDiscount = format.format(discountCoupon);
+        tvCouponDiscount.setText("₹ " + format.format(discountCoupon));
     }
 
 

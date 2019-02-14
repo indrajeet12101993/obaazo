@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/_260sdp"
-    android:layout_height="@dimen/_300sdp"
+    android:layout_height="wrap_content"
     android:background="@drawable/shape_dialog"
-    android:minHeight="@dimen/_200sdp"
+    android:minHeight="@dimen/_240sdp"
     android:minWidth="@dimen/_180sdp"
     android:orientation="vertical">
 
@@ -32,7 +32,8 @@
     <TextView
         android:id="@+id/tv_msg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_140sdp"
+        android:minHeight="@dimen/_140sdp"
+        android:layout_height="wrap_content"
         android:paddingBottom="@dimen/_5sdp"
         android:paddingLeft="@dimen/_15sdp"
         android:paddingRight="@dimen/_15sdp"

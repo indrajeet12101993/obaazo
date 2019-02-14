@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">obaazo</string>
+    <string name="app_name">Obaazo</string>
     <string name="facebook_app_id">2228195340725450</string>
     <string name="fb_login_protocol_scheme">fb2228195340725450</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

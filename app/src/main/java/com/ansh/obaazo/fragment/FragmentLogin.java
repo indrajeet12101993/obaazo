@@ -98,7 +98,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
             @Override
             public void onClick(View v) {
                 Intent intent = googleHelper.signIn();
-                startActivityForResult(intent, RC_SIGN_IN);
+                getActivity().startActivityForResult(intent, RC_SIGN_IN);
             }
         });
 

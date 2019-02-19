@@ -617,11 +617,10 @@
                     android:id="@+id/btn_payment"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
-
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:background="@drawable/shape_orange"
                     android:text="Pay Now"
                     android:textColor="@color/mdtp_white"

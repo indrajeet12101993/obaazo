@@ -1,5 +1,6 @@
 package com.ansh.obaazo.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import com.ansh.obaazo.model.MBooking;
 import com.ansh.obaazo.model.RoomDetailRequest;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.model.UserRequest;
+import com.ansh.obaazo.payment.ServiceUtility;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.request.BookingRequest;
 import com.ansh.obaazo.resources.response.BaseResponse;
@@ -40,12 +42,17 @@ import com.ansh.obaazo.utils.DateUtils;
 import com.ansh.obaazo.utils.PreferencesUtils;
 import com.ansh.obaazo.web.ApiCallback;
 import com.ansh.obaazo.web.ApiException;
+import com.getepay.getepay.PaymentResult;
+import com.getepay.getepay.PaymentSDKActivity;
+import com.getepay.getepay.Request;
 import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.cardview.widget.CardView;
@@ -92,6 +99,8 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private String mRoomPriceWithoutGst = "";
     private String mCouponDiscount = "";
     private int mAdultCount = 0, mChildCount = 0;
+
+    private String orderId = String.valueOf(ServiceUtility.randInt(0, 9999999));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,9 +238,9 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         findViewById(R.id.btn_payment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* if (isValidDetails()) {
-                    initPayment();
-                }*/
+                if (isValidDetails()) {
+                    initOnlinePayment();
+                }
 
             }
         });
@@ -259,6 +268,28 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
             }
         });
 
+    }
+
+    private void initOnlinePayment() {
+        final String agentId = "1";
+        final String merchantOrderNo = orderId;
+        final String txnAmount = mFinalAmout;
+        final String agentName = "Obaazo";
+        final String udf1 = etMobile.getText().toString();
+        final String udf2 = etEmail.getText().toString();
+        final String udf3 = etName.getText().toString();
+        final String udf4 = "udf4";
+        final String udf5 = "udf5";
+        final String password = "f925916e2754e5e03f75dd58a5733251";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String tft = sdf.format(new Date());
+        final String txndatetime = tft;
+
+
+        Intent intent = new Intent(getApplicationContext(), PaymentSDKActivity.class);
+        Request request = new Request(agentId, merchantOrderNo, txnAmount, agentName, udf1, udf2, udf3, udf4, udf5, txndatetime, password);
+        intent.putExtra("request", request);
+        startActivityForResult(intent, 1999);
     }
 
 
@@ -525,6 +556,18 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                 }
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
+            }
+        } else if (requestCode == 1999) {
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentResult response = (PaymentResult) data.getSerializableExtra("response");
+                Toast.makeText(this, "" + response.toString(), Toast.LENGTH_SHORT).show();
+               /* t1.setText(response.getTransaction().getAgentId());
+                t2.setText(response.getTransaction().getMerchantOrderNo());
+                t3.setText(response.getTransaction().getStatus());
+                t4.setText(response.getStatus());*/
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "Transaction Failed", Toast.LENGTH_SHORT).show();
             }
         }
     }

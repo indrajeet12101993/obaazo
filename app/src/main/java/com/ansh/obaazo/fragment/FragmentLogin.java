@@ -213,7 +213,7 @@ public class FragmentLogin extends BaseFragment implements FBHelper.OnFbSignInLi
 
     @Override
     public void OnGoogleSuccess(UserInfo user) {
-        Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getContext(), user.toString(), Toast.LENGTH_SHORT).show();
         hitSocialLoginApi(user.getEmail());
     }
 

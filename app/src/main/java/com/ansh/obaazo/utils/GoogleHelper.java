@@ -5,10 +5,13 @@ import android.content.Intent;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.model.UserInfo;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -33,10 +36,9 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
 
 
     private static final String TAG = GoogleHelper.class.getSimpleName();
-    private FirebaseAuth mAuth;
-    private GoogleApiClient mGoogleApiClient;
     private FragmentActivity activity;
     private OnGoogleListener onGoogleListener;
+    private GoogleSignInClient mGoogleSignInClient;
 
 
     public GoogleHelper(FragmentActivity activity, OnGoogleListener onGoogleListener) {
@@ -45,81 +47,55 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
         initSDK();
     }
 
-    public void initSDK() {
+    private void initSDK() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(activity.getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(activity, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        mAuth = FirebaseAuth.getInstance();
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
     }
 
     public Intent signIn() {
         signOut();
-        return Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        return mGoogleSignInClient.getSignInIntent();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         onGoogleListener.OnGoogleError(connectionResult.getErrorMessage());
-
     }
 
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-        if (result.isSuccess()) {
-            // Google Sign In was successful, authenticate with Firebase
-            GoogleSignInAccount account = result.getSignInAccount();
-            firebaseAuthWithGoogle(account);
+        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+        if (task.isComplete()) {
+            handleSignInResult(task);
         } else {
-            onGoogleListener.OnGoogleError(result.getStatus().getStatusMessage());
-            // Google Sign In failed, update UI appropriately
-            // ...
+            onGoogleListener.OnGoogleError(task.getException().getMessage());
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            if (account != null) {
+                UserInfo userInfo = new UserInfo();
+                userInfo.setName(account.getDisplayName());
+                userInfo.setEmail(account.getEmail());
+                userInfo.setProfileImg(String.valueOf(account.getPhotoUrl()));
+                onGoogleListener.OnGoogleSuccess(userInfo);
+            } else {
+                onGoogleListener.OnGoogleError("unable to login");
+            }
 
-                            UserInfo userInfo = new UserInfo();
-                            userInfo.setName(user.getDisplayName());
-                            userInfo.setEmail(user.getEmail());
-                            userInfo.setProfileImg(String.valueOf(user.getPhotoUrl()));
-                            onGoogleListener.OnGoogleSuccess(userInfo);
-                        } else {
-                            onGoogleListener.OnGoogleError(task.getException().getMessage());
-                        }
-                    }
-                });
+        } catch (ApiException e) {
+            onGoogleListener.OnGoogleError("Error" + e.getStatusCode());
+        }
     }
 
-    public void onDisconnect() {
-        //   mGoogleApiClient.stopAutoManage(activity);
-        mGoogleApiClient.disconnect();
-    }
 
-    public void signOut() {
-        if (mGoogleApiClient != null) {
-            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                    new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(@NonNull Status status) {
-
-                            // ...
-                       /* Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
-                        Intent i=new Intent(getApplicationContext(),ActivitySplash.class);
-                        startActivity(i);*/
-                        }
-                    });
+    private void signOut() {
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut();
         }
     }
 

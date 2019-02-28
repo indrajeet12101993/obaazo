@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ansh.obaazo.BuildConfig;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.adapter.AdapterCouponCode;
 import com.ansh.obaazo.adapter.PriceRoomAdapter;
@@ -271,16 +272,20 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     }
 
     private void initOnlinePayment() {
-        final String agentId = "1";
+        // final String agentId = "1";
+        final String agentId = "5";
         final String merchantOrderNo = orderId;
-        final String txnAmount = mFinalAmout;
+
+        final String txnAmount = BuildConfig.DEBUG ? "1" : mFinalAmout;
         final String agentName = "Obaazo";
         final String udf1 = etMobile.getText().toString();
         final String udf2 = etEmail.getText().toString();
         final String udf3 = etName.getText().toString();
         final String udf4 = "udf4";
         final String udf5 = "udf5";
-        final String password = "f925916e2754e5e03f75dd58a5733251";
+        //Obaazo@2019
+        final String password = "f403b6e381524cfcc0d9cc62fa747e5f";
+        // final String password = "f925916e2754e5e03f75dd58a5733251";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String tft = sdf.format(new Date());
         final String txndatetime = tft;

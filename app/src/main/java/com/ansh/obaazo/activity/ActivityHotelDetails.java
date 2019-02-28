@@ -178,7 +178,8 @@ public class ActivityHotelDetails extends BaseActivity {
         findViewById(R.id.tv_standard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SimpleDialog(ActivityHotelDetails.this, "STANDARD CANCELLATION POLICY", hotelDetails.getCancellation()).show();
+              //  String s = hotelDetails.getCancellation().trim().replaceAll("\\s{2,}", " ");
+                new SimpleDialog(ActivityHotelDetails.this, "STANDARD CANCELLATION POLICY",hotelDetails.getCancellation()).show();
             }
         });
 

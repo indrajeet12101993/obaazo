@@ -63,14 +63,22 @@ public class ActivityDateSelecte extends BaseActivity {
 
                 } else {
                     Date endDate = selectedDates.get(0);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(endDate);
+                    calendar.add(Calendar.DATE, 1);
+                    Date startDate = calendar.getTime();
                     tvStartDate.setText(monthFormat.format(endDate));
                     tvEndDate.setText("End Date");
+                    PreferencesUtils.putString(AppConstant.START_DATE, simpleDateFormat.format(endDate));
+                    PreferencesUtils.putString(AppConstant.END_DATE, simpleDateFormat.format(startDate));
+                    tvEndDate.setText(monthFormat.format(startDate));
+                    tvStartDate.setText(monthFormat.format(endDate));
                 }
             }
 
             @Override
             public void onDateUnselected(Date date) {
-
+                Log.e(TAG, "onDateUnselected: ");
             }
         });
     }

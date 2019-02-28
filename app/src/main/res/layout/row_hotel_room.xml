@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
+            android:gravity="center_vertical"
             android:layout_marginBottom="@dimen/_2sdp">
 
             <TextView
@@ -36,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:text="Fits"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/_8sdp" />
 
@@ -52,6 +54,11 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:src="@drawable/ic_user" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:src="@drawable/ic_user" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_10sdp"

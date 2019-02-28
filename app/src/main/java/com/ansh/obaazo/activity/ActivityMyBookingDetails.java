@@ -3,6 +3,7 @@ package com.ansh.obaazo.activity;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -13,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -38,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import androidx.core.app.NotificationCompat;
 import retrofit2.Call;
 
 public class ActivityMyBookingDetails extends BaseActivity implements OnMapReadyCallback {
@@ -195,10 +198,30 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
             PendingIntent pendingIntent = PendingIntent.getActivity(ActivityMyBookingDetails.this, 0, downloadIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            //   NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            //  Notification.Builder notificationBuilder = new Notification.Builder(ActivityMyBookingDetails.this);
+
+
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            Notification.Builder notificationBuilder = new Notification.Builder(ActivityMyBookingDetails.this);
+            String channelId = "channel-01";
+            String channelName = "Channel Name";
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+                if (mNotificationManager != null)
+                    mNotificationManager.createNotificationChannel(mChannel);
+            }
+
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ctxt, channelId);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                notificationBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            }
+
             notificationBuilder
-                    .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(getResources().getString(R.string.app_name))
                     .setContentText("Download completed")
                     .setAutoCancel(true)

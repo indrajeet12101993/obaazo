@@ -2,9 +2,11 @@ package com.ansh.obaazo.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.utils.AppConstant;
@@ -29,6 +31,10 @@ public class ActivityDateSelecte extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Calendar today = Calendar.getInstance();
+        Date startDate = today.getTime();
+
 
         final Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 10);
@@ -101,8 +107,14 @@ public class ActivityDateSelecte extends BaseActivity {
         findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(Activity.RESULT_OK);
-                onBackPressed();
+                if (!TextUtils.isEmpty(PreferencesUtils.getString(AppConstant.START_DATE))
+                        && !TextUtils.isEmpty(PreferencesUtils.getString(AppConstant.END_DATE))) {
+                    setResult(Activity.RESULT_OK);
+                    onBackPressed();
+                } else {
+                    Toast.makeText(ActivityDateSelecte.this, "First Select start and end date", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

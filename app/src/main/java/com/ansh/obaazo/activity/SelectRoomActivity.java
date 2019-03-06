@@ -308,7 +308,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                 // priceRate.getRoom_id();
                 mBooking.setRoomId(Integer.parseInt(priceRate.getRoom_id()));
                 mBooking.setHotelId(Integer.parseInt(priceRate.getHotel_id()));
-                       // Log.e(TAG, "calculation: " + priceRate.toString());
+                // Log.e(TAG, "calculation: " + priceRate.toString());
                 for (int j = 0; j < info.getPersonInfos().size(); j++) {
                     PersonInfo personInfo = info.getPersonInfos().get(j);
                     if (personInfo.getNoOfAdult() == 1) {
@@ -316,29 +316,29 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                         amt = amt + (Double.parseDouble(priceRate.getGst_adult()) + Double.parseDouble(priceRate.getAdult_price()));
                         priceWithOutGSt += Double.parseDouble(priceRate.getAdult_price());
                         roomGstprice += Double.parseDouble(priceRate.getGst_adult());
-                        tAdultPrice+=roomGstprice+priceWithOutGSt;
+                        tAdultPrice += roomGstprice + priceWithOutGSt;
                     }
                     if (personInfo.getNoOfAdult() == 2) {
                         Log.e(TAG, "calculation: for 2 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult())));
                         amt = amt + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()));
                         priceWithOutGSt += Double.parseDouble(priceRate.getTwo_adult());
                         roomGstprice += Double.parseDouble(priceRate.getGst_twoadult());
-                        tAdultPrice+=roomGstprice+priceWithOutGSt;
+                        tAdultPrice += roomGstprice + priceWithOutGSt;
                     }
                     if (personInfo.getNoOfAdult() == 3) {
                         Log.e(TAG, "calculation: for 3 person " + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult())));
                         amt = amt + (Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult()) + Double.parseDouble(priceRate.getGst_extraadult()));
                         priceWithOutGSt += Double.parseDouble(priceRate.getTwo_adult()) + Double.parseDouble(priceRate.getExtra_adult());
                         roomGstprice += Double.parseDouble(priceRate.getGst_twoadult()) + Double.parseDouble(priceRate.getGst_extraadult());
-                        tAdultPrice+=roomGstprice+priceWithOutGSt;
+                        tAdultPrice += roomGstprice + priceWithOutGSt;
                     }
                     if (personInfo.getChild().size() != 0) {
                         int size = personInfo.getChild().size();
-                     //   Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
+                        //   Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
                         amt = amt + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size));
                         priceWithOutGSt += (Double.parseDouble(priceRate.getExtra_child()) * size);
                         roomGstprice += (Double.parseDouble(priceRate.getGst_child()));
-                        tChildPrice+=roomGstprice+priceWithOutGSt;
+                        tChildPrice += roomGstprice + priceWithOutGSt;
                         //  Log.e(TAG, "calculation: for " + size + " Child " + (Double.parseDouble(priceRate.getGst_child()) + (Double.parseDouble(priceRate.getExtra_child()) * size)));
                     }
                 }
@@ -349,7 +349,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                 adultCount = info.getPersonInfos().get(k).getNoOfAdult();
                 childCount = child.size();
             }
-
+            info.setPriceWithoutGST(priceWithOutGSt);
 
             mBooking.setAdultCount(adultCount);
             mBooking.setChildCount(childCount);

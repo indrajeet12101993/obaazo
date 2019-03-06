@@ -29,15 +29,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="@dimen/_2sdp">
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:fontFamily="sans-serif"
                 android:text="Fits"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/_8sdp" />
 
@@ -59,6 +59,7 @@
                 android:layout_height="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:src="@drawable/ic_user" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_10sdp"
@@ -123,7 +124,9 @@
                         android:layout_height="wrap_content"
                         android:text="Start From"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_8sdp"
+                        android:visibility="invisible" />
+
                     <TextView
                         android:id="@+id/tv_discount_price"
                         android:layout_width="wrap_content"
@@ -131,8 +134,8 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:fontFamily="sans-serif"
                         android:text="₹"
-                        android:visibility="gone"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_start_from"
@@ -202,10 +205,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="₹"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:textColor="#000"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="₹"
+                android:textColor="#000"
                 android:textSize="@dimen/_14sdp" />
         </RelativeLayout>
 

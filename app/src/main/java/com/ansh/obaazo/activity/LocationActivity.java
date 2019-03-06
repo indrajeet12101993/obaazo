@@ -263,13 +263,13 @@ public class LocationActivity extends AppCompatActivity {
             List<Address> tempAddress = geocoder.getFromLocation(latitude, longitude, 1);
             StringBuilder address = new StringBuilder();
             if (tempAddress != null && tempAddress.size() != 0) {
-                address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
+              //  address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
 
-               /* address.append((tempAddress.get(0).getSubLocality() != null) ? tempAddress.get(0).getSubLocality() : "--");
+                address.append((tempAddress.get(0).getSubLocality() != null) ? tempAddress.get(0).getSubLocality() : "--");
                 address.append(" - ");
                 address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
-                address.append(", ");
-                address.append(tempAddress.get(0).getCountryName());*/
+              //  address.append(", ");
+              //  address.append(tempAddress.get(0).getCountryName());
             }
             return String.valueOf(address);
         } catch (IOException e) {

@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +47,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private String roomId;
     private TextView tvTotalAmount;
     private ArrayList<MBooking> mBookingsPriceList;
+    private HashMap<String, MBooking> mBookingHashMap = new HashMap<>();
     private Double totalPrice = 0.0;
 
     @Override
@@ -200,6 +202,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
 
     public void initBooking() {
         if (totalPrice != 0) {
+            mBookingsPriceList = new ArrayList<>();
+            mBookingsPriceList.addAll(mBookingHashMap.values());
             startActivity(new Intent(SelectRoomActivity.this, ActivityBookRoom.class)
                     .putParcelableArrayListExtra(AppConstant.PERSON_DETAILS, roomsAdapter.getmData())
                     .putExtra(AppConstant.HOTEL_DETAILS, hotelDetails)
@@ -360,7 +364,8 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
             mBooking.setRoomGstPrice(roomGstprice);
             info.setPrice(amt);
             roomsAdapter.setRoomData(info, selectedPosition);
-            mBookingsPriceList.add(mBooking);
+            mBookingHashMap.put(("" + selectedPosition), mBooking);
+            //   mBookingsPriceList.add(mBooking);
             totalPrice = roomsAdapter.getTotalAmt();
             tvTotalAmount.setText("Total Amount : ₹" + totalPrice);
         }

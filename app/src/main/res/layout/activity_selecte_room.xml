@@ -175,7 +175,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:text="  ( GST Included )"
-                android:textColor="@color/color_red"
+                android:textColor="@color/mdtp_white"
                 android:textSize="@dimen/_8sdp" />
         </LinearLayout>
 

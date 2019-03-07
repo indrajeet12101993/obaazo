@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
@@ -31,8 +32,8 @@ import com.ansh.obaazo.model.UserRequest;
 import com.ansh.obaazo.payment.ServiceUtility;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.request.BookingRequest;
-import com.ansh.obaazo.resources.response.BaseResponse;
 import com.ansh.obaazo.resources.response.CouponListResponse;
+import com.ansh.obaazo.resources.response.MyBookingResponse;
 import com.ansh.obaazo.resources.response.ObazoMoneyResponse;
 import com.ansh.obaazo.resources.service.BookingService;
 import com.ansh.obaazo.resources.service.CouponListService;
@@ -102,6 +103,8 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     private int mAdultCount = 0, mChildCount = 0;
 
     private String orderId = String.valueOf(ServiceUtility.randInt(0, 9999999));
+    private String mTransactionNo = "";
+    private PaymentResult paymentDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,10 +320,12 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         amountRequest.setBookingAmount(mRoomPriceWithoutGst);
         amountRequest.setPaymentOption(mode);
 
+
         discountRequest.setCouponDiscount(mCouponDiscount);
         discountRequest.setCouponName(couponName);
         discountRequest.setObaazoUsed(obaazoMoney + "");
         discountRequest.setReward(tempObaazoMoney + "");
+        request.setPaymentResult(paymentDetails);
 
         for (MBooking booking : mBookingsPriceList) {
             RoomDetailRequest roomDetailRequest = new RoomDetailRequest();
@@ -341,12 +346,15 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         request.setAmountRequest(amountRequest);
         request.setDiscountRequest(discountRequest);
         request.setRoomDetails(roomDetails);
-
-        new BookingService(this).execute(request, new ApiCallback<BaseResponse>() {
+        Log.e("", "initPayment: ");
+        new BookingService(this).execute(request, new ApiCallback<MyBookingResponse>() {
             @Override
-            public void onSuccess(Call<BaseResponse> call, BaseResponse response) {
+            public void onSuccess(Call<MyBookingResponse> call, MyBookingResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
-                    startActivity(new Intent(ActivityBookRoom.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    startActivity(new Intent(ActivityBookRoom.this, ActivityMyBookingDetails.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra("NEW", true)
+                            .putExtra(AppConstant.MY_BOOKING, response.getResult().get(0)));
                 }
                 Toast.makeText(ActivityBookRoom.this, response.getResponse_message(), Toast.LENGTH_SHORT).show();
 
@@ -362,6 +370,8 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                 Toast.makeText(ActivityBookRoom.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
        /* PaymentClient client = new PaymentClient();
 
@@ -570,6 +580,9 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
                 t2.setText(response.getTransaction().getMerchantOrderNo());
                 t3.setText(response.getTransaction().getStatus());
                 t4.setText(response.getStatus());*/
+                paymentDetails = response;
+                initPayment("2");
+
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Transaction Failed", Toast.LENGTH_SHORT).show();

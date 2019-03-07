@@ -50,6 +50,7 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
     private GoogleMap mMap;
     private String INVOICE_URL = "https://obaazo.com/invoice/";
     private String tempUrl;
+    private boolean newBooking = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
 
         //  ((TextView) findViewById(R.id.tv_title)).setText("Booking Details");
         MyBookingResponse.ResultBean tempDetails = getIntent().getParcelableExtra(AppConstant.MY_BOOKING);
+        newBooking = getIntent().getBooleanExtra("NEW", false);
         titleText = tempDetails.getHotel_name();
         ivHotelImage = findViewById(R.id.iv_hotel_image);
         initCustomToolbar();
@@ -244,6 +246,17 @@ public class ActivityMyBookingDetails extends BaseActivity implements OnMapReady
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(onComplete);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (newBooking) {
+            startActivity(new Intent(ActivityMyBookingDetails.this, MainActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+        } else {
+            super.onBackPressed();
+        }
 
     }
 }

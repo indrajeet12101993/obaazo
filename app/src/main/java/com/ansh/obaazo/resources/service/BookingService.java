@@ -4,13 +4,15 @@ import android.content.Context;
 
 import com.ansh.obaazo.resources.request.BookingRequest;
 import com.ansh.obaazo.resources.response.BaseResponse;
+import com.ansh.obaazo.resources.response.BookingDetailsResponse;
+import com.ansh.obaazo.resources.response.MyBookingResponse;
 import com.ansh.obaazo.web.ApiService;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public class BookingService extends ApiService<BookingService.BookingApi, BookingRequest, BaseResponse> {
+public class BookingService extends ApiService<BookingService.BookingApi, BookingRequest, MyBookingResponse> {
 
 
     public BookingService(Context context) {
@@ -23,12 +25,12 @@ public class BookingService extends ApiService<BookingService.BookingApi, Bookin
     }
 
     @Override
-    protected Call<BaseResponse> onExecute(BookingApi api, BookingRequest request) {
+    protected Call<MyBookingResponse> onExecute(BookingApi api, BookingRequest request) {
         return api.addBookingApi(request);
     }
 
     public interface BookingApi {
         @POST("Api/hotelbooking")
-        Call<BaseResponse> addBookingApi(@Body BookingRequest request);
+        Call<MyBookingResponse> addBookingApi(@Body BookingRequest request);
     }
 }

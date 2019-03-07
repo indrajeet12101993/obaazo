@@ -451,7 +451,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:background="@drawable/shape_edit_text"
                         android:hint="User Name"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapWords"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp" />

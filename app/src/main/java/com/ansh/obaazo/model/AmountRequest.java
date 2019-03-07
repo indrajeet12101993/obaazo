@@ -15,7 +15,16 @@ public class AmountRequest {
     private String checkIndate;
     @SerializedName("checkout")
     private String checkOutDate;
+    private String transactionNo;
 
+
+    public void setTransactionNo(String transactionNo) {
+        this.transactionNo = transactionNo;
+    }
+
+    public String getTransactionNo() {
+        return transactionNo;
+    }
 
     public String getFinalAmount() {
         return finalAmount;

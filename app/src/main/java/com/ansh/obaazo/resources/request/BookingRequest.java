@@ -5,6 +5,7 @@ import com.ansh.obaazo.model.DiscountRequest;
 import com.ansh.obaazo.model.RoomDetailRequest;
 import com.ansh.obaazo.model.UserRequest;
 import com.ansh.obaazo.web.ApiRequest;
+import com.getepay.getepay.PaymentResult;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class BookingRequest extends ApiRequest {
     private ArrayList<RoomDetailRequest> roomDetails;
     @SerializedName("discount")
     private DiscountRequest discountRequest;
+    private PaymentResult paymentResult;
 
     public UserRequest getRequest() {
         return request;
@@ -50,5 +52,10 @@ public class BookingRequest extends ApiRequest {
 
     public void setDiscountRequest(DiscountRequest discountRequest) {
         this.discountRequest = discountRequest;
+    }
+
+
+    public void setPaymentResult(PaymentResult paymentResult) {
+        this.paymentResult = paymentResult;
     }
 }

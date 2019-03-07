@@ -1,6 +1,8 @@
 package com.ansh.obaazo.resources.response;
 
+import com.ansh.obaazo.model.BookingDetails;
 import com.ansh.obaazo.web.ApiResponse;
+import com.google.gson.annotations.SerializedName;
 
 public class BaseResponse extends ApiResponse {
 
@@ -12,6 +14,13 @@ public class BaseResponse extends ApiResponse {
 
     private String response_code;
     private String response_message;
+
+    @SerializedName("result")
+    private BookingDetails details;
+
+    public BookingDetails getDetails() {
+        return details;
+    }
 
     public String getResponse_code() {
         return response_code;
@@ -25,7 +34,9 @@ public class BaseResponse extends ApiResponse {
         return response_message;
     }
 
+
     public void setResponse_message(String response_message) {
         this.response_message = response_message;
     }
+
 }

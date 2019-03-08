@@ -14,10 +14,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -28,10 +24,15 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class LocationActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -50,6 +51,7 @@ public class LocationActivity extends AppCompatActivity {
 
     private String mLatitudeLabel;
     private String mLongitudeLabel;
+    private String mLocationAddress = "";
     //  private TextView mLatitudeText;
     //   private TextView mLongitudeText;
 
@@ -124,12 +126,17 @@ public class LocationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
                             mLastLocation = task.getResult();
+                    /*        LocationAddress.getAddressFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(),
+                                    getApplicationContext(), new GeocoderHandler());*/
                             Intent intent = new Intent();
                             intent.putExtra(AppConstant.B_LATITUDE, mLastLocation.getLatitude());
                             intent.putExtra(AppConstant.B_LONGITUDE, mLastLocation.getLongitude());
-                            intent.putExtra(AppConstant.B_LOCATION, convertLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+                            intent.putExtra(AppConstant.B_LOCATION, convertLatLongToLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+                            //intent.putExtra(AppConstant.B_LOCATION, mLocationAddress);
+
                             setResult(Activity.RESULT_OK, intent);
                             finish();
+
                         } else {
                             Log.w(TAG, "getLastLocation:exception", task.getException());
                             showSnackbar("Error");
@@ -263,13 +270,13 @@ public class LocationActivity extends AppCompatActivity {
             List<Address> tempAddress = geocoder.getFromLocation(latitude, longitude, 1);
             StringBuilder address = new StringBuilder();
             if (tempAddress != null && tempAddress.size() != 0) {
-              //  address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
+                //  address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
 
                 address.append((tempAddress.get(0).getSubLocality() != null) ? tempAddress.get(0).getSubLocality() : "--");
                 address.append(" - ");
                 address.append(((tempAddress.get(0).getLocality() != null)) ? tempAddress.get(0).getLocality() : "--");
-              //  address.append(", ");
-              //  address.append(tempAddress.get(0).getCountryName());
+                //  address.append(", ");
+                //  address.append(tempAddress.get(0).getCountryName());
             }
             return String.valueOf(address);
         } catch (IOException e) {
@@ -278,4 +285,42 @@ public class LocationActivity extends AppCompatActivity {
         }
     }
 
+  /*  private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            mLocationAddress= locationAddress;
+           // tvAddress.setText(locationAddress);
+        }
+    }*/
+
+
+    public String convertLatLongToLocation(final double lattitude, final double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lattitude, longitude, 1);
+            StringBuilder tempAddress = new StringBuilder();
+            if (addresses.size() > 0 && addresses.get(0).getAddressLine(0) != null) {
+                tempAddress.append(addresses.get(0).getAddressLine(0));
+                //isLocationAvaliable = true;
+                //tv_loc.setText(Html.fromHtml("LocationInfo : <font color=#848484>" + tempAddress.toString() + "</font>"));
+            }
+            return tempAddress.toString();
+        } catch (IOException e) {
+            //  isLocationAvaliable = false;
+            //  tv_loc.setText(Html.fromHtml("LocationInfo : <font color=#848484>Loading...</font>"));
+            //  showSnackBar(MarkAttendanceActivity2.this, "No Internet Access!");
+            e.printStackTrace();
+            return "";
+        }
+    }
 }

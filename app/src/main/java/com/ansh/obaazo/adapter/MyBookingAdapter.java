@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.ActivityMyBookingDetails;
 import com.ansh.obaazo.activity.BaseActivity;
+import com.ansh.obaazo.listener.ItemClickNotiffy;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.resources.request.AddReviewRequest;
 import com.ansh.obaazo.resources.request.BaseRequest;
@@ -50,11 +51,12 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
     private ArrayList<MyBookingResponse.ResultBean> mData;
     private String type = "1";
     private ESOTP esotp;
+    private ItemClickNotiffy notiffy;
 
-    public MyBookingAdapter(Context mContext, ArrayList<MyBookingResponse.ResultBean> mData) {
+    public MyBookingAdapter(Context mContext, ArrayList<MyBookingResponse.ResultBean> mData, ItemClickNotiffy notiffy) {
         this.mContext = mContext;
         this.mData = mData;
-
+        this.notiffy = notiffy;
 
     }
 
@@ -100,7 +102,7 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
                 new ESDialogCancelBooking(mContext, "Are you sure to cancel this Booking ?", new ESDialogCancelBooking.ClickListener() {
                     @Override
                     public void onClick() {
-                        sendOtpDialog(mData.get(holder.getAdapterPosition()).getBooking_id(),
+                        sendOtpDialog(mData.get(holder.getAdapterPosition()).getId(),
                                 mData.get(holder.getAdapterPosition()).getUser_mobile());
 
                     }
@@ -148,6 +150,10 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
             new AddReviewService(mContext).execute(request, new ApiCallback<AddReviewResponse>() {
                 @Override
                 public void onSuccess(Call<AddReviewResponse> call, AddReviewResponse response) {
+                    if (response.getResponseCode().equalsIgnoreCase("200")) {
+                        notiffy.onItemClick(0);
+                    }
+
                     Toast.makeText(mContext, response.getResponseMessage(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -238,6 +244,9 @@ public class MyBookingAdapter extends RecyclerView.Adapter<MyBookingAdapter.MyBo
         new CancelBookingService(mContext).execute(request, new ApiCallback<BaseResponse>() {
             @Override
             public void onSuccess(Call<BaseResponse> call, BaseResponse response) {
+                if (response.getResponse_code().equalsIgnoreCase("200")) {
+                    notiffy.onItemClick(0);
+                }
                 Toast.makeText(mContext, response.getResponse_message(), Toast.LENGTH_SHORT).show();
             }
 

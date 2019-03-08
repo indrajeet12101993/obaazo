@@ -135,7 +135,7 @@
                         android:fontFamily="sans-serif"
                         android:text="₹"
                         android:textSize="@dimen/_10sdp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <TextView
                         android:id="@+id/tv_start_from"

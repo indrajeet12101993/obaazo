@@ -474,6 +474,7 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         }
 
         tvRoomPriceWithoutGst.setText("₹ " + roomAmt);
+        ((TextView) findViewById(R.id.tv_obaazo_money_receive)).setText("₹ " + (roomAmt - getDisountPrice(roomAmt)));
         mRoomPriceWithoutGst = "" + roomAmt;
         tvRoomGstAmt.setText("₹ " + gstAmt);
         mGstAmount = "" + gstAmt;
@@ -595,5 +596,18 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
     public void onItemClick(int position) {
         calculateAmmount();
         //bindDataWithUi();
+    }
+
+    private Double getDisountPrice(Double startPrice) {
+        Double tempPrice = startPrice;
+        if (startPrice != 0) {
+            if (PreferencesUtils.getString(AppConstant.USER_CATEGORY).equalsIgnoreCase(AppConstant.OLD_USER)
+                    && PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                tempPrice = tempPrice - (tempPrice * 10 / 100);
+            } else {
+                tempPrice = tempPrice - (tempPrice * 20 / 100);
+            }
+        }
+        return tempPrice;
     }
 }

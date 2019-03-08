@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class BookingInfo implements Parcelable {
     private ArrayList<PersonInfo> personInfos = new ArrayList<>();
     private Double price;
-    private Double priceWithoutGST;
+    private Double priceWithoutGST = 0.0;
 
 
     public Double getPrice() {

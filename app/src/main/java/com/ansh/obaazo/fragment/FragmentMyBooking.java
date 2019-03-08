@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.activity.BaseActivity;
 import com.ansh.obaazo.adapter.MyBookingAdapter;
+import com.ansh.obaazo.listener.ItemClickNotiffy;
 import com.ansh.obaazo.model.UserDetails;
 import com.ansh.obaazo.resources.request.BaseRequest;
 import com.ansh.obaazo.resources.response.MyBookingResponse;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentMyBooking extends BaseFragment {
+public class FragmentMyBooking extends BaseFragment implements ItemClickNotiffy {
 
 
     private View mView;
@@ -64,7 +65,7 @@ public class FragmentMyBooking extends BaseFragment {
 
         rvMyBooking = mView.findViewById(R.id.rv_my_booking);
         rvMyBooking.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bookingAdapter = new MyBookingAdapter(getContext(), new ArrayList<MyBookingResponse.ResultBean>());
+        bookingAdapter = new MyBookingAdapter(getContext(), new ArrayList<MyBookingResponse.ResultBean>(), this);
         rvMyBooking.setAdapter(bookingAdapter);
 
 
@@ -81,7 +82,7 @@ public class FragmentMyBooking extends BaseFragment {
             public void onSuccess(Call<MyBookingResponse> call, MyBookingResponse response) {
                 if (response.getResponse_code().equalsIgnoreCase("200")) {
                     rvMyBooking.setVisibility(View.VISIBLE);
-                    bookingAdapter.setmData(response.getResult(),type);
+                    bookingAdapter.setmData(response.getResult(), type);
                     bookingAdapter.setType(type);
                     mView.findViewById(R.id.iv_no_data).setVisibility((response.getResult() != null && response.getResult().size() != 0) ? View.GONE : View.VISIBLE);
                 } else {
@@ -146,4 +147,8 @@ public class FragmentMyBooking extends BaseFragment {
         }
     }
 
+    @Override
+    public void onItemClick(int position) {
+        bindDataWithUi();
+    }
 }

@@ -332,7 +332,7 @@ public class FragmentHome extends BaseFragment {
         if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
             isLocationSelected = true;
             double latitude = data.getDoubleExtra(AppConstant.B_LATITUDE, 0);
-            double longitude = data.getDoubleExtra(AppConstant.B_LATITUDE, 0);
+            double longitude = data.getDoubleExtra(AppConstant.B_LONGITUDE, 0);
             String location = data.getStringExtra(AppConstant.B_LOCATION);
             PreferencesUtils.putDouble(AppConstant.B_LATITUDE, latitude);
             PreferencesUtils.putDouble(AppConstant.B_LONGITUDE, longitude);

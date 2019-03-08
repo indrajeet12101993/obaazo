@@ -99,7 +99,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
                 ((TextView) holder.itemView.findViewById(R.id.tv_room_adult)).setText(bookingInfo.getPersonInfos().size() + " Room " + count + " Guest");
             }
         }
-        holder.tvPrice.setText("₹ " + mData.getBookingInfos().get(holder.getAdapterPosition()).getPriceWithoutGST());
+        holder.tvPrice.setText("₹ " + getDisountPrice(mData.getBookingInfos().get(holder.getAdapterPosition()).getPriceWithoutGST()));
         holder.itemView.findViewById(R.id.tv_photo_aminites).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,7 +188,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             } else {
                 itemView.findViewById(R.id.ll_start).setVisibility(View.VISIBLE);
                 ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + startPrice);
-                //   ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + getDisountPrice(startPrice));
+                ((TextView) itemView.findViewById(R.id.tv_start_from)).setText("₹" + getDisountPrice(startPrice));
                 ((TextView) itemView.findViewById(R.id.tv_discount_price)).setText("₹" + startPrice);
                 ((TextView) itemView.findViewById(R.id.tv_discount_price)).setPaintFlags(((TextView) itemView.findViewById(R.id.tv_discount_price)).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
@@ -199,6 +199,19 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     private Double getDisountPrice(String startPrice) {
         Double tempPrice = Double.parseDouble(startPrice);
         if (!TextUtils.isEmpty(startPrice)) {
+            if (PreferencesUtils.getString(AppConstant.USER_CATEGORY).equalsIgnoreCase(AppConstant.OLD_USER)
+                    && PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
+                tempPrice = tempPrice - (tempPrice * 10 / 100);
+            } else {
+                tempPrice = tempPrice - (tempPrice * 20 / 100);
+            }
+        }
+        return tempPrice;
+    }
+
+    private Double getDisountPrice(Double startPrice) {
+        Double tempPrice =startPrice;
+        if (startPrice != 0) {
             if (PreferencesUtils.getString(AppConstant.USER_CATEGORY).equalsIgnoreCase(AppConstant.OLD_USER)
                     && PreferencesUtils.getBoolean(AppConstant.IS_LOGIN)) {
                 tempPrice = tempPrice - (tempPrice * 10 / 100);

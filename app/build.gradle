@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'obaazo'
+            keyPassword 'Obaazo@123'
+            storeFile file('E:/New folder (2)/obaazo.jks')
+            storePassword 'Obaazo@123'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.ansh.obaazo"
@@ -16,9 +24,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
-
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
@@ -27,7 +35,6 @@ android {
     aaptOptions {
         cruncherEnabled = false
     }
-
     lintOptions {
         checkReleaseBuilds false
         abortOnError false

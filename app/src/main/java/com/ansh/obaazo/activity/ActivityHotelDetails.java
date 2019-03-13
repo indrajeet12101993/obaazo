@@ -42,6 +42,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 
+import static android.view.View.INVISIBLE;
 import static com.ansh.obaazo.utils.AppConstant.MAX_HEIGHT;
 import static com.ansh.obaazo.utils.AppConstant.MAX_WIDTH;
 import static com.ansh.obaazo.utils.AppConstant.size;
@@ -178,8 +179,8 @@ public class ActivityHotelDetails extends BaseActivity {
         findViewById(R.id.tv_standard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  String s = hotelDetails.getCancellation().trim().replaceAll("\\s{2,}", " ");
-                new SimpleDialog(ActivityHotelDetails.this, "STANDARD CANCELLATION POLICY",hotelDetails.getCancellation()).show();
+                //  String s = hotelDetails.getCancellation().trim().replaceAll("\\s{2,}", " ");
+                new SimpleDialog(ActivityHotelDetails.this, "STANDARD CANCELLATION POLICY", hotelDetails.getCancellation()).show();
             }
         });
 
@@ -219,16 +220,22 @@ public class ActivityHotelDetails extends BaseActivity {
 
 
             ((TextView) findViewById(R.id.tv_hotel_name)).setText(hotelDetails.getHotel_name());
-            if (!TextUtils.isEmpty(hotelDetails.getStartFrom())) {
+            if (!TextUtils.isEmpty(hotelDetails.getStartFrom()) && !hotelDetails.getStartFrom().equalsIgnoreCase("0")) {
                 ((TextView) findViewById(R.id.tv_price)).setText("₹ " + hotelDetails.getStartFrom());
                 ((TextView) findViewById(R.id.tv_discount_price)).setText("₹ " + getDisountPrice(hotelDetails.getStartFrom()));
                 ((TextView) findViewById(R.id.tv_price)).setPaintFlags(((TextView) findViewById(R.id.tv_price)).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                findViewById(R.id.tv_not_avi).setVisibility(View.INVISIBLE);
+                ((Button) findViewById(R.id.btn_select_room)).setEnabled(true);
+                ((Button) findViewById(R.id.btn_select_room)).setText("Select Room");
+
+            } else {
+                findViewById(R.id.tv_price).setVisibility(INVISIBLE);
+                findViewById(R.id.tv_lbl_start).setVisibility(INVISIBLE);
+                findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
+                ((Button) findViewById(R.id.btn_select_room)).setEnabled(false);
+                ((Button) findViewById(R.id.btn_select_room)).setText("Sold Out");
+
             }
-            findViewById(R.id.tv_price).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
-            findViewById(R.id.tv_lbl_start).setVisibility(TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
-            findViewById(R.id.tv_not_avi).setVisibility(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? View.INVISIBLE : View.VISIBLE);
-            ((Button) findViewById(R.id.btn_select_room)).setEnabled(!TextUtils.isEmpty(hotelDetails.getStartFrom()));
-            ((Button) findViewById(R.id.btn_select_room)).setText(!TextUtils.isEmpty(hotelDetails.getStartFrom()) ? "Select Room" : "Sold Out");
 
             ((RatingBar) findViewById(R.id.rb_hotel_rating)).setRating(hotelDetails.getHotelrating());
             (findViewById(R.id.tv_rating)).setVisibility(TextUtils.isEmpty(hotelDetails.getRating()) ? View.GONE : View.VISIBLE);

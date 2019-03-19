@@ -576,14 +576,14 @@ public class ActivityBookRoom extends BaseActivity implements ItemClickNotiffy {
         } else if (requestCode == 1999) {
             if (resultCode == Activity.RESULT_OK) {
                 PaymentResult response = (PaymentResult) data.getSerializableExtra("response");
-                Toast.makeText(this, "" + response.toString(), Toast.LENGTH_SHORT).show();
-               /* t1.setText(response.getTransaction().getAgentId());
-                t2.setText(response.getTransaction().getMerchantOrderNo());
-                t3.setText(response.getTransaction().getStatus());
-                t4.setText(response.getStatus());*/
-                paymentDetails = response;
-                initPayment("2");
-
+                Log.e("Payment Response", "onActivityResult: " + new Gson().toJson(response));
+                if (response.getStatus() != null && response.getStatus().equalsIgnoreCase("true")
+                        && response.getMessage() != null && response.getMessage().equalsIgnoreCase("Success")) {
+                    paymentDetails = response;
+                    initPayment("2");
+                } else {
+                    Toast.makeText(this, "" + response.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Transaction Failed", Toast.LENGTH_SHORT).show();

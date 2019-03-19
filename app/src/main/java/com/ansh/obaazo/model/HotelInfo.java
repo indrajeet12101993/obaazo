@@ -230,8 +230,11 @@ public class HotelInfo implements Parcelable/*, Comparable<HotelInfo>*/ {
     }
 
     public String getRating() {
-        if (TextUtils.isEmpty(Rating))
+        if (TextUtils.isEmpty(Rating)) {
             return "0";
+        } else if (Rating.length() > 4) {
+            return Rating.substring(0, 3);
+        }
         return Rating;
     }
 

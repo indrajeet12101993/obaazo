@@ -148,7 +148,7 @@ public class RoomPriceResponse extends ApiResponse {
         }
 
         public String getTwo_adult() {
-            return two_adult;
+            return TextUtils.isEmpty(two_adult) ? "0" : two_adult;
         }
 
         public void setTwo_adult(String two_adult) {
@@ -172,7 +172,8 @@ public class RoomPriceResponse extends ApiResponse {
         }
 
         public String getGst_adult() {
-            return gst_adult;
+            return TextUtils.isEmpty(gst_adult) ? "0" : gst_adult;
+
         }
 
         public void setGst_adult(String gst_adult) {
@@ -180,7 +181,7 @@ public class RoomPriceResponse extends ApiResponse {
         }
 
         public String getGst_twoadult() {
-            return gst_twoadult;
+            return TextUtils.isEmpty(gst_twoadult) ? "0" : gst_twoadult;
         }
 
         public void setGst_twoadult(String gst_twoadult) {
@@ -188,7 +189,7 @@ public class RoomPriceResponse extends ApiResponse {
         }
 
         public String getGst_extraadult() {
-            return gst_extraadult;
+            return TextUtils.isEmpty(gst_extraadult) ? "0" : gst_extraadult;
         }
 
         public void setGst_extraadult(String gst_extraadult) {

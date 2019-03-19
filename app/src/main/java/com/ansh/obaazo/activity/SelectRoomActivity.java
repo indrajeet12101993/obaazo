@@ -49,6 +49,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
     private ArrayList<MBooking> mBookingsPriceList;
     private HashMap<String, MBooking> mBookingHashMap = new HashMap<>();
     private Double totalPrice = 0.0;
+    private BookingInfo tempBookingInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +169,12 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
         if (position != -1) {
             selectedPosition = position;
             roomId = item.getId();
-            startActivityForResult(new Intent(SelectRoomActivity.this, ActivitySelect.class), 1004);
+            Intent intent = new Intent(SelectRoomActivity.this, ActivitySelect.class);
+            if (tempBookingInfo != null) {
+                intent.putExtra(AppConstant.PERSON_DETAILS, new Gson().toJson(tempBookingInfo));
+            }
+            startActivityForResult(intent, 1004);
+
         } else {
             totalPrice = roomsAdapter.getTotalPrice();
             tvTotalAmount.setText("Total Amount ₹" + totalPrice);
@@ -184,6 +190,7 @@ public class SelectRoomActivity extends BaseActivity implements RItemListener<Ho
                 BookingInfo bookingInfo = new Gson().fromJson(stringExtra, BookingInfo.class);
                 if (bookingInfo != null && bookingInfo.getPersonInfos() != null) {
                     // priceCal(bookingInfo);
+                    tempBookingInfo =bookingInfo;
                     hitRoomPriceApi(bookingInfo);
 
                 } else {

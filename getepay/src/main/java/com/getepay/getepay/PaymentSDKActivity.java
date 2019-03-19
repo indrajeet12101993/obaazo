@@ -140,22 +140,14 @@ public class PaymentSDKActivity extends AppCompatActivity {
                     call.enqueue(new Callback<PaymentResult>() {
                         @Override
                         public void onResponse(Call<PaymentResult> call, Response<PaymentResult> response) {
-                            // response.body() have your LoginResult fields and methods  (example you have to access error then try like this response.body().getError() )
-                            // response.body() have your LoginResult fields and methods  (example you have to access error then try like this response.body().getError() )
-                            String msg = response.body().getTransaction().getTransactionId();
-                            String docId = response.body().getMessage();
-                            String error = response.body().getTransaction().getMerchantOrderNo();
-                            String activie = response.body().getStatus();
                             Intent intent = new Intent();
                             intent.putExtra("response", response.body());
                             setResult(Activity.RESULT_OK, intent);
                             finish();
-
                         }
 
                         @Override
                         public void onFailure(Call<PaymentResult> call, Throwable t) {
-                            //for getting error in network put here Toast, so get the error on network
                             System.out.println("result negetive=>" + t.getMessage());
                             t.printStackTrace();
                         }
@@ -166,8 +158,6 @@ public class PaymentSDKActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-
-
             }
         });
 
@@ -191,7 +181,6 @@ public class PaymentSDKActivity extends AppCompatActivity {
 
     public static String getEncodedValueWithSha2(String hashKey, String... param) {
         String resp = null;
-
         StringBuilder sb = new StringBuilder();
         for (String s : param) {
             sb.append(s);
@@ -200,7 +189,6 @@ public class PaymentSDKActivity extends AppCompatActivity {
         try {
             System.out.println("[getEncodedValueWithSha2]String to Encode =" + sb.toString());
             resp = byteToHexString(encodeWithHMACSHA2(sb.toString(), hashKey));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -229,7 +217,6 @@ public class PaymentSDKActivity extends AppCompatActivity {
      */
     public static String byteToHexString(byte byData[]) {
         StringBuilder sb = new StringBuilder(byData.length * 2);
-
         for (int i = 0; i < byData.length; i++) {
             int v = byData[i] & 0xff;
             if (v < 16)
@@ -241,7 +228,6 @@ public class PaymentSDKActivity extends AppCompatActivity {
     }
 
     void take() {
-
     }
 
 }

@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ansh.obaazo.R;
 import com.ansh.obaazo.model.PersonInfo;
@@ -62,10 +63,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         holder.itemView.findViewById(R.id.iv_a_plus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validatePersonCount(holder.getAdapterPosition())) {
-                    int noOfAdult = mList.get(holder.getAdapterPosition()).getNoOfAdult();
-                    mList.get(holder.getAdapterPosition()).setNoOfAdult(noOfAdult + 1);
-                    notifyItemChanged(holder.getAdapterPosition());
+                if (mList.get(holder.getAdapterPosition()).getNoOfAdult() < 3) {
+                    if (validatePersonCount(holder.getAdapterPosition())) {
+                        int noOfAdult = mList.get(holder.getAdapterPosition()).getNoOfAdult();
+                        mList.get(holder.getAdapterPosition()).setNoOfAdult(noOfAdult + 1);
+                        notifyItemChanged(holder.getAdapterPosition());
+                    }
+                } else {
+                    Toast.makeText(mContext, "Max 3 Person Allow", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -300,6 +305,6 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     public ArrayList<PersonInfo> getDetails() {
-        return mList!=null?mList:new ArrayList<PersonInfo>();
+        return mList != null ? mList : new ArrayList<PersonInfo>();
     }
 }

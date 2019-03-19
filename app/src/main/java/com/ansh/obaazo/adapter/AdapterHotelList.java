@@ -158,7 +158,7 @@ public class AdapterHotelList extends RecyclerView.Adapter<AdapterHotelList.View
             }
 
             String startPrice = bean.getStartFrom();
-            if (TextUtils.isEmpty(startPrice)) {
+            if (TextUtils.isEmpty(startPrice)||startPrice.equalsIgnoreCase("0")) {
                 mList.get(adapterPosition).setAvailable(false);
                 itemView.findViewById(R.id.tv_not_avi).setVisibility(View.VISIBLE);
                 itemView.findViewById(R.id.ll_start).setVisibility(View.INVISIBLE);
